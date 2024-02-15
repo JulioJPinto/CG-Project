@@ -2,4 +2,6 @@ CMakeFiles/*
 CMakeCache.txt
 *.cmake
 Makefile
-class1
+.vscode
+generator
+visualizer
