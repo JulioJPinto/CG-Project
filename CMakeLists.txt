@@ -9,7 +9,10 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/obj)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/obj)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(INCLUDE_PATH "include")
 
+add_library(visualizer STATIC src/visualizer.cpp)
+target_include_directories(visualizer PUBLIC include)
 add_executable(${PROJECT_NAME} src/engine.cpp)
 add_executable(generator src/generator.cpp)
 
@@ -17,6 +20,9 @@ find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
+
+target_include_directories(visualizer PUBLIC include)
+target_include_directories(generator PUBLIC include)
 
 if(NOT OPENGL_FOUND)
     message(FATAL_ERROR "OPENGL not found!")
