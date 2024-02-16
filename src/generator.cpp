@@ -1,7 +1,9 @@
 #include <string.h>
+
 #include <iostream>
+
 #include "figure.hpp"
-#include "figure_generator.hpp" // Include the figure_generator header
+#include "figure_generator.hpp"  // Include the figure_generator header
 
 inline std::unique_ptr<Figure> generateFigure(int argc, char* argv[]) {
   if (argc < 5) {
@@ -22,7 +24,7 @@ inline std::unique_ptr<Figure> generateFigure(int argc, char* argv[]) {
     return nullptr;
   } else if (figureName == "plane" && figureType == "plane.3d" && argc == 5) {
     // Generate Plane
-    std::cout << "Generating Plane\n"; // Added newline here
+    std::cout << "Generating Plane\n";  // Added newline here
     float length = std::stof(argv[2]);
     int divisions = std::stoi(argv[3]);
     // generatePlane(length, divisions);
