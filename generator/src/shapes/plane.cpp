@@ -4,11 +4,7 @@
 #include <fstream>
 #include <vector>
 
-float planeWidth = 5.0f;
-float planeLength = 5.0f;
-int divisions = 3;
-
-std::vector<Point> calculateTriangles(float length, int divisions) {
+std::vector<Point> planeTriangles(float length, int divisions) {
     float half = length / 2.0f;
     float steps = length / divisions;
 
@@ -42,22 +38,10 @@ std::vector<Point> calculateTriangles(float length, int divisions) {
     return points;
 }
 
-void saveToFile(const std::vector<Point>& points, const char* filepath) { // Changed parameter type to const char*
-    std::ofstream file(filepath);
 
-    if (file.is_open()) {
-        for (const auto& point : points) {
-            file << point.x << " " << point.y << " " << point.z << "\n";
-        }
-        file.close();
-        std::cout << "File saved successfully.\n";
-    } else {
-        std::cerr << "Unable to open file: " << filepath << std::endl;
-    }
-}
 
 bool generatePlane(float length, int divisions, const char* filepath) { // Changed parameter type to const char*
-    std::vector<Point> triangles = calculateTriangles(length, divisions);
+    std::vector<Point> triangles = planeTriangles(length, divisions);
 
     if (triangles.empty()) {
         std::cerr << "Error: Empty vector of triangles.\n";

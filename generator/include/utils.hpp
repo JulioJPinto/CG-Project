@@ -1,8 +1,12 @@
 #ifndef SOLAR_SYSTEM_UTILS_HPP
 #define SOLAR_SYSTEM_UTILS_HPP
 
+#include "utils.hpp"
 #include <string>
 #include <sstream>
+#include <iostream>
+#include <fstream>
+#include <vector>
 
 // Define Point struct
 typedef struct Point {
@@ -17,5 +21,7 @@ typedef struct Point {
 
 // Function to convert Point to string
 std::string pointToString(const Point& point);
+
+void saveToFile(const std::vector<Point>& points, const char* filepath);
 
 #endif //SOLAR_SYSTEM_UTILS_HPP
