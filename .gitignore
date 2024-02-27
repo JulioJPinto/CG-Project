@@ -1,8 +1,10 @@
-CMakeFiles/*
-CMakeCache.txt
 *.cmake
-Makefile
-.vscode
+*/Makefile
+*.3d
+*/CMakeCache.txt
+generator/CMakeFiles/*
+engine/CMakeFiles/*
 generator
-visualizer
-bin/*
+engine
+models/*
+.idea/*
