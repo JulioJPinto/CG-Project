@@ -39,7 +39,6 @@ std::vector<Point> planeTriangles(float length, int divisions) {
 }
 
 
-
 bool generatePlane(float length, int divisions, const char* filepath) { // Changed parameter type to const char*
     std::vector<Point> triangles = planeTriangles(length, divisions);
 
