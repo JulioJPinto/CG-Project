@@ -10,7 +10,7 @@ void generateFigure(int argc, char* argv[]) {
     return;
   }
 
-  std::string figureType = argv[argc - 1];
+  char* figureType = argv[argc - 1];
   std::string figureName = argv[1];
 
   if (figureName == "sphere" && argc == 6) {
@@ -22,7 +22,7 @@ void generateFigure(int argc, char* argv[]) {
     float length = std::stof(argv[2]);
     int divisions = std::stoi(argv[3]);
 
-    generateCube(length, divisions, argv[4]);
+    generateCube(length, divisions, figureType);
   } else if (figureName == "plane" && argc == 5) {
     // Generate Plane
     std::cout << "Generating Plane\n";  // Added newline here
@@ -30,7 +30,7 @@ void generateFigure(int argc, char* argv[]) {
     int divisions = std::stoi(argv[3]);
 
     generatePlane(length, divisions,
-                  argv[4]);  // Assuming saveToFile is available
+                  figureType);  // Assuming saveToFile is available
   } else if (figureName == "cone" && argc == 7) {
     // Generate Cone
     std::cout << "Generating Cone\n";

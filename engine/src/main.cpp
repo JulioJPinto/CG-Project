@@ -6,8 +6,8 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include "draw.hpp"
 
+#include "draw.hpp"
 
 char* file = "";
 
@@ -39,30 +39,29 @@ void renderScene(void) {
 
   // put drawing instructions here
   glBegin(GL_LINES);
-    // x-axis (red)
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(-1.0f, 0.0f, 0.0f);
-    glVertex3f(1.0f, 0.0f, 0.0f);
-    // y-axis (green)
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(0.0f, -1.0f, 0.0f);
-    glVertex3f(0.0f, 1.0f, 0.0f);
-    // z-axis (blue)
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0f, 0.0f, -1.0f);
-    glVertex3f(0.0f, 0.0f, 1.0f);
-    glEnd();
+  // x-axis (red)
+  glColor3f(1.0f, 0.0f, 0.0f);
+  glVertex3f(-1.0f, 0.0f, 0.0f);
+  glVertex3f(1.0f, 0.0f, 0.0f);
+  // y-axis (green)
+  glColor3f(0.0f, 1.0f, 0.0f);
+  glVertex3f(0.0f, -1.0f, 0.0f);
+  glVertex3f(0.0f, 1.0f, 0.0f);
+  // z-axis (blue)
+  glColor3f(0.0f, 0.0f, 1.0f);
+  glVertex3f(0.0f, 0.0f, -1.0f);
+  glVertex3f(0.0f, 0.0f, 1.0f);
+  glEnd();
   glEnd();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   drawFile(file);
-  
 
   // End of frame
   glutSwapBuffers();
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   // put GLUT�s init here
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -76,10 +75,9 @@ int main(int argc, char **argv) {
   glutIdleFunc(renderScene);
   glutDisplayFunc(renderScene);
 
-
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
-  //glEnable(GL_CULL_FACE);
+  // glEnable(GL_CULL_FACE);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
   // enter GLUT�s main cycle
