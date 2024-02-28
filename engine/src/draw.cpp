@@ -12,6 +12,8 @@
 #include "draw.hpp"
 #include "utils.hpp"
 
+#define MODELS "../models/"
+
 void drawTriangles(const std::vector<Point>& points) {
   glBegin(GL_TRIANGLES);
   for (size_t i = 0; i < points.size(); i += 3) {
@@ -24,7 +26,7 @@ void drawTriangles(const std::vector<Point>& points) {
 }
 
 void drawFile(char* filename) {
-  std::string dir = "../models/";
+  std::string dir = MODELS;
   dir.append(filename);
 
   std::vector<Point> points = parseFile(dir);
