@@ -6,9 +6,11 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+
 #include "draw.hpp"
 
-
+float cameraAngle = 90.0f;
+float cameraAngleY = 0.0f;
 char* file = "";
 
 void changeSize(int w, int h) {
@@ -35,25 +37,25 @@ void renderScene(void) {
 
   // set camera
   glLoadIdentity();
-  //gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
-  gluLookAt(5, 5, 5, 0, 0, 0, 0, 1, 0); 
+  // gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
+  gluLookAt(5.0 * sin(cameraAngle), 5.0 * cos(cameraAngleY),
+            5.0 * cos(cameraAngle), 0.0, 0.0, 0.0, 0.0f, 1.0f, 0.0f);
 
   // put drawing instructions here
   glBegin(GL_LINES);
   // x-axis (red)
-    glColor3f(50.0f, 0.0f, 0.0f);
-    glVertex3f(-50.0f, 0.0f, 0.0f);
-    glVertex3f(50.0f, 0.0f, 0.0f);
-    // y-axis (green)
-    glColor3f(0.0f, 50.0f, 0.0f);
-    glVertex3f(0.0f, -50.0f, 0.0f);
-    glVertex3f(0.0f, 50.0f, 0.0f);
-    // z-axis (blue)
-    glColor3f(0.0f, 0.0f, 50.0f);
-    glVertex3f(0.0f, 0.0f, -50.0f);
-    glVertex3f(0.0f, 0.0f, 50.0f);
+  glColor3f(50.0f, 0.0f, 0.0f);
+  glVertex3f(-50.0f, 0.0f, 0.0f);
+  glVertex3f(50.0f, 0.0f, 0.0f);
+  // y-axis (green)
+  glColor3f(0.0f, 50.0f, 0.0f);
+  glVertex3f(0.0f, -50.0f, 0.0f);
+  glVertex3f(0.0f, 50.0f, 0.0f);
+  // z-axis (blue)
+  glColor3f(0.0f, 0.0f, 50.0f);
+  glVertex3f(0.0f, 0.0f, -50.0f);
+  glVertex3f(0.0f, 0.0f, 50.0f);
   glEnd();
-
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   drawFile(file);
@@ -63,15 +65,35 @@ void renderScene(void) {
 }
 
 void reshape(int w, int h) {
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 1.0f, 100.0f);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+  glViewport(0, 0, w, h);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 1.0f, 100.0f);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
 }
 
-int main(int argc, char **argv) {
+void processSpecialKeys(int key, int xx, int yy) {
+  switch (key) {
+    case GLUT_KEY_LEFT:
+      cameraAngle -= 0.1f;
+      break;
+    case GLUT_KEY_RIGHT:
+      cameraAngle += 0.1f;
+      break;
+    case GLUT_KEY_UP:
+      cameraAngleY += 0.1f;
+      break;
+    case GLUT_KEY_DOWN:
+      cameraAngleY -= 0.1f;
+      break;
+    default:
+      break;
+  }
+  glutPostRedisplay();
+}
+
+int main(int argc, char** argv) {
   // put GLUT�s init here
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -85,6 +107,8 @@ int main(int argc, char **argv) {
   glutIdleFunc(renderScene);
   glutDisplayFunc(renderScene);
   glutReshapeFunc(reshape);
+
+  glutSpecialFunc(processSpecialKeys);
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
