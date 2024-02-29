@@ -1,5 +1,5 @@
-#ifndef SOLAR_SYSTEM_CUBE_HPP
-#define SOLAR_SYSTEM_CUBE_HPP
+#ifndef CUBE_HPP
+#define CUBE_HPP
 
 
 #include <vector>
@@ -8,4 +8,4 @@
 
 bool generateCube(float length, int divisions, const char* filepath);
 
-#endif //SOLAR_SYSTEM_PLANE_HPP
+#endif //CUBE_HPP

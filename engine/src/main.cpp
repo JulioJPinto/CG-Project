@@ -35,28 +35,28 @@ void renderScene(void) {
 
   // set camera
   glLoadIdentity();
-  gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
+  //gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
+  gluLookAt(5, 5, 5, 0, 0, 0, 0, 1, 0); 
 
   // put drawing instructions here
   glBegin(GL_LINES);
-    // x-axis (red)
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(-1.0f, 0.0f, 0.0f);
-    glVertex3f(1.0f, 0.0f, 0.0f);
+  // x-axis (red)
+    glColor3f(50.0f, 0.0f, 0.0f);
+    glVertex3f(-50.0f, 0.0f, 0.0f);
+    glVertex3f(50.0f, 0.0f, 0.0f);
     // y-axis (green)
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(0.0f, -1.0f, 0.0f);
-    glVertex3f(0.0f, 1.0f, 0.0f);
+    glColor3f(0.0f, 50.0f, 0.0f);
+    glVertex3f(0.0f, -50.0f, 0.0f);
+    glVertex3f(0.0f, 50.0f, 0.0f);
     // z-axis (blue)
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0f, 0.0f, -1.0f);
-    glVertex3f(0.0f, 0.0f, 1.0f);
-    glEnd();
+    glColor3f(0.0f, 0.0f, 50.0f);
+    glVertex3f(0.0f, 0.0f, -50.0f);
+    glVertex3f(0.0f, 0.0f, 50.0f);
   glEnd();
+
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   drawFile(file);
-  
 
   // End of frame
   glutSwapBuffers();
@@ -76,10 +76,9 @@ int main(int argc, char **argv) {
   glutIdleFunc(renderScene);
   glutDisplayFunc(renderScene);
 
-
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
-  //glEnable(GL_CULL_FACE);
+  glEnable(GL_CULL_FACE);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
   // enter GLUT�s main cycle

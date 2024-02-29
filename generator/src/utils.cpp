@@ -6,10 +6,16 @@
 #include <string>
 #include <vector>
 
+#define DIR "../models/"
+
 void saveToFile(
     const std::vector<Point>& points,
     const char* filepath) {  // Changed parameter type to const char*
-  std::ofstream file(filepath);
+  
+  std::string buf(DIR);
+  buf.append(filepath);
+
+  std::ofstream file(buf);
 
   if (file.is_open()) {
     for (const auto& point : points) {
