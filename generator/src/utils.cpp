@@ -11,7 +11,7 @@
 void saveToFile(
     const std::vector<Point>& points,
     const char* filepath) {  // Changed parameter type to const char*
-  
+
   std::string buf(DIR);
   buf.append(filepath);
 

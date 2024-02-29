@@ -1,10 +1,9 @@
 #include <iostream>
 #include <string>
 
+#include "../include/shapes/cone.hpp"
 #include "../include/shapes/cube.hpp"
 #include "../include/shapes/plane.hpp"
-#include "../include/shapes/cone.hpp"
-
 
 void generateFigure(int argc, char* argv[]) {
   if (argc < 5) {
@@ -41,7 +40,7 @@ void generateFigure(int argc, char* argv[]) {
     int slices = std::stoi(argv[4]);
     int stacks = std::stoi(argv[5]);
 
-    generateCone(radius,height,slices,stacks, figureType);
+    generateCone(radius, height, slices, stacks, figureType);
 
   } else {
     std::cerr << "Invalid arguments\n";
