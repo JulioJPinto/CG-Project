@@ -4,6 +4,7 @@
 #include "../include/shapes/cone.hpp"
 #include "../include/shapes/cube.hpp"
 #include "../include/shapes/plane.hpp"
+#include "../include/shapes/sphere.hpp"
 
 void generateFigure(int argc, char* argv[]) {
   if (argc < 5) {
@@ -17,6 +18,11 @@ void generateFigure(int argc, char* argv[]) {
   if (figureName == "sphere" && argc == 6) {
     // Generate Sphere
     std::cout << "Generating Sphere\n";
+    float radius = std::stof(argv[2]);
+    int slices = std::stoi(argv[3]);
+    int stacks = std::stoi(argv[4]);
+
+    generateSphere(radius, slices, stacks, figureType);
   } else if (figureName == "box" && argc == 5) {
     // Generate Box
     std::cout << "Generating Box\n";
