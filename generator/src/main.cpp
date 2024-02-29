@@ -3,6 +3,8 @@
 
 #include "../include/shapes/cube.hpp"
 #include "../include/shapes/plane.hpp"
+#include "../include/shapes/cone.hpp"
+
 
 void generateFigure(int argc, char* argv[]) {
   if (argc < 5) {
@@ -34,6 +36,13 @@ void generateFigure(int argc, char* argv[]) {
   } else if (figureName == "cone" && argc == 7) {
     // Generate Cone
     std::cout << "Generating Cone\n";
+    float radius = std::stof(argv[2]);
+    float height = std::stof(argv[3]);
+    int slices = std::stoi(argv[4]);
+    int stacks = std::stoi(argv[5]);
+
+    generateCone(radius,height,slices,stacks, figureType);
+
   } else {
     std::cerr << "Invalid arguments\n";
   }
