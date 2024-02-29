@@ -62,6 +62,15 @@ void renderScene(void) {
   glutSwapBuffers();
 }
 
+void reshape(int w, int h) {
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 1.0f, 100.0f);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+}
+
 int main(int argc, char **argv) {
   // put GLUT�s init here
   glutInit(&argc, argv);
@@ -75,6 +84,7 @@ int main(int argc, char **argv) {
   glutReshapeFunc(changeSize);
   glutIdleFunc(renderScene);
   glutDisplayFunc(renderScene);
+  glutReshapeFunc(reshape);
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);

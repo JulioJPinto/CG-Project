@@ -1,12 +1,10 @@
 *.cmake
-*.3d
 generator/Makefile
 engine/Makefile
 generator/CMakeCache.txt
 engine/CMakeCache.txt
 generator/CMakeFiles/*
 engine/CMakeFiles/*
-models/*
 .idea/*
 .vscode/*
 generator/generator
