@@ -7,38 +7,31 @@
 
 std::vector<Point> coneTriangles(float radius, float height, int slices, int stacks) {
     std::vector<Point> points;
+    float alfa = 2.0f * M_PI / slices;
+    float yT = height / 2.0f;
+    float yB = -height / 2.0f;
+	float lastX = radius * cos(0);
+	float lastZ = radius * sin(0);
+    
+    for (int i = 1; i <= slices; ++i) {
+            float a = i * alfa;
+            float x = radius * cos(a);
+            float z = radius * sin(a);
 
-    // Generate points for each stack
-    for (int i = 0; i < stacks; ++i) {
-        float y1 = height * i / stacks;
-        float y2 = height * (i + 1) / stacks;
-
-        for (int j = 0; j < slices; ++j) {
-            float theta1 = 2.0f * M_PI * j / slices;
-            float theta2 = 2.0f * M_PI * (j + 1) / slices;
-
-            float x1 = radius * std::cos(theta1);
-            float z1 = radius * std::sin(theta1);
-
-            float x2 = radius * std::cos(theta2);
-            float z2 = radius * std::sin(theta2);
 
             // Side triangles
-            points.emplace_back(x1, y1, z1);
-            points.emplace_back(x2, y1, z2);
-            points.emplace_back(0.0f, y2, 0.0f);
+            points.emplace_back(0, height, 0);
+            points.emplace_back(x, 0, z);
+            points.emplace_back(lastX, 0, lastZ);
 
             // Bottom triangles
-            if (i == 0) {
-                points.emplace_back(0.0f, 0.0f, 0.0f);
-                points.emplace_back(x2, y1, z2);
-                points.emplace_back(x1, y1, z1);
-            }
-        }
-    }
+            points.emplace_back(lastX, 0, lastZ);
+            points.emplace_back(x, 0, z);
+            points.emplace_back(0, 0, 0);
 
-    // Cone tip
-    points.emplace_back(0.0f, height, 0.0f);
+            lastX = x;
+            lastZ = z;
+        }
 
     return points;
 }
