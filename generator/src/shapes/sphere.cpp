@@ -37,14 +37,14 @@ std::vector<Point> sphereTriangles(float radius, int slices, int stacks) {
       float x4 = radius * std::sin(theta2) * std::sin(phi2);
       float y4 = radius * std::cos(theta2);
 
-      // Push vertices in counter-clockwise order
       points.push_back(Point(x1, y1, z1));
+      points.push_back(Point(x4, y4, z4));
       points.push_back(Point(x2, y2, z2));
-      points.push_back(Point(x4, y4, z4));
 
+      // Second triangle
       points.push_back(Point(x1, y1, z1));
-      points.push_back(Point(x4, y4, z4));
       points.push_back(Point(x3, y3, z3));
+      points.push_back(Point(x4, y4, z4));
     }
   }
 
