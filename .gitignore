@@ -9,3 +9,4 @@ engine/CMakeFiles/*
 .vscode/*
 generator/generator
 engine/engine
+build
