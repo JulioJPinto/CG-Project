@@ -1,7 +1,7 @@
 #include "Window.hpp"
 
-#include <string>
 #include <sstream>
+#include <string>
 
 Window::Window() {
   this->width = 0;

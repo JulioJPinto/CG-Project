@@ -1,7 +1,7 @@
 #include "Camera.hpp"
 
-#include <string>
 #include <sstream>
+#include <string>
 
 Camera::Camera() {
   this->position = Point();

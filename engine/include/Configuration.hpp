@@ -1,12 +1,12 @@
 #ifndef CONFIGURATION_HPP
 #define CONFIGURATION_HPP
 
+#include <string>
+#include <vector>
+
 #include "Camera.hpp"
 #include "Configuration.hpp"
 #include "Window.hpp"
-
-#include <vector>
-#include <string>
 
 class Configuration {
  public:

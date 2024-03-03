@@ -1,10 +1,10 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
+#include <string>
+
 #include "Camera.hpp"
 #include "utils.hpp"
-
-#include <string>
 
 class Camera {
  public:

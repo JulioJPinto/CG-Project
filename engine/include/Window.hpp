@@ -1,9 +1,9 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
-#include "Window.hpp"
-
 #include <string>
+
+#include "Window.hpp"
 
 class Window {
  public:
