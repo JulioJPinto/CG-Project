@@ -1,12 +1,12 @@
 #include "parse.hpp"
 
-#include <fstream>
 #include <iostream>
+#include <fstream>
+#include <string>
 
-Configuration parseConfig(char* filename) {
+Configuration parseConfig(std::string filename) {
   // open file in read mode
-  std::fstream file;
-  file.open(filename, std::ios::in);
+  std::ifstream file(filename);
 
   // check if the file was opened successfully
   if (!file.is_open()) {
@@ -58,12 +58,12 @@ Configuration parseConfig(char* filename) {
   Camera camera_info = Camera(position, lookAt, up, fov, near, far);
 
   // models
-  std::vector<char*> models_info;
+  std::vector<std::string> models_info;
   rapidxml::xml_node<>* models =
       root->first_node("group")->first_node("models");
   for (rapidxml::xml_node<>* model = models->first_node("model"); model;
        model = model->next_sibling("model")) {
-    models_info.push_back(model->first_attribute("file")->value());
+    models_info.push_back(std::string(model->first_attribute("file")->value()));
   }
 
   return Configuration(window_info, camera_info, models_info);

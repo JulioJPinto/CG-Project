@@ -8,6 +8,7 @@
 #include <math.h>
 
 #include "draw.hpp"
+#include "parse.hpp"
 
 float cameraAngle = 90.0f;
 float cameraAngleY = 0.0f;
@@ -94,6 +95,11 @@ void processSpecialKeys(int key, int xx, int yy) {
 }
 
 int main(int argc, char** argv) {
+  std::string filename;
+  filename.assign("/home/diogo/LEI/3ano/2sem/CG/CG-Project/engine/test.xml");
+  Configuration c = parseConfig(filename);
+  printf(c.toString().c_str());
+
   // put GLUT�s init here
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);

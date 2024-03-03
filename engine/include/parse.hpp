@@ -5,6 +5,8 @@
 #include "Configuration.hpp"
 #include "parse.hpp"
 
-Configuration parseConfig(char* filename);
+#include <string>
+
+Configuration parseConfig(std::string filename);
 
 #endif  // PARSE_HPP

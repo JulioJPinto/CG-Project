@@ -4,6 +4,8 @@
 #include "Camera.hpp"
 #include "utils.hpp"
 
+#include <string>
+
 class Camera {
  public:
   Point position;
@@ -16,6 +18,8 @@ class Camera {
   Camera();
   Camera(Point position, Point lookAt, Point up, int fov, float near,
          float far);
+
+  std::string toString();
 };
 
 #endif  // CAMERA_HPP

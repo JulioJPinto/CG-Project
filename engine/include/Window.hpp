@@ -3,6 +3,8 @@
 
 #include "Window.hpp"
 
+#include <string>
+
 class Window {
  public:
   float width;
@@ -10,6 +12,8 @@ class Window {
 
   Window();
   Window(float width, float height);
+
+  std::string toString();
 };
 
 #endif  // WINDOW_HPP
