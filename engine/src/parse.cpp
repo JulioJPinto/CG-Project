@@ -1,11 +1,7 @@
+#include "parse.hpp"
+
 #include <fstream>
 #include <iostream>
-
-#include "../../lib/rapidxml-1.13/rapidxml.hpp"
-#include "Camera.cpp"
-#include "Configuration.cpp"
-#include "Window.cpp"
-#include "utils.hpp"
 
 Configuration parseConfig(char* filename) {
   // open file in read mode
