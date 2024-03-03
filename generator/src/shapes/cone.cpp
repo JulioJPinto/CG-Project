@@ -5,35 +5,53 @@
 
 #include "utils.hpp"
 
-std::vector<Point> coneTriangles(float radius, float height, int slices,
-                                 int stacks) {
-  std::vector<Point> points;
-  float alfa = 2.0f * M_PI / slices;
-  float yT = height / 2.0f;
-  float yB = -height / 2.0f;
-  float lastX = radius * cos(0);
-  float lastZ = radius * sin(0);
+std::vector<Point> coneTriangles(const float radius, const float height,
+                                 const size_t slices, const size_t stacks) {
+  std::vector<Point> vertex;
 
-  for (int i = 1; i <= slices; ++i) {
-    float a = i * alfa;
-    float x = radius * cos(a);
-    float z = radius * sin(a);
+  const auto alfa = 2 * M_PI / slices;
+  const auto stackHeight = height / stacks;
 
-    // Side triangles
-    points.emplace_back(0, height, 0);
-    points.emplace_back(x, 0, z);
-    points.emplace_back(lastX, 0, lastZ);
+  const auto base_middle = Point{0, 0, 0};
 
-    // Bottom triangles
-    points.emplace_back(lastX, 0, lastZ);
-    points.emplace_back(x, 0, z);
-    points.emplace_back(0, 0, 0);
+  for (int slice = 0; slice < slices; ++slice) {
+    for (int stack = 0; stack < stacks; ++stack) {
+      const float cRadius = radius - stack * radius / stacks;
+      const float nRadius = radius - (stack + 1) * radius / stacks;
 
-    lastX = x;
-    lastZ = z;
+      const Point bottom_left =
+          Point(cRadius * sin(slice * alfa), stack * stackHeight,
+                cRadius * cos(slice * alfa));
+      const Point bottom_right =
+          Point(cRadius * sin((slice + 1) * alfa), stack * stackHeight,
+                cRadius * cos((slice + 1) * alfa));
+      const Point top_left =
+          Point(nRadius * sin(slice * alfa), (stack + 1) * stackHeight,
+                nRadius * cos(slice * alfa));
+      const Point top_right =
+          Point(nRadius * sin((slice + 1) * alfa), (stack + 1) * stackHeight,
+                nRadius * cos((slice + 1) * alfa));
+
+      vertex.push_back(top_left);
+      vertex.push_back(bottom_left);
+      vertex.push_back(bottom_right);
+
+      vertex.push_back(top_left);
+      vertex.push_back(bottom_right);
+      vertex.push_back(top_right);
+    }
+
+    const Point base_bottom_left =
+        Point(radius * sin(slice * alfa), 0, radius * cos(slice * alfa));
+    const Point base_bottom_right = Point(radius * sin((slice + 1) * alfa), 0,
+                                          radius * cos((slice + 1) * alfa));
+
+    vertex.push_back(base_middle);
+    vertex.push_back(base_bottom_right);
+    vertex.push_back(base_bottom_left);
   }
 
-  return points;
+  return vertex;
 }
 
 bool generateCone(float radius, float height, int slices, int stacks,
