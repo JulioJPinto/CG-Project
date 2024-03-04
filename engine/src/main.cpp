@@ -12,7 +12,7 @@
 
 float cameraAngle = 90.0f;
 float cameraAngleY = 0.0f;
-char* file = "";
+
 Configuration c;
 
 void changeSize(int w, int h) {
@@ -60,7 +60,10 @@ void renderScene(void) {
   glEnd();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  drawFile(file);
+  for(std::string model : c.models) {
+    drawFile(model.data());
+  }
+  
 
   // End of frame
   glutSwapBuffers();
@@ -97,17 +100,17 @@ void processSpecialKeys(int key, int xx, int yy) {
 
 int main(int argc, char** argv) {
   std::string filename;
-  filename.assign("../engine/test.xml");
+  filename.assign(argv[1]);
   c = parseConfig(filename);
+
   // put GLUT�s init here
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
   glutInitWindowPosition(100, 100);
-  glutInitWindowSize(800, 800);
+  glutInitWindowSize(c.window.width, c.window.height);
   glutCreateWindow("CG@DI");
+  
   // put callback registry here
-  file = argv[1];
-  glutReshapeFunc(changeSize);
   glutIdleFunc(renderScene);
   glutDisplayFunc(renderScene);
   glutReshapeFunc(reshape);
