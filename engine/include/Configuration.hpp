@@ -13,7 +13,7 @@ class Configuration {
   Window window;
   Camera camera;
   std::vector<std::string> models;
-
+  Configuration() = default;
   Configuration(Window window, Camera camera, std::vector<std::string> models);
 
   std::string toString();

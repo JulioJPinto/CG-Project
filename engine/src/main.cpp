@@ -13,19 +13,20 @@
 float cameraAngle = 90.0f;
 float cameraAngleY = 0.0f;
 char* file = "";
+Configuration c;
 
 void changeSize(int w, int h) {
   // Prevent a divide by zero, when window is too short
   // (you can�t make a window with zero width).
   if (h == 0) h = 1;
 
-  float ratio = w * 1.0f / h;
+  float ratio = c.window.width * 1.0f / c.window.height;
   // Set the projection matrix as current
   glMatrixMode(GL_PROJECTION);
   // Load the identity matrix
   glLoadIdentity();
   // Set the viewport to be the entire window
-  glViewport(0, 0, w, h);
+  glViewport(0, 0, c.window.width, c.window.height);
   // Set the perspective
   gluPerspective(45.0f, ratio, 1.0f, 1000.0f);
   // return to the model view matrix mode
@@ -35,12 +36,12 @@ void changeSize(int w, int h) {
 void renderScene(void) {
   // clear buffers
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
   // set camera
   glLoadIdentity();
   // gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
-  gluLookAt(5.0 * sin(cameraAngle), 5.0 * cos(cameraAngleY),
-            5.0 * cos(cameraAngle), 0.0, 0.0, 0.0, 0.0f, 1.0f, 0.0f);
+  gluLookAt(c.camera.position.x, c.camera.position.y, c.camera.position.z,
+            c.camera.lookAt.x, c.camera.lookAt.y, c.camera.lookAt.z,
+            c.camera.up.x, c.camera.up.y, c.camera.up.z);
 
   // put drawing instructions here
   glBegin(GL_LINES);
@@ -96,17 +97,14 @@ void processSpecialKeys(int key, int xx, int yy) {
 
 int main(int argc, char** argv) {
   std::string filename;
-  filename.assign("/home/diogo/LEI/3ano/2sem/CG/CG-Project/engine/test.xml");
-  Configuration c = parseConfig(filename);
-  printf(c.toString().c_str());
-
+  filename.assign("../engine/test.xml");
+  c = parseConfig(filename);
   // put GLUT�s init here
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
   glutInitWindowPosition(100, 100);
   glutInitWindowSize(800, 800);
   glutCreateWindow("CG@DI");
-
   // put callback registry here
   file = argv[1];
   glutReshapeFunc(changeSize);
