@@ -60,10 +60,9 @@ void renderScene(void) {
   glEnd();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  for(std::string model : c.models) {
+  for (std::string model : c.models) {
     drawFile(model.data());
   }
-  
 
   // End of frame
   glutSwapBuffers();
@@ -109,7 +108,7 @@ int main(int argc, char** argv) {
   glutInitWindowPosition(100, 100);
   glutInitWindowSize(c.window.width, c.window.height);
   glutCreateWindow("CG@DI");
-  
+
   // put callback registry here
   glutIdleFunc(renderScene);
   glutDisplayFunc(renderScene);
