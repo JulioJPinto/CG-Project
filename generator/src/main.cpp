@@ -5,6 +5,7 @@
 #include "../include/shapes/cube.hpp"
 #include "../include/shapes/plane.hpp"
 #include "../include/shapes/sphere.hpp"
+#include "../include/shapes/torus.hpp"
 
 void generateFigure(int argc, char* argv[]) {
   if (argc < 5) {
@@ -48,6 +49,15 @@ void generateFigure(int argc, char* argv[]) {
 
     generateCone(radius, height, slices, stacks, figureType);
 
+  } else if (figureName == "torus" && argc == 7) {
+    // Generate Torus
+    std::cout << "Generating Torus\n";
+    float innerRadius = std::stof(argv[2]);
+    float outerRadius = std::stof(argv[3]);
+    int slices = std::stoi(argv[4]);
+    int stacks = std::stoi(argv[5]);
+
+    generateTorus(innerRadius, outerRadius, slices, stacks, figureType);
   } else {
     std::cerr << "Invalid arguments\n";
   }
