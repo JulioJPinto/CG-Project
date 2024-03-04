@@ -28,7 +28,7 @@ void changeSize(int w, int h) {
   // Set the viewport to be the entire window
   glViewport(0, 0, c.window.width, c.window.height);
   // Set the perspective
-  gluPerspective(45.0f, ratio, 1.0f, 1000.0f);
+  gluPerspective(c.camera.fov, ratio, c.camera.near, c.camera.far);
   // return to the model view matrix mode
   glMatrixMode(GL_MODELVIEW);
 }
@@ -68,15 +68,6 @@ void renderScene(void) {
   glutSwapBuffers();
 }
 
-void reshape(int w, int h) {
-  glViewport(0, 0, w, h);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 1.0f, 100.0f);
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-}
-
 void processSpecialKeys(int key, int xx, int yy) {
   switch (key) {
     case GLUT_KEY_LEFT:
@@ -112,7 +103,7 @@ int main(int argc, char** argv) {
   // put callback registry here
   glutIdleFunc(renderScene);
   glutDisplayFunc(renderScene);
-  glutReshapeFunc(reshape);
+  glutReshapeFunc(changeSize);
 
   glutSpecialFunc(processSpecialKeys);
 
