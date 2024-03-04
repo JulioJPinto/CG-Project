@@ -14,36 +14,24 @@ float cameraAngle = 90.0f;
 float cameraAngleY = 0.0f;
 
 Configuration c;
+void reshape(int w, int h) {
+    float aspect_ratio = (float)w / (float)h;
 
-void changeSize(int w, int h) {
-  // Prevent a divide by zero, when window is too short
-  // (you can�t make a window with zero width).
-  if (h == 0) h = 1;
+    // Set the viewport to the entire window
+    glViewport(0, 0, w, h);
 
-  float ratio = c.window.width * 1.0f / c.window.height;
-  // Set the projection matrix as current
-  glMatrixMode(GL_PROJECTION);
-  // Load the identity matrix
-  glLoadIdentity();
-  // Set the viewport to be the entire window
-  glViewport(0, 0, c.window.width, c.window.height);
-  // Set the perspective
-  gluPerspective(c.camera.fov, ratio, c.camera.near, c.camera.far);
-  // return to the model view matrix mode
-  glMatrixMode(GL_MODELVIEW);
+    // Set up the projection matrix
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(c.camera.fov, aspect_ratio, c.camera.near, c.camera.far);
+
+    // Reset the modelview matrix
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
-void renderScene(void) {
-  // clear buffers
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  // set camera
-  glLoadIdentity();
-  // gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
-  gluLookAt(c.camera.position.x, c.camera.position.y, c.camera.position.z,
-            c.camera.lookAt.x, c.camera.lookAt.y, c.camera.lookAt.z,
-            c.camera.up.x, c.camera.up.y, c.camera.up.z);
+void drawAxis(void) {
 
-  // put drawing instructions here
   glBegin(GL_LINES);
   // x-axis (red)
   glColor3f(50.0f, 0.0f, 0.0f);
@@ -58,6 +46,20 @@ void renderScene(void) {
   glVertex3f(0.0f, 0.0f, -50.0f);
   glVertex3f(0.0f, 0.0f, 50.0f);
   glEnd();
+
+}
+void renderScene(void) {
+  // clear buffers
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  // set camera
+  glLoadIdentity();
+  // gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
+  gluLookAt(c.camera.position.x, c.camera.position.y, c.camera.position.z,
+            c.camera.lookAt.x, c.camera.lookAt.y, c.camera.lookAt.z,
+            c.camera.up.x, c.camera.up.y, c.camera.up.z);
+
+  // put drawing instructions here
+  drawAxis();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   for (std::string model : c.models) {
@@ -103,7 +105,7 @@ int main(int argc, char** argv) {
   // put callback registry here
   glutIdleFunc(renderScene);
   glutDisplayFunc(renderScene);
-  glutReshapeFunc(changeSize);
+  glutReshapeFunc(reshape);
 
   glutSpecialFunc(processSpecialKeys);
 
