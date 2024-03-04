@@ -1,0 +1,15 @@
+<world> 
+    <window width="512" height="512" /> <!-- gluPerspective Ratio -->
+    <camera> 
+        <position x="5" y="5" z="5" /> <!-- gluLookAt eye -->
+        <lookAt x="0" y="0" z="0" /> <!-- gluLookAt center-->
+        <up x="0" y="1" z="0" /> <!-- gluLookAt up-->
+        <projection fov="60" near="1" far="1000" /> <!--gluPerspective-->
+    </camera>
+    <group> 
+          <models> 
+            <model file="cone.3d" />
+            <model file="sphere.3d" /> <!-- generator cone 1 2 4 3 cone.3d -->
+         </models>
+     </group>
+</world>
