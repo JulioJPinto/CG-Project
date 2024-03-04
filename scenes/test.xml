@@ -8,8 +8,7 @@
     </camera>
     <group> 
           <models> 
-            <model file="cone.3d" />
-            <model file="sphere.3d" /> <!-- generator cone 1 2 4 3 cone.3d -->
+            <model file="torus1.3d" /> <!-- generator cone 1 2 4 3 cone.3d -->
          </models>
      </group>
 </world>
