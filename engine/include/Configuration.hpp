@@ -16,7 +16,7 @@ class Configuration {
   Configuration() = default;
   Configuration(Window window, Camera camera, std::vector<std::string> models);
 
-  std::string toString();
+  // std::string toString();
 };
 
 #endif  // CONFIGURATION_HPP

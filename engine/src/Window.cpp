@@ -13,9 +13,9 @@ Window::Window(float width, float height) {
   this->height = height;
 }
 
-std::string Window::toString() {
-  std::stringstream ss;
-  ss << "\tWidth: " << width << std::endl
-     << "\tHeight: " << height << std::endl;
-  return ss.str();
-}
+// std::string Window::toString() {
+//   std::stringstream ss;
+//   ss << "\tWidth: " << width << std::endl
+//      << "\tHeight: " << height << std::endl;
+//   return ss.str();
+// }

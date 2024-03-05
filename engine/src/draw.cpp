@@ -12,7 +12,6 @@
 #include "draw.hpp"
 #include "utils.hpp"
 
-#define MODELS "../models/"
 
 void drawTriangles(const std::vector<Point>& points) {
   glBegin(GL_TRIANGLES);
@@ -26,14 +25,3 @@ void drawTriangles(const std::vector<Point>& points) {
   glEnd();
 }
 
-void drawFile(char* filename) {
-  std::string dir = MODELS;
-  dir.append(filename);
-
-  std::vector<Point> points = parseFile(dir);
-  if (points.empty()) {
-    // File not found or empty, handle this case
-    return;
-  }
-  drawTriangles(points);
-}

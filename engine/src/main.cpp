@@ -10,10 +10,13 @@
 #include "draw.hpp"
 #include "parse.hpp"
 
+#define MODELS "../models/"
+
 float cameraAngle = 0.0f;
 float cameraAngleY = 0.0f;
 
 Configuration c;
+std::vector<std::vector<Point>> vectors;
 
 void reshape(int w, int h) {
   float aspect_ratio = (float)w / (float)h;
@@ -64,8 +67,8 @@ void renderScene(void) {
   drawAxis();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  for (std::string model : c.models) {
-    drawFile(model.data());
+  for (std::vector<Point> model : vectors) {
+    drawTriangles(model);
   }
 
   // End of frame
@@ -92,10 +95,27 @@ void processSpecialKeys(int key, int xx, int yy) {
   glutPostRedisplay();
 }
 
-int main(int argc, char** argv) {
+void setupConfig(char* arg) {
+  
   std::string filename;
-  filename.assign(argv[1]);
+  filename.assign(arg);
   c = parseConfig(filename);
+  for(std::string file : c.models) {
+    std::string dir = MODELS;
+    dir.append(file);
+
+    std::vector<Point> points = parseFile(dir);
+    if (points.empty()) {
+      std::cerr << "File not found";
+    }
+
+    vectors.push_back(points);
+  }
+}
+
+int main(int argc, char** argv) {
+
+  setupConfig(argv[1]); 
 
   // put GLUT�s init here
   glutInit(&argc, argv);

@@ -18,12 +18,12 @@ std::string vectorToString(std::vector<std::string> v) {
   return ss.str();
 }
 
-std::string Configuration::toString() {
-  std::stringstream ss;
-  ss << "Window:\n"
-     << window.toString() << std::endl
-     << "Camera:\n"
-     << camera.toString() << std::endl
-     << "Models: " << vectorToString(models) << std::endl;
-  return ss.str();
-}
+// std::string Configuration::toString() {
+//   std::stringstream ss;
+//   ss << "Window:\n"
+//      << window.toString() << std::endl
+//      << "Camera:\n"
+//      << camera.toString() << std::endl
+//      << "Models: " << vectorToString(models) << std::endl;
+//   return ss.str();
+// }

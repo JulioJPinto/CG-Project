@@ -13,7 +13,7 @@ class Window {
   Window();
   Window(float width, float height);
 
-  std::string toString();
+  // std::string toString();
 };
 
 #endif  // WINDOW_HPP
