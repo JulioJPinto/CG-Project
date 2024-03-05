@@ -96,11 +96,10 @@ void processSpecialKeys(int key, int xx, int yy) {
 }
 
 void setupConfig(char* arg) {
-  
   std::string filename;
   filename.assign(arg);
   c = parseConfig(filename);
-  for(std::string file : c.models) {
+  for (std::string file : c.models) {
     std::string dir = MODELS;
     dir.append(file);
 
@@ -114,8 +113,7 @@ void setupConfig(char* arg) {
 }
 
 int main(int argc, char** argv) {
-
-  setupConfig(argv[1]); 
+  setupConfig(argv[1]);
 
   // put GLUT�s init here
   glutInit(&argc, argv);
