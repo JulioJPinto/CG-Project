@@ -16,24 +16,22 @@ float cameraAngleY = 0.0f;
 Configuration c;
 
 void reshape(int w, int h) {
-    float aspect_ratio = (float)w / (float)h;
+  float aspect_ratio = (float)w / (float)h;
 
-    // Set the viewport to the entire window
-    glViewport(0, 0, w, h);
+  // Set the viewport to the entire window
+  glViewport(0, 0, w, h);
 
-    // Set up the projection matrix
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(c.camera.fov, aspect_ratio, c.camera.near, c.camera.far);
+  // Set up the projection matrix
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluPerspective(c.camera.fov, aspect_ratio, c.camera.near, c.camera.far);
 
-    // Reset the modelview matrix
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    
+  // Reset the modelview matrix
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
 }
 
 void drawAxis(void) {
-
   glBegin(GL_LINES);
   // x-axis (red)
   glColor3f(50.0f, 0.0f, 0.0f);
@@ -48,7 +46,6 @@ void drawAxis(void) {
   glVertex3f(0.0f, 0.0f, -500.0f);
   glVertex3f(0.0f, 0.0f, 500.0f);
   glEnd();
-
 }
 
 void renderScene(void) {
