@@ -12,44 +12,46 @@ std::vector<Point> cylinderTriangles(const float radius, const float height,
   std::vector<Point> vertex;
 
   float alpha = 2 * M_PI / slices;
+  float half = height / 2;
+
   float r = 0;
 
   for (int i = 0; i < slices; i++) {
     // base
     float px = radius * sin(r);
     float pz = radius * cos(r);
-    vertex.push_back(Point(px, 0, pz));
-    vertex.push_back(Point(0, 0, 0));
+    vertex.push_back(Point(px, -half, pz));
+    vertex.push_back(Point(0, -half, 0));
     r += alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
-    vertex.push_back(Point(px, 0, pz));
+    vertex.push_back(Point(px, -half, pz));
 
     // face
-    vertex.push_back(Point(px, 0, pz));
-    vertex.push_back(Point(px, height, pz));
+    vertex.push_back(Point(px, -half, pz));
+    vertex.push_back(Point(px, half, pz));
     r -= alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
-    vertex.push_back(Point(px, height, pz));
+    vertex.push_back(Point(px, half, pz));
 
-    vertex.push_back(Point(px, height, pz));
-    vertex.push_back(Point(px, 0, pz));
+    vertex.push_back(Point(px, half, pz));
+    vertex.push_back(Point(px, -half, pz));
     r += alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
-    vertex.push_back(Point(px, 0, pz));
+    vertex.push_back(Point(px, -half, pz));
 
     // topo
     r += alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
-    vertex.push_back(Point(px, height, pz));
-    vertex.push_back(Point(0, height, 0));
+    vertex.push_back(Point(px, half, pz));
+    vertex.push_back(Point(0, half, 0));
     r -= alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
-    vertex.push_back(Point(px, height, pz));
+    vertex.push_back(Point(px, half, pz));
   }
 
   return vertex;

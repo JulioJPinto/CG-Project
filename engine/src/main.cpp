@@ -63,7 +63,7 @@ void renderScene(void) {
   // put drawing instructions here
   drawAxis();
 
-  glPolygonMode(GL_FRONT, GL_LINE);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   for (std::string model : c.models) {
     drawFile(model.data());
   }
