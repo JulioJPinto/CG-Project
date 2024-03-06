@@ -14,6 +14,8 @@
 
 float cameraAngle = 0.0f;
 float cameraAngleY = 0.0f;
+
+float zoom = 1.0f;
 int axis = 1;
 
 Configuration c;
@@ -66,6 +68,8 @@ void renderScene(void) {
 
   glRotatef(cameraAngleY, 0.0f, 1.0f, 0.0f);
   glRotatef(cameraAngle, 1.0f, 0.0f, 0.0f);
+  glScalef(zoom, zoom, zoom);
+
   // put drawing instructions here
   drawAxis();
 
@@ -92,21 +96,37 @@ void processSpecialKeys(int key, int xx, int yy) {
     case GLUT_KEY_DOWN:
       cameraAngleY -= 1.0f;
       break;
-    case GLUT_KEY_F2:
+    default:
+      break;
+  }
+  glutPostRedisplay();
+}
+
+void processNormalKeys(unsigned char key, int x, int y) {
+  switch(key) {
+    case 'a':
       if (axis) {
         axis = 0;
       } else {
         axis = 1;
       }
       break;
-    case GLUT_KEY_F1:
+    case 'r':
       cameraAngle = 0;
       cameraAngleY = 0;
+      zoom = 1.0f;
+      break;
+    case 'i':
+      zoom -= 0.1;
+      break;
+    case 'o':
+      zoom += 0.1;
       break;
     default:
       break;
+
   }
-  glutPostRedisplay();
+
 }
 
 void setupConfig(char* arg) {
@@ -142,6 +162,7 @@ int main(int argc, char** argv) {
   glutReshapeFunc(reshape);
 
   glutSpecialFunc(processSpecialKeys);
+  glutKeyboardFunc(processNormalKeys);
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
