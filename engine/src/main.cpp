@@ -116,11 +116,15 @@ void processNormalKeys(unsigned char key, int x, int y) {
       cameraAngleY = 0;
       zoom = 1.0f;
       break;
-    case 'i':
-      zoom -= 0.1;
-      break;
     case 'o':
-      zoom += 0.1;
+      if(zoom > 0.2) {
+        zoom -= 0.1;
+      }
+      break;
+    case 'i':
+      if(zoom < 2.5) {
+        zoom += 0.1;
+      }
       break;
     default:
       break;
