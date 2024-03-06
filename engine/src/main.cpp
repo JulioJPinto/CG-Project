@@ -103,7 +103,7 @@ void processSpecialKeys(int key, int xx, int yy) {
 }
 
 void processNormalKeys(unsigned char key, int x, int y) {
-  switch(key) {
+  switch (key) {
     case 'a':
       if (axis) {
         axis = 0;
@@ -124,9 +124,7 @@ void processNormalKeys(unsigned char key, int x, int y) {
       break;
     default:
       break;
-
   }
-
 }
 
 void setupConfig(char* arg) {
