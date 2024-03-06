@@ -134,16 +134,23 @@ void processNormalKeys(unsigned char key, int x, int y) {
 void setupConfig(char* arg) {
   std::string filename;
   filename.assign(arg);
-  c = parseConfig(filename);
-  for (std::string file : c.models) {
-    std::string dir = MODELS;
-    dir.append(file);
 
-    std::vector<Point> points = parseFile(dir);
-    if (points.empty()) {
-      std::cerr << "File not found";
+  if (filename.substr(filename.size() - 4) == ".xml") {
+    c = parseConfig(filename);
+    for (std::string file : c.models) {
+      std::string dir = MODELS;
+      dir.append(file);
+
+      std::vector<Point> points = parseFile(dir);
+      if (points.empty()) {
+        std::cerr << "File not found";
+      }
+
+      vectors.push_back(points);
     }
-
+  } else {
+    c = parseConfig("../scenes/default.xml");
+    std::vector<Point> points = parseFile(filename);
     vectors.push_back(points);
   }
 }
@@ -155,7 +162,14 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  setupConfig(argv[1]);
+  std::string filepath = argv[1];
+  if (filepath.substr(filepath.size() - 4) == ".xml") {
+    setupConfig(argv[1]);
+  } else {
+    c = parseConfig("../scenes/default.xml");
+    std::vector<Point> points = parseFile(filepath);
+    vectors.push_back(points);
+  }
 
   // put GLUT�s init here
   glutInit(&argc, argv);
