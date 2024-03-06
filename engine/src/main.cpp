@@ -117,7 +117,7 @@ void processNormalKeys(unsigned char key, int x, int y) {
       zoom = 1.0f;
       break;
     case 'o':
-      if (zoom > 0.2) {
+      if (zoom > 0.001) {
         zoom -= 0.1;
       }
       break;

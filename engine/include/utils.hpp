@@ -25,4 +25,10 @@ typedef struct Point {
 // Function to convert Point to string
 std::vector<Point> parseFile(std::string filename);
 
+// Function to parse OBJ file
+std::vector<Point> parseOBJfile(std::string filename, std::string type);
+
+// Function to parse 3D file
+std::vector<Point> parse3Dfile(std::string filename);
+
 #endif  // UTILS_HPP
