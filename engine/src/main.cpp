@@ -14,6 +14,7 @@
 
 float cameraAngle = 0.0f;
 float cameraAngleY = 0.0f;
+int axis = 1;
 
 Configuration c;
 std::vector<std::vector<Point>> vectors;
@@ -35,20 +36,22 @@ void reshape(int w, int h) {
 }
 
 void drawAxis(void) {
-  glBegin(GL_LINES);
-  // x-axis (red)
-  glColor3f(50.0f, 0.0f, 0.0f);
-  glVertex3f(-500.0f, 0.0f, 0.0f);
-  glVertex3f(500.0f, 0.0f, 0.0f);
-  // y-axis (green)
-  glColor3f(0.0f, 50.0f, 0.0f);
-  glVertex3f(0.0f, -500.0f, 0.0f);
-  glVertex3f(0.0f, 500.0f, 0.0f);
-  // z-axis (blue)
-  glColor3f(0.0f, 0.0f, 50.0f);
-  glVertex3f(0.0f, 0.0f, -500.0f);
-  glVertex3f(0.0f, 0.0f, 500.0f);
-  glEnd();
+  if (axis) {
+    glBegin(GL_LINES);
+    // x-axis (red)
+    glColor3f(50.0f, 0.0f, 0.0f);
+    glVertex3f(-500.0f, 0.0f, 0.0f);
+    glVertex3f(500.0f, 0.0f, 0.0f);
+    // y-axis (green)
+    glColor3f(0.0f, 50.0f, 0.0f);
+    glVertex3f(0.0f, -500.0f, 0.0f);
+    glVertex3f(0.0f, 500.0f, 0.0f);
+    // z-axis (blue)
+    glColor3f(0.0f, 0.0f, 50.0f);
+    glVertex3f(0.0f, 0.0f, -500.0f);
+    glVertex3f(0.0f, 0.0f, 500.0f);
+    glEnd();
+  }
 }
 
 void renderScene(void) {
@@ -88,6 +91,17 @@ void processSpecialKeys(int key, int xx, int yy) {
       break;
     case GLUT_KEY_DOWN:
       cameraAngleY -= 1.0f;
+      break;
+    case GLUT_KEY_F2:
+      if (axis) {
+        axis = 0;
+      } else {
+        axis = 1;
+      }
+      break;
+    case GLUT_KEY_F1:
+      cameraAngle = 0;
+      cameraAngleY = 0;
       break;
     default:
       break;
