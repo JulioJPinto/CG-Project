@@ -117,12 +117,12 @@ void processNormalKeys(unsigned char key, int x, int y) {
       zoom = 1.0f;
       break;
     case 'o':
-      if(zoom > 0.2) {
+      if (zoom > 0.2) {
         zoom -= 0.1;
       }
       break;
     case 'i':
-      if(zoom < 2.5) {
+      if (zoom < 2.5) {
         zoom += 0.1;
       }
       break;
@@ -149,6 +149,12 @@ void setupConfig(char* arg) {
 }
 
 int main(int argc, char** argv) {
+  if (argc == 1) {
+    std::cout << "Invalid Arguments\n";
+    std::cout << "Usage: ./engine <file_path>\n";
+    return 1;
+  }
+
   setupConfig(argv[1]);
 
   // put GLUT�s init here
