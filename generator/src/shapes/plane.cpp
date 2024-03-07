@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#include "utils.hpp"
+#include "../../common/include/utils.hpp"
 
 std::vector<Point> planeTriangles(float length, int divisions) {
   float half = length / 2.0f;

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#include "utils.hpp"
+#include "../../common/include/utils.hpp"
 
 std::vector<Point> cubeTriangles(float length, int divisions) {
   float halfSize = length / 2.0f;

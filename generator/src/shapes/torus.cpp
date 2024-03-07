@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "utils.hpp"
+#include "../../common/include/utils.hpp"
 
 std::vector<Point> torusTriangles(float majorRadius, float minorRadius,
                                   int sides, int rings) {

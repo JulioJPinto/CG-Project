@@ -9,8 +9,8 @@
 
 #include <vector>
 
+#include "../../common/include/utils.hpp"
 #include "draw.hpp"
-#include "utils.hpp"
 
 #define MODELS "../models/"
 

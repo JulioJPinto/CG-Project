@@ -5,8 +5,8 @@
 
 #include <vector>
 
+#include "../../common/include/utils.hpp"
 #include "draw.hpp"
-#include "utils.hpp"
 
 void drawTriangles(const std::vector<Point>& points);
 

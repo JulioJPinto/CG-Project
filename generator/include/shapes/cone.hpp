@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../utils.hpp"
+#include "../../common/include/utils.hpp"
 
 bool generateCone(float radius, float height, int slices, int stacks,
                   const char* filepath);
