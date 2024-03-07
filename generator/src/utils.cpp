@@ -8,10 +8,7 @@
 
 #define DIR "../models/"
 
-void saveToFile(
-    const std::vector<Point>& points,
-    const char* filepath) {
-
+void saveToFile(const std::vector<Point>& points, const char* filepath) {
   std::string buf(DIR);
   buf.append(filepath);
 
