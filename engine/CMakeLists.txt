@@ -3,13 +3,11 @@ cmake_minimum_required(VERSION 3.5)
 # Project Name
 project(engine)
 
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-file(GLOB SRC_FILES src/scene/*.cpp src/*.cpp)
+file(GLOB SRC_FILES src/*.cpp)
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 
 include_directories(${PROJECT_NAME} PUBLIC include) 
-include_directories(../common PUBLIC include) 
+target_link_libraries(${PROJECT_NAME} common)
 
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})

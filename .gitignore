@@ -1,12 +1,58 @@
 *.cmake
+Makefile
 generator/Makefile
 engine/Makefile
+common/Makefile
 generator/CMakeCache.txt
 engine/CMakeCache.txt
+common/CMakeCache.txt
 generator/CMakeFiles/*
 engine/CMakeFiles/*
+common/CMakeFiles/*
 .idea/*
 .vscode/*
 generator/generator
 engine/engine
+common/common
 build
+CMakeCache.txt
+compile_commands.json
+CMakeFiles/*
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.bin
+
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+.vscode
+build
+.3d

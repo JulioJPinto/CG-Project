@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../utils.hpp"
+#include "../../common/include/utils.hpp"
 
 bool generateSphere(float radius, int slices, int stacks, const char* filepath);
 

@@ -3,8 +3,8 @@
 
 #include <string>
 
+#include "../../common/include/utils.hpp"
 #include "Camera.hpp"
-#include "utils.hpp"
 
 class Camera {
  public:

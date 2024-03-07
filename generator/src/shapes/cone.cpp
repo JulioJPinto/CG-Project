@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "utils.hpp"
+#include "../../common/include/utils.hpp"
 
 std::vector<Point> coneTriangles(const float radius, const float height,
                                  const size_t slices, const size_t stacks) {
@@ -62,7 +62,6 @@ bool generateCone(float radius, float height, int slices, int stacks,
     std::cerr << "Error: Empty vector of triangles.\n";
     return false;
   }
-
   saveToFile(triangles, filepath);
 
   return true;

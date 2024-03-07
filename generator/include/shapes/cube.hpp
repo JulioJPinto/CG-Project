@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../utils.hpp"
+#include "../../common/include/utils.hpp"
 
 bool generateCube(float length, int divisions, const char* filepath);
 
