@@ -1,10 +1,10 @@
+#include "utils.hpp"
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
-
-#include "utils.hpp"
 
 std::vector<Point> parseFile(std::string filename) {
   std::ifstream file(filename);
