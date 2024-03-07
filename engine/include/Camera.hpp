@@ -19,7 +19,7 @@ class Camera {
   Camera(Point position, Point lookAt, Point up, int fov, float near,
          float far);
 
-  std::string toString();
+  //   std::string toString();
 };
 
 #endif  // CAMERA_HPP

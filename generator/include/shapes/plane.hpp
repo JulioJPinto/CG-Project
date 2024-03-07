@@ -2,7 +2,6 @@
 #define SOLAR_SYSTEM_PLANE_HPP
 
 #include <string>
-#include <vector>
 
 #include "../../common/include/utils.hpp"
 

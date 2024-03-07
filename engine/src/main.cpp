@@ -10,10 +10,16 @@
 #include "draw.hpp"
 #include "parse.hpp"
 
+#define MODELS "../models/"
+
 float cameraAngle = 0.0f;
 float cameraAngleY = 0.0f;
 
+float zoom = 1.0f;
+int axis = 1;
+
 Configuration c;
+std::vector<std::vector<Point>> vectors;
 
 void reshape(int w, int h) {
   float aspect_ratio = (float)w / (float)h;
@@ -32,20 +38,22 @@ void reshape(int w, int h) {
 }
 
 void drawAxis(void) {
-  glBegin(GL_LINES);
-  // x-axis (red)
-  glColor3f(50.0f, 0.0f, 0.0f);
-  glVertex3f(-500.0f, 0.0f, 0.0f);
-  glVertex3f(500.0f, 0.0f, 0.0f);
-  // y-axis (green)
-  glColor3f(0.0f, 50.0f, 0.0f);
-  glVertex3f(0.0f, -500.0f, 0.0f);
-  glVertex3f(0.0f, 500.0f, 0.0f);
-  // z-axis (blue)
-  glColor3f(0.0f, 0.0f, 50.0f);
-  glVertex3f(0.0f, 0.0f, -500.0f);
-  glVertex3f(0.0f, 0.0f, 500.0f);
-  glEnd();
+  if (axis) {
+    glBegin(GL_LINES);
+    // x-axis (red)
+    glColor3f(50.0f, 0.0f, 0.0f);
+    glVertex3f(-500.0f, 0.0f, 0.0f);
+    glVertex3f(500.0f, 0.0f, 0.0f);
+    // y-axis (green)
+    glColor3f(0.0f, 50.0f, 0.0f);
+    glVertex3f(0.0f, -500.0f, 0.0f);
+    glVertex3f(0.0f, 500.0f, 0.0f);
+    // z-axis (blue)
+    glColor3f(0.0f, 0.0f, 50.0f);
+    glVertex3f(0.0f, 0.0f, -500.0f);
+    glVertex3f(0.0f, 0.0f, 500.0f);
+    glEnd();
+  }
 }
 
 void renderScene(void) {
@@ -60,12 +68,14 @@ void renderScene(void) {
 
   glRotatef(cameraAngleY, 0.0f, 1.0f, 0.0f);
   glRotatef(cameraAngle, 1.0f, 0.0f, 0.0f);
+  glScalef(zoom, zoom, zoom);
+
   // put drawing instructions here
   drawAxis();
 
-  glPolygonMode(GL_FRONT, GL_LINE);
-  for (std::string model : c.models) {
-    drawFile(model.data());
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  for (std::vector<Point> model : vectors) {
+    drawTriangles(model);
   }
 
   // End of frame
@@ -92,10 +102,72 @@ void processSpecialKeys(int key, int xx, int yy) {
   glutPostRedisplay();
 }
 
-int main(int argc, char** argv) {
+void processNormalKeys(unsigned char key, int x, int y) {
+  switch (key) {
+    case 'a':
+      if (axis) {
+        axis = 0;
+      } else {
+        axis = 1;
+      }
+      break;
+    case 'r':
+      cameraAngle = 0;
+      cameraAngleY = 0;
+      zoom = 1.0f;
+      break;
+    case 'o':
+      if (zoom > 0.1) {
+        zoom -= 0.1;
+      }
+      break;
+    case 'i':
+      zoom += 0.1;
+      break;
+    default:
+      break;
+  }
+}
+
+void setupConfig(char* arg) {
   std::string filename;
-  filename.assign(argv[1]);
-  c = parseConfig(filename);
+  filename.assign(arg);
+
+  if (filename.substr(filename.size() - 4) == ".xml") {
+    c = parseConfig(filename);
+    for (std::string file : c.models) {
+      std::string dir = MODELS;
+      dir.append(file);
+
+      std::vector<Point> points = parseFile(dir);
+      if (points.empty()) {
+        std::cerr << "File not found";
+      }
+
+      vectors.push_back(points);
+    }
+  } else {
+    c = parseConfig("../scenes/default.xml");
+    std::vector<Point> points = parseFile(filename);
+    vectors.push_back(points);
+  }
+}
+
+int main(int argc, char** argv) {
+  if (argc == 1) {
+    std::cout << "Invalid Arguments\n";
+    std::cout << "Usage: ./engine <file_path>\n";
+    return 1;
+  }
+
+  std::string filepath = argv[1];
+  if (filepath.substr(filepath.size() - 4) == ".xml") {
+    setupConfig(argv[1]);
+  } else {
+    c = parseConfig("../scenes/default.xml");
+    std::vector<Point> points = parseFile(filepath);
+    vectors.push_back(points);
+  }
 
   // put GLUT�s init here
   glutInit(&argc, argv);
@@ -110,6 +182,7 @@ int main(int argc, char** argv) {
   glutReshapeFunc(reshape);
 
   glutSpecialFunc(processSpecialKeys);
+  glutKeyboardFunc(processNormalKeys);
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
