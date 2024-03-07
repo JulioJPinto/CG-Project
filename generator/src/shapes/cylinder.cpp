@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-#include "utils.hpp"
+#include "../../common/include/utils.hpp"
 
 std::vector<Point> cylinderTriangles(const float radius, const float height,
                                      const int slices) {
