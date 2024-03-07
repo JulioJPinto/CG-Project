@@ -1,4 +1,5 @@
 *.cmake
+Makefile
 generator/Makefile
 engine/Makefile
 common/Makefile
