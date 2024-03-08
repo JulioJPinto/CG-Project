@@ -8,7 +8,7 @@
     </camera>
     <group> 
           <models> 
-            <model file="torus.3d" /> 
+            <model file="ferrari.obj" /> 
          </models>
      </group>
 </world>
