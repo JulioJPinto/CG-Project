@@ -27,7 +27,7 @@ std::vector<Point> parseFile(std::string filename);
 void saveToFile(const std::vector<Point>& points, const char* filepath);
 
 // Function to parse OBJ file
-std::vector<Point> parseOBJfile(std::string filename, std::string type);
+std::vector<Point> parseOBJfile(std::string filename);
 
 // Function to parse 3D file
 std::vector<Point> parse3Dfile(std::string filename);

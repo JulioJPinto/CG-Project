@@ -8,20 +8,27 @@
 
 #define DIR "../models/"
 
-std::vector<Point> parseFile(std::string filename) {
+std::vector<Point> parseFile(std::string filepath) {
   std::vector<Point> points;
-  std::ifstream file(filename);
 
-  if (!file.is_open()) {
-    std::cerr << "Error: Unable to open file " << filename << std::endl;
+  size_t dotIndex = filepath.find_last_of(".");
+  if (dotIndex == std::string::npos) {
+    std::cerr << "Error: Unable to determine file extension for " << filepath
+              << std::endl;
     return points;
   }
 
-  Point point;
-  while (file >> point.x >> point.y >> point.z) {
-    points.push_back(point);
+  std::string extension = filepath.substr(dotIndex + 1);
+  if (extension == "obj") {
+    std::cout << "Processing .obj file: " << filepath << std::endl;
+    points = parseOBJfile(filepath);
+  } else if (extension == "3d") {
+    std::cout << "Processing .3d file: " << filepath << std::endl;
+    points = parse3Dfile(filepath);
+  } else {
+    std::cerr << "Error: Unsupported file format for " << filepath << std::endl;
   }
-  file.close();
+
   return points;
 }
 
@@ -45,7 +52,7 @@ void saveToFile(
   }
 }
 
-std::vector<Point> parseOBJfile(std::string filename, std::string type) {
+std::vector<Point> parseOBJfile(std::string filename) {
   std::vector<Point> points;
   std::vector<Point> sorted_points;
   std::ifstream file(filename);
