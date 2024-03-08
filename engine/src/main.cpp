@@ -103,6 +103,7 @@ void processSpecialKeys(int key, int xx, int yy) {
 }
 
 void processNormalKeys(unsigned char key, int x, int y) {
+  float value = zoom * 0.1;
   switch (key) {
     case 'a':
       if (axis) {
@@ -117,12 +118,10 @@ void processNormalKeys(unsigned char key, int x, int y) {
       zoom = 1.0f;
       break;
     case 'o':
-      if (zoom > 0.1) {
-        zoom -= 0.1;
-      }
+      zoom -= value;
       break;
     case 'i':
-      zoom += 0.1;
+      zoom += value;
       break;
     default:
       break;
