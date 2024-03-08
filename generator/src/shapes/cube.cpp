@@ -12,64 +12,64 @@ std::vector<Point> cubeTriangles(float length, int divisions) {
 
   for (int i = 0; i < divisions; ++i) {
     for (int j = 0; j < divisions; ++j) {
-      float x1 = -halfSize + i * step;
-      float y1 = -halfSize + j * step;
-      float x2 = x1 + step;
-      float y2 = y1 + step;
+      float v1 = -halfSize + i * step;
+      float u1 = -halfSize + j * step;
+      float v2 = v1 + step;
+      float u2 = u1 + step;
 
       // Front Face
-      points.push_back(Point(x1, y1, halfSize));
-      points.push_back(Point(x2, y1, halfSize));
-      points.push_back(Point(x1, y2, halfSize));
+      points.push_back(Point(v1, u1, halfSize));
+      points.push_back(Point(v2, u1, halfSize));
+      points.push_back(Point(v1, u2, halfSize));
 
-      points.push_back(Point(x1, y2, halfSize));
-      points.push_back(Point(x2, y1, halfSize));
-      points.push_back(Point(x2, y2, halfSize));
+      points.push_back(Point(v1, u2, halfSize));
+      points.push_back(Point(v2, u1, halfSize));
+      points.push_back(Point(v2, u2, halfSize));
 
       // Back Face
-      points.push_back(Point(x1, y1, -halfSize));
-      points.push_back(Point(x1, y2, -halfSize));
-      points.push_back(Point(x2, y1, -halfSize));
+      points.push_back(Point(v1, u1, -halfSize));
+      points.push_back(Point(v1, u2, -halfSize));
+      points.push_back(Point(v2, u1, -halfSize));
 
-      points.push_back(Point(x1, y2, -halfSize));
-      points.push_back(Point(x2, y2, -halfSize));
-      points.push_back(Point(x2, y1, -halfSize));
+      points.push_back(Point(v1, u2, -halfSize));
+      points.push_back(Point(v2, u2, -halfSize));
+      points.push_back(Point(v2, u1, -halfSize));
 
       // Left Face
-      points.push_back(Point(-halfSize, x1, y1));
-      points.push_back(Point(-halfSize, x1, y2));
-      points.push_back(Point(-halfSize, x2, y1));
+      points.push_back(Point(-halfSize, v1, u1));
+      points.push_back(Point(-halfSize, v1, u2));
+      points.push_back(Point(-halfSize, v2, u1));
 
-      points.push_back(Point(-halfSize, x1, y2));
-      points.push_back(Point(-halfSize, x2, y2));
-      points.push_back(Point(-halfSize, x2, y1));
+      points.push_back(Point(-halfSize, v1, u2));
+      points.push_back(Point(-halfSize, v2, u2));
+      points.push_back(Point(-halfSize, v2, u1));
 
       // Right Face
-      points.push_back(Point(halfSize, x1, y1));
-      points.push_back(Point(halfSize, x2, y1));
-      points.push_back(Point(halfSize, x1, y2));
+      points.push_back(Point(halfSize, v1, u1));
+      points.push_back(Point(halfSize, v2, u1));
+      points.push_back(Point(halfSize, v1, u2));
 
-      points.push_back(Point(halfSize, x1, y2));
-      points.push_back(Point(halfSize, x2, y1));
-      points.push_back(Point(halfSize, x2, y2));
+      points.push_back(Point(halfSize, v1, u2));
+      points.push_back(Point(halfSize, v2, u1));
+      points.push_back(Point(halfSize, v2, u2));
 
       // Top Face
-      points.push_back(Point(x1, halfSize, y1));
-      points.push_back(Point(x1, halfSize, y2));
-      points.push_back(Point(x2, halfSize, y1));
+      points.push_back(Point(v1, halfSize, u1));
+      points.push_back(Point(v1, halfSize, u2));
+      points.push_back(Point(v2, halfSize, u1));
 
-      points.push_back(Point(x1, halfSize, y2));
-      points.push_back(Point(x2, halfSize, y2));
-      points.push_back(Point(x2, halfSize, y1));
+      points.push_back(Point(v1, halfSize, u2));
+      points.push_back(Point(v2, halfSize, u2));
+      points.push_back(Point(v2, halfSize, u1));
 
       // Bottom Face
-      points.push_back(Point(x1, -halfSize, y1));
-      points.push_back(Point(x2, -halfSize, y1));
-      points.push_back(Point(x1, -halfSize, y2));
+      points.push_back(Point(v1, -halfSize, u1));
+      points.push_back(Point(v2, -halfSize, u1));
+      points.push_back(Point(v1, -halfSize, u2));
 
-      points.push_back(Point(x1, -halfSize, y2));
-      points.push_back(Point(x2, -halfSize, y1));
-      points.push_back(Point(x2, -halfSize, y2));
+      points.push_back(Point(v1, -halfSize, u2));
+      points.push_back(Point(v2, -halfSize, u1));
+      points.push_back(Point(v2, -halfSize, u2));
     }
   }
 

@@ -12,12 +12,11 @@ std::vector<Point> planeTriangles(float length, int divisions) {
 
   for (int i = 0; i < divisions; i++) {
     for (int j = 0; j < divisions; j++) {
-      float x1 = -half + i * steps;
       float y1 = 0.0f;
+      float x1 = -half + i * steps;
       float z1 = -half + j * steps;
-      float x2 = -half + (i + 1) * steps;
-      float y2 = 0.0f;
-      float z2 = -half + (j + 1) * steps;
+      float x2 = x1 + steps;
+      float z2 = z1 + steps;
 
       Point p1(x1, y1, z1);
       Point p2(x2, y1, z1);
