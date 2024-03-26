@@ -3,11 +3,10 @@
 #include <sstream>
 #include <string>
 
-Configuration::Configuration(Window window, Camera camera,
-                             std::vector<std::string> models) {
+Configuration::Configuration(Window window, Camera camera, Group group) {
   this->window = window;
   this->camera = camera;
-  this->models = models;
+  this->group = group;
 }
 
 std::string vectorToString(std::vector<std::string> v) {

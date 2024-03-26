@@ -58,6 +58,7 @@ std::vector<Point> parseOBJfile(std::string filename) {
   std::ifstream file(filename);
 
   std::string line;
+  printf("Reading file\n");
   while (std::getline(file, line)) {
     std::istringstream iss(line);
     std::string type;
@@ -84,6 +85,7 @@ std::vector<Point> parseOBJfile(std::string filename) {
 }
 
 std::vector<Point> parse3Dfile(std::string filename) {
+  printf("%s\n", filename.c_str());
   std::vector<Point> points;
   std::ifstream file(filename);
 
@@ -91,7 +93,7 @@ std::vector<Point> parse3Dfile(std::string filename) {
   while (file >> point.x >> point.y >> point.z) {
     points.push_back(point);
   }
-
+  printf("Read %lu points\n", points.size());
   file.close();
 
   return points;

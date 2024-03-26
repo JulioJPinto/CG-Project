@@ -74,9 +74,7 @@ void renderScene(void) {
   drawAxis();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  for (std::vector<Point> model : vectors) {
-    drawTriangles(model);
-  }
+  drawGroup(c.group);
 
   // End of frame
   glutSwapBuffers();
@@ -134,17 +132,7 @@ void setupConfig(char* arg) {
 
   if (filename.substr(filename.size() - 4) == ".xml") {
     c = parseConfig(filename);
-    for (std::string file : c.models) {
-      std::string dir = MODELS;
-      dir.append(file);
-
-      std::vector<Point> points = parseFile(dir);
-      if (points.empty()) {
-        std::cerr << "File not found";
-      }
-
-      vectors.push_back(points);
-    }
+    printf("Parsing group\n");
   } else {
     c = parseConfig("../scenes/default.xml");
     std::vector<Point> points = parseFile(filename);
