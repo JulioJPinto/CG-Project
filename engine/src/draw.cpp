@@ -23,13 +23,6 @@ void drawTriangles(const std::vector<Point>& points, Group group) {
 
   glMultMatrixf(matrix);
 
-  for (int i = 0; i < 16; i++) {
-    std::cout << matrix[i] << " ";
-    if (i % 4 == 3) {
-      std::cout << std::endl;
-    }
-  }
-
   glBegin(GL_TRIANGLES);
   glColor3f(1.0f, 1.0f, 1.0f);
   for (size_t i = 0; i < points.size(); i += 3) {

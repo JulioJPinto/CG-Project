@@ -132,7 +132,6 @@ void setupConfig(char* arg) {
 
   if (filename.substr(filename.size() - 4) == ".xml") {
     c = parseConfig(filename);
-    printf("Parsing group\n");
   } else {
     c = parseConfig("../scenes/default.xml");
     std::vector<Point> points = parseFile(filename);

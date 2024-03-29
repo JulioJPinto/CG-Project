@@ -93,7 +93,7 @@ std::vector<Point> parse3Dfile(std::string filename) {
   while (file >> point.x >> point.y >> point.z) {
     points.push_back(point);
   }
-  printf("Read %lu points\n", points.size());
+
   file.close();
 
   return points;

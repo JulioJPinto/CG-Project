@@ -52,12 +52,6 @@ void Group::scale(double x, double y, double z) {
   }
 
   memcpy(this->arr, result, sizeof(this->arr));
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 4; j++) {
-      std::cout << this->arr[i][j] << " ";
-    }
-    std::cout << std::endl;
-  }
 }
 
 void Group::rotate(double angle, double x, double y, double z) {
@@ -72,13 +66,6 @@ void Group::rotate(double angle, double x, double y, double z) {
        0},
       {0, 0, 0, 1}};
 
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 4; j++) {
-      std::cout << this->arr[i][j] << " ";
-    }
-    std::cout << std::endl;
-  }
-
   double result[4][4] = {
       {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 
@@ -91,11 +78,4 @@ void Group::rotate(double angle, double x, double y, double z) {
   }
 
   memcpy(this->arr, result, sizeof(this->arr));
-
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 4; j++) {
-      std::cout << this->arr[i][j] << " ";
-    }
-    std::cout << std::endl;
-  }
 }

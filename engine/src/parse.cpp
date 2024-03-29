@@ -97,29 +97,27 @@ Group parseGroup(rapidxml::xml_node<>* groupNode) {
 
 // Parse transform node
 void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
-  rapidxml::xml_node<>* translateNode = transformNode->first_node("translate");
-  if (translateNode) {
-    double x = std::stod(translateNode->first_attribute("x")->value());
-    double y = std::stod(translateNode->first_attribute("y")->value());
-    double z = std::stod(translateNode->first_attribute("z")->value());
-    group.translate(x, y, z);
-  }
-
-  rapidxml::xml_node<>* scaleNode = transformNode->first_node("scale");
-  if (scaleNode) {
-    double x = std::stod(scaleNode->first_attribute("x")->value());
-    double y = std::stod(scaleNode->first_attribute("y")->value());
-    double z = std::stod(scaleNode->first_attribute("z")->value());
-    group.scale(x, y, z);
-  }
-
-  rapidxml::xml_node<>* rotateNode = transformNode->first_node("rotate");
-  if (rotateNode) {
-    double angle = std::stod(rotateNode->first_attribute("angle")->value());
-    double x = std::stod(rotateNode->first_attribute("x")->value());
-    double y = std::stod(rotateNode->first_attribute("y")->value());
-    double z = std::stod(rotateNode->first_attribute("z")->value());
-    group.rotate(angle, x, y, z);
+  // Iterate over all transformation nodes
+  for (rapidxml::xml_node<>* node = transformNode->first_node(); node;
+       node = node->next_sibling()) {
+    std::string nodeName = node->name();
+    if (nodeName == "scale") {
+      double x = std::stod(node->first_attribute("x")->value());
+      double y = std::stod(node->first_attribute("y")->value());
+      double z = std::stod(node->first_attribute("z")->value());
+      group.scale(x, y, z);
+    } else if (nodeName == "rotate") {
+      double angle = std::stod(node->first_attribute("angle")->value());
+      double x = std::stod(node->first_attribute("x")->value());
+      double y = std::stod(node->first_attribute("y")->value());
+      double z = std::stod(node->first_attribute("z")->value());
+      group.rotate(angle, x, y, z);
+    } else if (nodeName == "translate") {
+      double x = std::stod(node->first_attribute("x")->value());
+      double y = std::stod(node->first_attribute("y")->value());
+      double z = std::stod(node->first_attribute("z")->value());
+      group.translate(x, y, z);
+    }
   }
 }
 
