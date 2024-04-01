@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
+
 
 Configuration parseConfig(std::string filename) {
   // open file in read mode
@@ -89,7 +91,7 @@ Group parseGroup(rapidxml::xml_node<>* groupNode) {
     Group subgroup = parseGroup(subgroupsNode);
     group.subgroups.push_back(subgroup);
     subgroupsNode = subgroupsNode->next_sibling("group");
-    printf("Subgroup\n");
+
   }
 
   return group;
@@ -128,5 +130,7 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
     std::string file = modelNode->first_attribute("file")->value();
     group.models.push_back(file);
     modelNode = modelNode->next_sibling("model");
+    std::vector<Point> file_points = parseFile("../models/" + file);
+    group.points.insert(group.points.end(), file_points.begin(), file_points.end());
   }
 }

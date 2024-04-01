@@ -4,14 +4,17 @@
 #include <string>
 #include <vector>
 
+#include "../../common/include/utils.hpp"
+
 class Group {
  public:
   std::vector<std::string> models;
   std::vector<Group> subgroups;
+  std::vector<Point> points;
   double arr[4][4] = {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}};
 
   Group();
-  Group(std::vector<std::string> models, std::vector<Group> subgroups,
+  Group(std::vector<std::string> models, std::vector<Group> subgroups, std::vector<Point> points,
         double arr[4][4]);
 
   void translate(double x, double y, double z);

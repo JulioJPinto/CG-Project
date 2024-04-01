@@ -6,15 +6,19 @@
 #include <iostream>
 #include <string>
 
+#include "../../common/include/utils.hpp"
+
 Group::Group() {
   this->models = std::vector<std::string>();
   this->subgroups = std::vector<Group>();
+  this->points = std::vector<Point>();
 }
 
-Group::Group(std::vector<std::string> models, std::vector<Group> subgroups,
+Group::Group(std::vector<std::string> models, std::vector<Group> subgroups, std::vector<Point> points,
              double arr[4][4]) {
   this->models = models;
   this->subgroups = subgroups;
+  this->points = points;
   memcpy(this->arr, arr, sizeof(this->arr));
 }
 

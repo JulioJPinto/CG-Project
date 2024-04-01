@@ -43,11 +43,8 @@ void drawTriangles(const std::vector<Point>& points, Group group) {
 void drawGroup(Group group) {
   if (group.models.size() > 0) {
     for (std::string file : group.models) {
-      file = "../models/" + file;
-      std::vector<Point> points = parseFile(file);
-      drawTriangles(points, group);
+      drawTriangles(group.points, group);
     }
-
   } else {
     std::vector<Point> points;
     drawTriangles(points, group);
