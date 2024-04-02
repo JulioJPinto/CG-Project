@@ -7,9 +7,8 @@
 
 #include "../../common/include/utils.hpp"
 #include "draw.hpp"
+#include "parse.hpp"
 
-void drawTriangles(const std::vector<Point>& points);
-
-void drawFile(char* filename);
+void drawGroups(const Group &group);
 
 #endif  // DRAW_HPP

@@ -7,15 +7,15 @@
 #include "Camera.hpp"
 #include "Configuration.hpp"
 #include "Window.hpp"
+#include "group.hpp"
 
 class Configuration {
  public:
   Window window;
   Camera camera;
-  std::vector<std::string> models;
+  Group group;
   Configuration() = default;
-  Configuration(Window window, Camera camera, std::vector<std::string> models);
-
+  Configuration(const Window &window, const Camera &camera, const Group &group);
   // std::string toString();
 };
 

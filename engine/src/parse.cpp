@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 Configuration parseConfig(std::string filename) {
   // open file in read mode
@@ -57,14 +58,78 @@ Configuration parseConfig(std::string filename) {
 
   Camera camera_info = Camera(position, lookAt, up, fov, near, far);
 
-  // models
-  std::vector<std::string> models_info;
-  rapidxml::xml_node<>* models =
-      root->first_node("group")->first_node("models");
-  for (rapidxml::xml_node<>* model = models->first_node("model"); model;
-       model = model->next_sibling("model")) {
-    models_info.push_back(std::string(model->first_attribute("file")->value()));
+  // group information
+  rapidxml::xml_node<>* group = root->first_node("group");
+
+  // Parse groups recursively
+  Group groupInfo = parseGroup(group);
+
+  // Return the configuration object
+  return Configuration(window_info, camera_info, groupInfo);
+}
+
+// Parse a group node recursively
+Group parseGroup(rapidxml::xml_node<>* groupNode) {
+  Group group;
+
+  // Parse transform node
+  rapidxml::xml_node<>* transformNode = groupNode->first_node("transform");
+  if (transformNode) {
+    parseTransform(transformNode, group);
   }
 
-  return Configuration(window_info, camera_info, models_info);
+  // Parse models node
+  rapidxml::xml_node<>* modelsNode = groupNode->first_node("models");
+  if (modelsNode) {
+    parseModels(modelsNode, group);
+  }
+
+  // Parse subgroups node
+  rapidxml::xml_node<>* subgroupsNode = groupNode->first_node("group");
+  while (subgroupsNode) {
+    Group subgroup = parseGroup(subgroupsNode);
+    group.subgroups.push_back(subgroup);
+    subgroupsNode = subgroupsNode->next_sibling("group");
+  }
+
+  return group;
+}
+
+// Parse transform node
+void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
+  // Iterate over all transformation nodes
+  for (rapidxml::xml_node<>* node = transformNode->first_node(); node;
+       node = node->next_sibling()) {
+    std::string nodeName = node->name();
+    if (nodeName == "scale") {
+      double x = std::stod(node->first_attribute("x")->value());
+      double y = std::stod(node->first_attribute("y")->value());
+      double z = std::stod(node->first_attribute("z")->value());
+      group.scale(x, y, z);
+    } else if (nodeName == "rotate") {
+      double angle = std::stod(node->first_attribute("angle")->value());
+      double x = std::stod(node->first_attribute("x")->value());
+      double y = std::stod(node->first_attribute("y")->value());
+      double z = std::stod(node->first_attribute("z")->value());
+      group.rotate(angle, x, y, z);
+    } else if (nodeName == "translate") {
+      double x = std::stod(node->first_attribute("x")->value());
+      double y = std::stod(node->first_attribute("y")->value());
+      double z = std::stod(node->first_attribute("z")->value());
+      group.translate(x, y, z);
+    }
+  }
+}
+
+// Parse models node
+void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
+  rapidxml::xml_node<>* modelNode = modelsNode->first_node("model");
+  while (modelNode) {
+    std::string file = modelNode->first_attribute("file")->value();
+    group.models.push_back(file);
+    modelNode = modelNode->next_sibling("model");
+    std::vector<Point> file_points = parseFile("../models/" + file);
+    group.points.insert(group.points.end(), file_points.begin(),
+                        file_points.end());
+  }
 }
