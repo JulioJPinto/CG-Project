@@ -1,10 +1,9 @@
 #include "group.hpp"
-
-#include <math.h>
-
-#include <cstring>  // for memcpy
+#include <cmath> // for M_PI
+#include <cstring> // for memcpy
 #include <iostream>
 #include <string>
+#include <array>
 
 #include "../../common/include/utils.hpp"
 
@@ -14,20 +13,28 @@ Group::Group() {
   this->points = std::vector<Point>();
 }
 
-Group::Group(std::vector<std::string> models, std::vector<Group> subgroups, std::vector<Point> points,
-             double arr[4][4]) {
+Group::Group(std::vector<std::string> models, std::vector<Group> subgroups,
+             std::vector<Point> points, std::array<std::array<double, 4>, 4> arr) {
   this->models = models;
   this->subgroups = subgroups;
   this->points = points;
-  memcpy(this->arr, arr, sizeof(this->arr));
+  this->arr = arr;
 }
 
 void Group::translate(double x, double y, double z) {
-  double translationMatrix[4][4] = {
-      {1, 0, 0, x}, {0, 1, 0, y}, {0, 0, 1, z}, {0, 0, 0, 1}};
+  std::array<std::array<double, 4>, 4> translationMatrix = {{
+      {1, 0, 0, x}, 
+      {0, 1, 0, y}, 
+      {0, 0, 1, z}, 
+      {0, 0, 0, 1}
+  }};
 
-  double result[4][4] = {
-      {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+  std::array<std::array<double, 4>, 4> result = {{
+      {0, 0, 0, 0}, 
+      {0, 0, 0, 0}, 
+      {0, 0, 0, 0}, 
+      {0, 0, 0, 0}
+  }};
 
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
@@ -37,15 +44,23 @@ void Group::translate(double x, double y, double z) {
     }
   }
 
-  memcpy(this->arr, result, sizeof(this->arr));
+  this->arr = result;
 }
 
 void Group::scale(double x, double y, double z) {
-  double scaleMatrix[4][4] = {
-      {x, 0, 0, 0}, {0, y, 0, 0}, {0, 0, z, 0}, {0, 0, 0, 1}};
+  std::array<std::array<double, 4>, 4> scaleMatrix = {{
+      {x, 0, 0, 0}, 
+      {0, y, 0, 0}, 
+      {0, 0, z, 0}, 
+      {0, 0, 0, 1}
+  }};
 
-  double result[4][4] = {
-      {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+  std::array<std::array<double, 4>, 4> result = {{
+      {0, 0, 0, 0}, 
+      {0, 0, 0, 0}, 
+      {0, 0, 0, 0}, 
+      {0, 0, 0, 0}
+  }};
 
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
@@ -55,12 +70,12 @@ void Group::scale(double x, double y, double z) {
     }
   }
 
-  memcpy(this->arr, result, sizeof(this->arr));
+  this->arr = result;
 }
 
 void Group::rotate(double angle, double x, double y, double z) {
   float rad = angle * M_PI / 180;
-  double rotateMatrix[4][4] = {
+  std::array<std::array<double, 4>, 4> rotateMatrix = {{
       {x * x + (1 - x * x) * cos(rad), x * y * (1 - cos(rad)) - z * sin(rad),
        x * z * (1 - cos(rad)) + y * sin(rad), 0},
       {y * x * (1 - cos(rad)) + z * sin(rad), y * y + (1 - y * y) * cos(rad),
@@ -68,10 +83,15 @@ void Group::rotate(double angle, double x, double y, double z) {
       {x * z * (1 - cos(rad)) - y * sin(rad),
        y * z * (1 - cos(rad)) + x * sin(rad), z * z + (1 - z * z) * cos(rad),
        0},
-      {0, 0, 0, 1}};
+      {0, 0, 0, 1}
+  }};
 
-  double result[4][4] = {
-      {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+  std::array<std::array<double, 4>, 4> result = {{
+      {0, 0, 0, 0}, 
+      {0, 0, 0, 0}, 
+      {0, 0, 0, 0}, 
+      {0, 0, 0, 0}
+  }};
 
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
@@ -81,5 +101,5 @@ void Group::rotate(double angle, double x, double y, double z) {
     }
   }
 
-  memcpy(this->arr, result, sizeof(this->arr));
+  this->arr = result;
 }

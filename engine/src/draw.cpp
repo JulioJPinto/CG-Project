@@ -41,4 +41,3 @@ void drawGroups(const Group &group) {
 
   glPopMatrix();
 }
-
