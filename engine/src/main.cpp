@@ -19,7 +19,7 @@ float zoom = 1.0f;
 int axis = 1;
 
 Configuration c;
-std::vector<std::vector<Point>> vectors;
+std::vector<Point> points;
 
 void reshape(int w, int h) {
   float aspect_ratio = (float)w / (float)h;
@@ -74,7 +74,7 @@ void renderScene(void) {
   drawAxis();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  drawGroup(c.group);
+  drawGroups(c.group);
 
   // End of frame
   glutSwapBuffers();
@@ -134,8 +134,8 @@ void setupConfig(char* arg) {
     c = parseConfig(filename);
   } else {
     c = parseConfig("../scenes/default.xml");
-    std::vector<Point> points = parseFile(filename);
-    vectors.push_back(points);
+    std::vector<Point> file_points = parseFile(filename);
+    points.insert(points.end(), file_points.begin(), file_points.end());
   }
 }
 
@@ -146,14 +146,7 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  std::string filepath = argv[1];
-  if (filepath.substr(filepath.size() - 4) == ".xml") {
-    setupConfig(argv[1]);
-  } else {
-    c = parseConfig("../scenes/default.xml");
-    std::vector<Point> points = parseFile(filepath);
-    vectors.push_back(points);
-  }
+  setupConfig(argv[1]);
 
   // put GLUT�s init here
   glutInit(&argc, argv);

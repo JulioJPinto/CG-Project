@@ -9,8 +9,6 @@
 #include "draw.hpp"
 #include "parse.hpp"
 
-void drawTriangles(const std::vector<Point>& points, Group group);
-
-void drawGroup(Group group);
+void drawGroups(const Group &group);
 
 #endif  // DRAW_HPP

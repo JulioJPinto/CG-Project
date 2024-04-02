@@ -13,7 +13,9 @@
 #include "draw.hpp"
 #include "parse.hpp"
 
-void drawTriangles(const std::vector<Point>& points, Group group) {
+void drawGroups(const Group &group) {
+  std::vector<Point> points = group.points;
+
   glPushMatrix();
   GLfloat matrix[16] = {
       group.arr[0][0], group.arr[1][0], group.arr[2][0], group.arr[3][0],
@@ -34,19 +36,9 @@ void drawTriangles(const std::vector<Point>& points, Group group) {
   glEnd();
 
   for (size_t i = 0; i < group.subgroups.size(); i++) {
-    drawGroup(group.subgroups[i]);
+    drawGroups(group.subgroups[i]);
   }
 
   glPopMatrix();
 }
 
-void drawGroup(Group group) {
-  if (group.models.size() > 0) {
-    for (std::string file : group.models) {
-      drawTriangles(group.points, group);
-    }
-  } else {
-    std::vector<Point> points;
-    drawTriangles(points, group);
-  }
-}

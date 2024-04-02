@@ -15,7 +15,7 @@ class Configuration {
   Camera camera;
   Group group;
   Configuration() = default;
-  Configuration(Window window, Camera camera, Group group);
+  Configuration(const Window &window, const Camera &camera, const Group &group);
   // std::string toString();
 };
 
