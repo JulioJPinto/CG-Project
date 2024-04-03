@@ -18,6 +18,10 @@ class Camera {
   Camera();
   Camera(Point position, Point lookAt, Point up, int fov, float near,
          float far);
+  
+  Camera(const Camera& other);
+
+  void changeVectors(Point position, Point lookAt, Point up);
 
   //   std::string toString();
 };

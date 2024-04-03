@@ -39,5 +39,6 @@ void drawGroups(const Group &group) {
     drawGroups(group.subgroups[i]);
   }
 
+  // lobo
   glPopMatrix();
 }

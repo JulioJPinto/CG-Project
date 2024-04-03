@@ -9,8 +9,9 @@
 
 #include "draw.hpp"
 #include "parse.hpp"
+#include "save.hpp"
 
-#define MODELS "../models/"
+std::string filename;
 
 float cameraAngle = 0.0f;
 float cameraAngleY = 0.0f;
@@ -54,6 +55,10 @@ void drawAxis(void) {
     glVertex3f(0.0f, 0.0f, 500.0f);
     glEnd();
   }
+}
+
+void saveCurrent() {
+  //getWindowSizeAndCamera(filename, zoom);
 }
 
 void renderScene(void) {
@@ -121,13 +126,16 @@ void processNormalKeys(unsigned char key, int x, int y) {
     case 'i':
       zoom += value;
       break;
+    case 's':
+      std::cout << "Saving Current Settings to file";
+      saveCurrent();
+      break;
     default:
       break;
   }
 }
 
 void setupConfig(char* arg) {
-  std::string filename;
   filename.assign(arg);
 
   if (filename.substr(filename.size() - 4) == ".xml") {
