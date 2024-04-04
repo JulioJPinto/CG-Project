@@ -1,8 +1,7 @@
 #ifndef SAVE_HPP
 #define SAVE_HPP
 
-#include "../../lib/rapidxml-1.13/rapidxml.hpp"
-#include "../../lib/rapidxml-1.13/rapidxml_print.hpp"
+#include "../../lib/rapidxml-1.13/rapidxml_ext.hpp"
 #include "Configuration.hpp"
 #include "parse.hpp"
 
