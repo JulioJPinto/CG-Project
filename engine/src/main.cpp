@@ -58,7 +58,7 @@ void drawAxis(void) {
 }
 
 void saveCurrent() {
-  //getWindowSizeAndCamera(filename, zoom);
+  // getWindowSizeAndCamera(filename, zoom);
 }
 
 void renderScene(void) {

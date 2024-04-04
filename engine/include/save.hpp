@@ -8,4 +8,4 @@
 
 void getWindowSizeAndCamera(std::string filename, float scale);
 
-#endif //SAVE_HPP
+#endif  // SAVE_HPP

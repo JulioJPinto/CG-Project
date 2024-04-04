@@ -29,11 +29,11 @@ void Camera::changeVectors(Point position, Point lookAt, Point up) {
 }
 
 Camera::Camera(const Camera& other) {
-    // Copy member variables from 'other' to the current object
-    this->position = other.position;
-    this->lookAt = other.lookAt;
-    this->up = other.up;
-    this->fov = other.fov;
-    this->near = other.near;
-    this->far = other.far;
+  // Copy member variables from 'other' to the current object
+  this->position = other.position;
+  this->lookAt = other.lookAt;
+  this->up = other.up;
+  this->fov = other.fov;
+  this->near = other.near;
+  this->far = other.far;
 }
