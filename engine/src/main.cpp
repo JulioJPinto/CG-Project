@@ -57,24 +57,30 @@ void drawAxis(void) {
   }
 }
 
-Point calculateNewPosition(Point position) {
-    // Apply rotation transformations
-    float newX = position.x * cos(cameraAngleY) * cos(cameraAngle) + position.y * (cos(cameraAngle) * sin(cameraAngle) + sin(cameraAngle) * sin(cameraAngleY) * cos(cameraAngle)) + position.z * (sin(cameraAngle) * sin(cameraAngle) - cos(cameraAngle) * sin(cameraAngleY) * cos(cameraAngle));
-    float newY = -position.x * cos(cameraAngleY) * sin(cameraAngle) + position.y * (cos(cameraAngle) * cos(cameraAngle) - sin(cameraAngle) * sin(cameraAngleY) * sin(cameraAngle)) + position.z * (sin(cameraAngle) * cos(cameraAngle) + cos(cameraAngle) * sin(cameraAngleY) * sin(cameraAngle));
-    float newZ = position.x * sin(cameraAngleY) + position.y * (-sin(cameraAngle) * cos(cameraAngleY)) + position.z * (cos(cameraAngle) * cos(cameraAngleY));
+Point spherical2Cartesian(Point position) {
+  float r = sqrt(position.x * position.x + position.y * position.y +
+                 position.z * position.z) *
+            (1 / zoom);
+  float alfa = atan2(position.y, position.x);
+  float beta = acos(position.z / r);
 
-    float inverse = 1 / zoom;
+  float camX = r * cos(beta + cameraAngleY) * sin(alfa + cameraAngle);
+  float camY = r * sin(beta + cameraAngleY);
+  float camZ = r * cos(beta + cameraAngleY) * cos(alfa + cameraAngle);
 
-    return Point(newX * inverse, newY * inverse, newZ * inverse);
+  return Point(camX, camY, camZ);
 }
 
 void saveCurrent() {
-  Point newPos = calculateNewPosition(c.camera.position);
-  Window w(glutGet(GLUT_WINDOW_WIDTH) ,glutGet(GLUT_WINDOW_HEIGHT));
+  Point newPos = spherical2Cartesian(c.camera.position);
+
+  std::cout << newPos.toString();
+
+  Window w(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
   std::cout << w.toString();
-  
-  getWindowSizeAndCamera(filename,newPos, w);
+
+  getWindowSizeAndCamera(filename, newPos, w);
 }
 
 void renderScene(void) {
@@ -83,7 +89,7 @@ void renderScene(void) {
   // set camera
   glLoadIdentity();
   // gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
-  gluLookAt(c.camera.position.x , c.camera.position.y, c.camera.position.z,
+  gluLookAt(c.camera.position.x, c.camera.position.y, c.camera.position.z,
             c.camera.lookAt.x, c.camera.lookAt.y, c.camera.lookAt.z,
             c.camera.up.x, c.camera.up.y, c.camera.up.z);
 

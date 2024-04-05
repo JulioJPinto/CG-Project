@@ -8,6 +8,12 @@
 
 #define DIR "../models/"
 
+std::string Point::toString() {
+  std::ostringstream oss;
+  oss << "(" << x << ", " << y << ", " << z << ")";
+  return oss.str();
+}
+
 std::vector<Point> parseFile(std::string filepath) {
   std::vector<Point> points;
 
