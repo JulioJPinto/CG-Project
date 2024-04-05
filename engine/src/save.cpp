@@ -11,10 +11,24 @@
 #include <string>
 #include <vector>
 
+
 #include "save.hpp"  // Assuming this is the header file where Point is defined
 
+int index = 0;
+
+std::string generate_xml_path() {
+    // Define base directory
+    std::string base_dir = "../scenes/save";
+
+    // Generate file name based on the integer
+    std::ostringstream oss;
+    oss << base_dir << "/log_" << index << ".xml";
+    index++;
+
+    return oss.str();
+}
+
 void saveXmlToFile(rapidxml::xml_document<>& doc, const char* filename) {
-  print(std::cout, doc, 0);
 
   std::ofstream file(filename);
   if (!file.is_open()) {
@@ -22,7 +36,6 @@ void saveXmlToFile(rapidxml::xml_document<>& doc, const char* filename) {
               << std::endl;
     return;
   }
-
   file << doc;
   file.close();
   std::cout << "XML saved successfully to " << filename << std::endl;
@@ -86,9 +99,7 @@ void getWindowSizeAndCamera(std::string filename, Point point, Window w) {
     // Similar updates for 'lookAt' and 'up' nodes in the future
   }
 
-  // Print camera node after modification
-  rapidxml::print(std::cout, *cameraNode, 0);
-
   const char* filepath = "../scenes/save/latest.xml";
   saveXmlToFile(doc, filepath);
+  saveXmlToFile(doc, generate_xml_path().data());
 }
