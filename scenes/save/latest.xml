@@ -1,17 +1,14 @@
 <world>
 	<window width="512" height="512"/>
 	<camera>
-		<position x="2.873479" y="10.440306" z="10.440306"/>
+		<position x="0.423778" y="5.070255" z="1.054955"/>
 		<lookAt x="0" y="0" z="0"/>
 		<up x="0" y="1" z="0"/>
 		<projection fov="60" near="1" far="1000"/>
 	</camera>
 	<group>
-		<transform>
-			<translate x="0" y="1" z="0"/>
-		</transform>
 		<models>
-			<model file="box_2_3.3d"/>
+			<model file="ferrari.obj"/>
 		</models>
 	</group>
 </world>

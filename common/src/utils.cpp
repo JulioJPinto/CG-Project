@@ -104,3 +104,7 @@ std::vector<Point> parse3Dfile(std::string filename) {
 
   return points;
 }
+
+Point Point::multiply(float value) {
+  return Point(x * value,y * value,z * value);
+}

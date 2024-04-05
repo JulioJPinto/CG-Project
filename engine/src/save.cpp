@@ -80,7 +80,7 @@ void getWindowSizeAndCamera(std::string filename, Point point, Window w) {
 
       rapidxml::xml_attribute<>* zAttr = positionNode->first_attribute("z");
       if (zAttr)
-        zAttr->value(doc.allocate_string(std::to_string(point.y).data()));
+        zAttr->value(doc.allocate_string(std::to_string(point.z).data()));
       ;
     }
     // Similar updates for 'lookAt' and 'up' nodes in the future
