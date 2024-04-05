@@ -11,25 +11,23 @@
 #include <string>
 #include <vector>
 
-
 #include "save.hpp"  // Assuming this is the header file where Point is defined
 
 int index = 0;
 
 std::string generate_xml_path() {
-    // Define base directory
-    std::string base_dir = "../scenes/save";
+  // Define base directory
+  std::string base_dir = "../scenes/save";
 
-    // Generate file name based on the integer
-    std::ostringstream oss;
-    oss << base_dir << "/log_" << index << ".xml";
-    index++;
+  // Generate file name based on the integer
+  std::ostringstream oss;
+  oss << base_dir << "/log_" << index << ".xml";
+  index++;
 
-    return oss.str();
+  return oss.str();
 }
 
 void saveXmlToFile(rapidxml::xml_document<>& doc, const char* filename) {
-
   std::ofstream file(filename);
   if (!file.is_open()) {
     std::cerr << "Unable to open file " << filename << " for writing!"
