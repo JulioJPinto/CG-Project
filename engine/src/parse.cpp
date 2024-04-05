@@ -31,7 +31,7 @@ Configuration parseConfig(std::string filename) {
   char* width = root->first_node("window")->first_attribute("width")->value();
   char* height = root->first_node("window")->first_attribute("height")->value();
 
-  Window window_info = Window(std::stof(width), std::stof(height));
+  Window window_info = Window(std::stoi(width), std::stoi(height));
 
   // camera information
   rapidxml::xml_node<>* camera = root->first_node("camera");

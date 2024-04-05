@@ -8,6 +8,12 @@
 
 #define DIR "../models/"
 
+std::string Point::toString() {
+  std::ostringstream oss;
+  oss << "(" << x << ", " << y << ", " << z << ")";
+  return oss.str();
+}
+
 std::vector<Point> parseFile(std::string filepath) {
   std::vector<Point> points;
 
@@ -97,4 +103,8 @@ std::vector<Point> parse3Dfile(std::string filename) {
   file.close();
 
   return points;
+}
+
+Point Point::multiply(float value) {
+  return Point(x * value, y * value, z * value);
 }
