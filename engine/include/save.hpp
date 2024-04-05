@@ -5,6 +5,6 @@
 #include "Configuration.hpp"
 #include "parse.hpp"
 
-void getWindowSizeAndCamera(std::string filename, float scale);
+void getWindowSizeAndCamera(std::string filename, Point point, Window w);
 
 #endif  // SAVE_HPP

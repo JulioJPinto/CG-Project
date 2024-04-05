@@ -15,6 +15,9 @@
 #include "save.hpp" // Assuming this is the header file where Point is defined
 
 void saveXmlToFile(rapidxml::xml_document<> &doc, const char *filename) {
+
+    print(std::cout, doc, 0);
+
     std::ofstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Unable to open file " << filename << " for writing!" << std::endl;
@@ -26,22 +29,8 @@ void saveXmlToFile(rapidxml::xml_document<> &doc, const char *filename) {
     std::cout << "XML saved successfully to " << filename << std::endl;
 }
 
-void getWindowSizeAndCamera(std::string filename, float scale) {
-    int windowWidth = glutGet(GLUT_WINDOW_WIDTH);
-    int windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
-
-    GLfloat modelview[16];
-    GLfloat projection[16];
-    glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
-    glGetFloatv(GL_PROJECTION_MATRIX, projection);
-
-    Point position(-modelview[12] * (1 / scale), -modelview[13] * (1 / scale),
-                   -modelview[14] * (1 / scale));
-    Point lookAt(modelview[8] * (1 / scale), modelview[9] * (1 / scale),
-                 modelview[10] * (1 / scale));
-    Point up(modelview[4] * (1 / scale), modelview[5] * (1 / scale),
-             modelview[6] * (1 / scale));
-
+void getWindowSizeAndCamera(std::string filename, Point point, Window w) {
+    
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error opening the file!" << std::endl;
@@ -68,25 +57,42 @@ void getWindowSizeAndCamera(std::string filename, float scale) {
 
     rapidxml::xml_node<>* windowNode = root->first_node("window");
     if (windowNode) {
-        if (rapidxml::xml_attribute<>* widthAttr = windowNode->first_attribute("width"))
-            widthAttr->value(std::to_string(windowWidth).c_str());
-        if (rapidxml::xml_attribute<>* heightAttr = windowNode->first_attribute("height"))
-            heightAttr->value(std::to_string(windowHeight).c_str());
+        rapidxml::xml_attribute<>* widthAttr = windowNode->first_attribute("width");
+        if (widthAttr)
+            widthAttr->value(std::to_string(w.width).data());
+
+        rapidxml::xml_attribute<>* heightAttr = windowNode->first_attribute("height");
+        if (heightAttr)
+            heightAttr->value(std::to_string(w.height).data());
     }
 
+    // Print window node after modification
+    rapidxml::print(std::cout, *windowNode, 0);
+
+    // Accessing camera node
     rapidxml::xml_node<>* cameraNode = root->first_node("camera");
     if (cameraNode) {
-        if (rapidxml::xml_node<>* positionNode = cameraNode->first_node("position")) {
-            if (rapidxml::xml_attribute<>* xAttr = positionNode->first_attribute("x"))
-                xAttr->value(std::to_string(position.x).c_str());
-            if (rapidxml::xml_attribute<>* yAttr = positionNode->first_attribute("y"))
-                yAttr->value(std::to_string(position.y).c_str());
-            if (rapidxml::xml_attribute<>* zAttr = positionNode->first_attribute("z"))
-                zAttr->value(std::to_string(position.z).c_str());
+        rapidxml::xml_node<>* positionNode = cameraNode->first_node("position");
+        if (positionNode) {
+            rapidxml::xml_attribute<>* xAttr = positionNode->first_attribute("x");
+            if (xAttr)
+                xAttr->value(std::to_string(point.x).data());
+
+            rapidxml::xml_attribute<>* yAttr = positionNode->first_attribute("y");
+            if (yAttr)
+                yAttr->value(std::to_string(point.y).data());
+
+            rapidxml::xml_attribute<>* zAttr = positionNode->first_attribute("z");
+            if (zAttr)
+                zAttr->value(std::to_string(point.y).data());;
         }
-        // Similar updates for 'lookAt' and 'up' nodes
+        // Similar updates for 'lookAt' and 'up' nodes in the future
     }
 
-    const char* filepath = "latest.xml";
-    saveXmlToFile(doc, filepath);
+    // Print camera node after modification
+    rapidxml::print(std::cout, *cameraNode, 0);
+
+
+    const char* filepath = "../scenes/save/latest.xml";
+    saveXmlToFile(doc,filepath);
 }
