@@ -7,8 +7,8 @@
 
 #include "../../common/include/utils.hpp"
 
-
-std::vector<Point> patchTriangles(const char* bezier_patch, const int tessellation) {
+std::vector<Point> patchTriangles(const char* bezier_patch,
+                                  const int tessellation) {
   std::vector<Point> controlPoints;
 
   std::ifstream file(bezier_patch);
@@ -20,15 +20,16 @@ std::vector<Point> patchTriangles(const char* bezier_patch, const int tessellati
   size_t num_patches;
   file >> num_patches;
 
-  std::vector<std::vector<size_t>> patches(num_patches, std::vector<size_t>(16));
+  std::vector<std::vector<size_t>> patches(num_patches,
+                                           std::vector<size_t>(16));
 
   for (size_t i = 0; i < num_patches; ++i) {
-      for (size_t j = 0; j < 16; ++j) {
-          size_t idx;
-          file >> idx;
-          file.ignore();
-          patches[i][j] = idx;
-      }
+    for (size_t j = 0; j < 16; ++j) {
+      size_t idx;
+      file >> idx;
+      file.ignore();
+      patches[i][j] = idx;
+    }
   }
 
   size_t numberOfControlPoints;
@@ -48,7 +49,7 @@ std::vector<Point> patchTriangles(const char* bezier_patch, const int tessellati
 
   file.close();
 
-  //calculate the coordinates of the points
+  // calculate the coordinates of the points
   std::vector<Point> points;
 
   for (size_t i = 0; i < num_patches; ++i) {
@@ -78,12 +79,9 @@ std::vector<Point> patchTriangles(const char* bezier_patch, const int tessellati
         points.push_back(p4);
       }
     }
-
   }
 
   return points;
-
-
 }
 
 Point bezierPatch(const std::vector<Point>& controlPoints, float u, float v) {
@@ -115,17 +113,15 @@ float bernstein(int i, float t) {
   }
 }
 
-
-
-bool generatePatch(const char* bezier_patch , const int tessellation, const char* fileName) {
-  
+bool generatePatch(const char* bezier_patch, const int tessellation,
+                   const char* fileName) {
   std::vector<Point> triangles = patchTriangles(bezier_patch, tessellation);
 
-  if(triangles.empty()) {
+  if (triangles.empty()) {
     std::cerr << "Error generating patch\n";
     return false;
   }
-  
+
   saveToFile(triangles, fileName);
 
   return true;

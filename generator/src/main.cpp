@@ -4,11 +4,10 @@
 #include "../include/shapes/cone.hpp"
 #include "../include/shapes/cube.hpp"
 #include "../include/shapes/cylinder.hpp"
+#include "../include/shapes/patches.hpp"
 #include "../include/shapes/plane.hpp"
 #include "../include/shapes/sphere.hpp"
 #include "../include/shapes/torus.hpp"
-#include "../include/shapes/patches.hpp"
-
 
 void generateFigure(int argc, char* argv[]) {
   if (argc < 5) {

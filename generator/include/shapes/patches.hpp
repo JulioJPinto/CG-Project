@@ -5,9 +5,11 @@
 
 #include "../../common/include/utils.hpp"
 
-std::vector<Point> patchTriangles(const char* bezier_patch, const int tessellation);
+std::vector<Point> patchTriangles(const char* bezier_patch,
+                                  const int tessellation);
 
-bool generatePatch(const char* bezier_patch, const int tessellation, const char* fileName);
+bool generatePatch(const char* bezier_patch, const int tessellation,
+                   const char* fileName);
 
 float bernstein(int i, float t);
 
