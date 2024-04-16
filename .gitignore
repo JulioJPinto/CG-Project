@@ -55,3 +55,4 @@ CMakeFiles/*
 .vscode
 build
 .3d
+.patch
