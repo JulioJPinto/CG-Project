@@ -5,8 +5,6 @@
 #include <string>
 #include <vector>
 
-
-
 Configuration parseConfig(std::string filename) {
   // open file in read mode
   std::ifstream file(filename);

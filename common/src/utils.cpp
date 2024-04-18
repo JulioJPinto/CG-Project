@@ -1,8 +1,8 @@
 #include "../include/utils.hpp"
 
 #include <fstream>
-#include <map>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -18,8 +18,7 @@ std::string Point::toString() {
 }
 
 std::vector<Point> parseFile(std::string filepath) {
-
-  if(hash_models.find(filepath) != hash_models.end()) {
+  if (hash_models.find(filepath) != hash_models.end()) {
     return hash_models[filepath];
   }
 
