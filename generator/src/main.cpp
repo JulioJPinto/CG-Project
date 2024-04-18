@@ -4,6 +4,7 @@
 #include "../include/shapes/cone.hpp"
 #include "../include/shapes/cube.hpp"
 #include "../include/shapes/cylinder.hpp"
+#include "../include/shapes/patches.hpp"
 #include "../include/shapes/plane.hpp"
 #include "../include/shapes/sphere.hpp"
 #include "../include/shapes/torus.hpp"
@@ -67,6 +68,16 @@ void generateFigure(int argc, char* argv[]) {
     int slices = std::stoi(argv[4]);
 
     generateCylinder(radius, height, slices, fileName);
+  } else if (figureName == "patch" && argc == 5) {
+    // Generate Patch
+    std::cout << "Generating Patch\n";
+    char* bezier_patch = argv[2];
+    int tessellation = std::stoi(argv[3]);
+    printf("Tessellation: %d\n", tessellation);
+    printf("File name: %s\n", fileName);
+    printf("Bezier patch: %s\n", bezier_patch);
+    generatePatch(bezier_patch, tessellation, fileName);
+
   } else {
     std::cerr << "Invalid arguments\n";
   }
