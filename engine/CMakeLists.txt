@@ -7,7 +7,7 @@ file(GLOB SRC_FILES src/*.cpp)
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 
 include_directories(${PROJECT_NAME} PUBLIC include) 
-target_link_libraries(${PROJECT_NAME} common)
+target_link_libraries(${PROJECT_NAME} common imgui)
 
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
@@ -40,7 +40,11 @@ if  (WIN32)
 
 else (WIN32) #Linux and Mac
 
-	set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} Wno-deprecated")
+	set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} set(IMGUI_PATH ../lib/imgui)
+	file(GLOB IMGUI_SOURCES ${IMGUI_PATH}/*.cpp ${IMGUI_PATH}/backends/imgui_impl_glut.cpp ${IMGUI_PATH}/backends/imgui_impl_opengl3.cpp)
+	add_library(imgui STATIC ${IMGUI_SOURCES})
+	target_link_libraries(imgui ${CMAKE_DL_LIBS})
+	target_include_directories(imgui PUBLIC ${IMGUI_PATH} ${IMGUI_PATH}/backends)Wno-deprecated")
 	find_package(GLUT REQUIRED)
 	include_directories(${GLUT_INCLUDE_DIR})
 	link_directories(${GLUT_LIBRARY_DIRS})

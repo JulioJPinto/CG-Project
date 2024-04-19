@@ -8,6 +8,9 @@
 #include <math.h>
 
 #include "draw.hpp"
+#include "imgui.h"
+#include "imgui_impl_glut.h"
+#include "imgui_impl_opengl3.h"
 #include "parse.hpp"
 #include "save.hpp"
 
@@ -223,6 +226,11 @@ int main(int argc, char** argv) {
 
   glutSpecialFunc(processSpecialKeys);
   glutKeyboardFunc(processNormalKeys);
+
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  // Setup Dear ImGui style
+  ImGui::StyleColorsDark();
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
