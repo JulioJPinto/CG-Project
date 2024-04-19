@@ -1,8 +1,6 @@
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
+
+#include <GL/glew.h>
 #include <GL/glut.h>
-#endif
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -218,6 +216,8 @@ int main(int argc, char** argv) {
   glutInitWindowPosition(100, 100);
   glutInitWindowSize(c.window.width, c.window.height);
   glutCreateWindow("CG@DI");
+
+  glewInit();
 
   // put callback registry here
   glutIdleFunc(renderScene);

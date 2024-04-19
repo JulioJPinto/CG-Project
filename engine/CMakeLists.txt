@@ -45,12 +45,22 @@ else (WIN32) #Linux and Mac
 	add_library(imgui STATIC ${IMGUI_SOURCES})
 	target_link_libraries(imgui ${CMAKE_DL_LIBS})
 	target_include_directories(imgui PUBLIC ${IMGUI_PATH} ${IMGUI_PATH}/backends)Wno-deprecated")
+
 	find_package(GLUT REQUIRED)
 	include_directories(${GLUT_INCLUDE_DIR})
 	link_directories(${GLUT_LIBRARY_DIRS})
 	add_definitions(${GLUT_DEFINITIONS})
 
-	target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
+	if (NOT APPLE)
+		find_package(GLEW REQUIRED)
+		include_directories(${GLEW_INCLUDE_DIRS})
+		link_libraries(${GLEW_LIBRARIES})
+		target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES})
+	else (NOT APPLE)
+		target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} )
+	endif(NOT APPLE)
+
+	target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} )
 	if(NOT GLUT_FOUND)
 	   message(ERROR ": GLUT not found!")
 	endif(NOT GLUT_FOUND)
