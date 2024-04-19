@@ -8,12 +8,11 @@
 #include <math.h>
 
 #include "draw.hpp"
-#include "parse.hpp"
-#include "save.hpp"
-
 #include "imgui.h"
 #include "imgui_impl_glut.h"
 #include "imgui_impl_opengl3.h"
+#include "parse.hpp"
+#include "save.hpp"
 
 std::string filename;
 
