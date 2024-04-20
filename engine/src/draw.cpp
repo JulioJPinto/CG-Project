@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "../../common/include/utils.hpp"
+#include "model.hpp"
 #include "draw.hpp"
 #include "parse.hpp"
 
@@ -54,6 +55,8 @@ void drawGroups(const Group &group) {
   glMultMatrixf(matrix);
 
   drawbyVBO(points);
+
+  generateIBO(points, generateVBO(points));
 
   for (size_t i = 0; i < group.subgroups.size(); i++) {
     drawGroups(group.subgroups[i]);
