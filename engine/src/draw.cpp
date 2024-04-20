@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "../../common/include/utils.hpp"
-#include "model.hpp"
 #include "draw.hpp"
+#include "model.hpp"
 #include "parse.hpp"
 
 GLuint buffers[1];

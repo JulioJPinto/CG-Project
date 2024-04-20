@@ -23,15 +23,16 @@ typedef struct Point {
   Point multiply(float value);
 
   bool operator==(const Point& other) const {
-        return x == other.x && y == other.y && z == other.z;
+    return x == other.x && y == other.y && z == other.z;
   }
 
 } Point;
 
 struct PointHash {
-    size_t operator()(const Point& p) const {
-        return std::hash<float>()(p.x) ^ std::hash<float>()(p.y) ^ std::hash<float>()(p.z);
-    }
+  size_t operator()(const Point& p) const {
+    return std::hash<float>()(p.x) ^ std::hash<float>()(p.y) ^
+           std::hash<float>()(p.z);
+  }
 };
 
 // Function to convert Point to string
