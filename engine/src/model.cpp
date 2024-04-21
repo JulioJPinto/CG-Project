@@ -10,11 +10,6 @@
 
 #define MAX 10
 
-GLuint buffers[MAX], verticeCount[MAX];
-
-GLuint indexs[MAX];
-unsigned int indexCount[MAX];
-
 std::vector<Model> models;
 int counter = 0;
 
@@ -84,6 +79,7 @@ Model::Model(std::string filename, std::vector<Point> points) {
 }
 
 void Model::setupModel() {
+  
   std::vector<float> floats = vPointstoFloats(this->vbo);
 
   // Generate and bind vertex buffer
@@ -97,11 +93,15 @@ void Model::setupModel() {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * this->ibo.size(),
                this->ibo.data(), GL_STATIC_DRAW);
+  this->initialized = true;
 }
 
 void Model::drawModel() {
-  setupModel();
-
+  if(!this->initialized) {
+    setupModel();
+  }
+  
+  glColor3f(1.0f, 1.0f, 1.0f);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glVertexPointer(3, GL_FLOAT, 0, 0);
 

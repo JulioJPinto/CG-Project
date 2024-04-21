@@ -125,9 +125,9 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
 void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
   rapidxml::xml_node<>* modelNode = modelsNode->first_node("model");
   while (modelNode) {
-    std::string file = modelNode->first_attribute("file")->value();
-    std::vector<Point> file_points = parseFile(file);
-    Model model = Model(file, file_points);
+    const std::string& file = modelNode->first_attribute("file")->value();
+    const std::vector<Point>& file_points = parseFile(file);
+    const Model& model = Model(file, file_points);
     group.points.insert(group.points.end(), file_points.begin(),
                         file_points.end());
     group.models.push_back(model);

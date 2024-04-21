@@ -20,6 +20,9 @@ float cameraAngleY = 0.0f;
 float zoom = 1.0f;
 int axis = 1;
 
+int timebase;
+float frames;
+
 Configuration c;
 
 void reshape(int w, int h) {
@@ -133,6 +136,22 @@ void renderScene(void) {
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   drawGroups(c.group);
+
+  static int frame = 0;
+	static float time = 0;
+	static float fps = 0;
+
+	frame++;
+	time = glutGet(GLUT_ELAPSED_TIME);
+	if (time - timebase > 1000)
+	{
+		fps = frame * 1000.0 / (time - timebase);
+		timebase = time;
+		frame = 0;
+	}
+
+	// print fps
+	std::cout << "FPS: " << std::to_string(fps);
 
   // End of frame
   glutSwapBuffers();

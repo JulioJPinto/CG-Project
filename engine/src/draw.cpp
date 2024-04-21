@@ -40,7 +40,7 @@ void drawbyVBO(std::vector<Point> points) {
 }
 
 void drawGroups(const Group &group) {
-  std::vector<Point> points = group.points;
+  const std::vector<Point>& points = group.points;
 
   glPushMatrix();
   GLfloat matrix[16] = {
@@ -51,13 +51,12 @@ void drawGroups(const Group &group) {
 
   glMultMatrixf(matrix);
 
-  // Its not entering here can you check why?
   for (Model model : group.models) {
     model.drawModel();
   }
 
-  for (size_t i = 0; i < group.subgroups.size(); i++) {
-    drawGroups(group.subgroups[i]);
+  for(const Group& sub : group.subgroups) {
+    drawGroups(sub);
   }
 
   // lobo

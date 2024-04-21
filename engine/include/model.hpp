@@ -21,6 +21,7 @@ class Model {
   std::vector<Point> vbo;
   std::vector<unsigned int> ibo;
   int id;
+  bool initialized = false;
 
   Model(std::string filename, std::vector<Point> points);
 
