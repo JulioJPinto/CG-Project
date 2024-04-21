@@ -138,20 +138,19 @@ void renderScene(void) {
   drawGroups(c.group);
 
   static int frame = 0;
-	static float time = 0;
-	static float fps = 0;
+  static float time = 0;
+  static float fps = 0;
 
-	frame++;
-	time = glutGet(GLUT_ELAPSED_TIME);
-	if (time - timebase > 1000)
-	{
-		fps = frame * 1000.0 / (time - timebase);
-		timebase = time;
-		frame = 0;
-	}
+  frame++;
+  time = glutGet(GLUT_ELAPSED_TIME);
+  if (time - timebase > 1000) {
+    fps = frame * 1000.0 / (time - timebase);
+    timebase = time;
+    frame = 0;
+  }
 
-	// print fps
-	std::cout << "FPS: " << std::to_string(fps);
+  // print fps
+  std::cout << "FPS: " << std::to_string(fps);
 
   // End of frame
   glutSwapBuffers();

@@ -79,7 +79,6 @@ Model::Model(std::string filename, std::vector<Point> points) {
 }
 
 void Model::setupModel() {
-  
   std::vector<float> floats = vPointstoFloats(this->vbo);
 
   // Generate and bind vertex buffer
@@ -97,14 +96,14 @@ void Model::setupModel() {
 }
 
 void Model::drawModel() {
-  if(!this->initialized) {
+  if (!this->initialized) {
     setupModel();
   }
-  
+
   glColor3f(1.0f, 1.0f, 1.0f);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glVertexPointer(3, GL_FLOAT, 0, 0);
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
-  glDrawElements(GL_TRIANGLES, this->_ibo, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);
 }

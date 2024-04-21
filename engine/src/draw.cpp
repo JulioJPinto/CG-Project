@@ -39,7 +39,7 @@ void drawbyVBO(std::vector<Point> points) {
   glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void drawGroups(const Group &group) {
+void drawGroups(const Group& group) {
   const std::vector<Point>& points = group.points;
 
   glPushMatrix();
@@ -55,7 +55,7 @@ void drawGroups(const Group &group) {
     model.drawModel();
   }
 
-  for(const Group& sub : group.subgroups) {
+  for (const Group& sub : group.subgroups) {
     drawGroups(sub);
   }
 
