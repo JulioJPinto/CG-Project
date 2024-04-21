@@ -10,20 +10,25 @@
 
 std::vector<Point> generateVBO(const std::vector<Point>& points);
 
-std::vector<int> generateIBO(const std::vector<Point>& points,
-                             const std::vector<Point>& vbo);
+std::vector<unsigned int> generateIBO(const std::vector<Point>& points,
+                                      const std::vector<Point>& vbo);
 
 class Model {
  public:
   std::string filename;
-  std::set<Point> points;
-  std::vector<int> indices;
+  std::vector<Point> vbo;
+  std::vector<unsigned int> ibo;
   int id;
 
-  Model(std::string filename, std::set<Point> points, std::vector<int> indices,
-        int id);
+  Model(std::string filename, std::vector<Point> points);
 
-  void setupIndexBuffer();
+  void setupModel();
+
+ private:
+  Model(std::string filename, std::vector<Point> vbo,
+        std::vector<unsigned int> ibo, int id);
 };
+
+void drawModel(const Model& model);
 
 #endif  // MODEL_HPP

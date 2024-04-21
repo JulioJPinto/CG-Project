@@ -9,12 +9,12 @@
 #include "../../common/include/utils.hpp"
 
 Group::Group() {
-  this->models = std::vector<std::string>();
+  this->models = std::vector<Model>();
   this->subgroups = std::vector<Group>();
   this->points = std::vector<Point>();
 }
 
-Group::Group(std::vector<std::string> models, std::vector<Group> subgroups,
+Group::Group(std::vector<Model> models, std::vector<Group> subgroups,
              std::vector<Point> points,
              std::array<std::array<double, 4>, 4> arr) {
   this->models = models;

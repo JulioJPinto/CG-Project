@@ -227,11 +227,6 @@ int main(int argc, char** argv) {
   glutSpecialFunc(processSpecialKeys);
   glutKeyboardFunc(processNormalKeys);
 
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  // Setup Dear ImGui style
-  ImGui::StyleColorsDark();
-
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);

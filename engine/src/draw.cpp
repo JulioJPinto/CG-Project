@@ -12,8 +12,6 @@
 #include "model.hpp"
 #include "parse.hpp"
 
-GLuint buffers[1];
-
 void drawbyPoints(std::vector<Point> points) {
   glBegin(GL_TRIANGLES);
   glColor3f(1.0f, 1.0f, 1.0f);
@@ -54,9 +52,9 @@ void drawGroups(const Group &group) {
 
   glMultMatrixf(matrix);
 
-  drawbyVBO(points);
-
-  generateIBO(points, generateVBO(points));
+  for (size_t i = 0; i < group.models.size(); i++) {
+    drawModel(group.models[i]);
+  }
 
   for (size_t i = 0; i < group.subgroups.size(); i++) {
     drawGroups(group.subgroups[i]);

@@ -126,10 +126,11 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
   rapidxml::xml_node<>* modelNode = modelsNode->first_node("model");
   while (modelNode) {
     std::string file = modelNode->first_attribute("file")->value();
-    group.models.push_back(file);
-    modelNode = modelNode->next_sibling("model");
     std::vector<Point> file_points = parseFile(file);
+    Model model = Model(file, file_points);
     group.points.insert(group.points.end(), file_points.begin(),
                         file_points.end());
+
+    modelNode = modelNode->next_sibling("model");
   }
 }
