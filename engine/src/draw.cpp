@@ -1,4 +1,3 @@
-
 #include <GL/glew.h>
 #include <GL/glut.h>
 
@@ -52,8 +51,9 @@ void drawGroups(const Group &group) {
 
   glMultMatrixf(matrix);
 
-  for (size_t i = 0; i < group.models.size(); i++) {
-    drawModel(group.models[i]);
+  // Its not entering here can you check why?
+  for (Model model : group.models) {
+    model.drawModel();
   }
 
   for (size_t i = 0; i < group.subgroups.size(); i++) {

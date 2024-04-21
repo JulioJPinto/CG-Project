@@ -130,6 +130,7 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
     Model model = Model(file, file_points);
     group.points.insert(group.points.end(), file_points.begin(),
                         file_points.end());
+    group.models.push_back(model);
 
     modelNode = modelNode->next_sibling("model");
   }

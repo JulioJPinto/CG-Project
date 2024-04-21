@@ -21,7 +21,6 @@ float zoom = 1.0f;
 int axis = 1;
 
 Configuration c;
-std::vector<Point> points;
 
 void reshape(int w, int h) {
   float aspect_ratio = (float)w / (float)h;
@@ -196,8 +195,6 @@ void setupConfig(char* arg) {
     c = parseConfig(filename);
   } else {
     c = parseConfig("../scenes/default.xml");
-    std::vector<Point> file_points = parseFile(filename);
-    points.insert(points.end(), file_points.begin(), file_points.end());
   }
 }
 
@@ -218,6 +215,7 @@ int main(int argc, char** argv) {
   glutCreateWindow("CG@DI");
 
   glewInit();
+  glEnableClientState(GL_VERTEX_ARRAY);
 
   // put callback registry here
   glutIdleFunc(renderScene);

@@ -1,4 +1,3 @@
-
 #include <GL/glew.h>
 #include <GL/glut.h>
 
@@ -81,8 +80,6 @@ Model::Model(std::string filename, std::vector<Point> points) {
     this->ibo = generateIBO(points, this->vbo);
     models.push_back(*this);
     counter++;
-
-    setupModel();
   }
 }
 
@@ -90,24 +87,24 @@ void Model::setupModel() {
   std::vector<float> floats = vPointstoFloats(this->vbo);
 
   // Generate and bind vertex buffer
-  glGenBuffers(1, &buffers[this->id]);
-  glBindBuffer(GL_ARRAY_BUFFER, buffers[this->id]);
+  glGenBuffers(1, &this->_vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floats.size(), floats.data(),
                GL_STATIC_DRAW);
-  verticeCount[this->id] = this->vbo.size();
 
   // Generate and bind index buffer
-  glGenBuffers(1, &indexs[this->id]);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexs[this->id]);
+  glGenBuffers(1, &this->_ibo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * this->ibo.size(),
                this->ibo.data(), GL_STATIC_DRAW);
-  indexCount[this->id] = this->ibo.size();
 }
 
-void drawModel(const Model& model) {
-  glBindBuffer(GL_ARRAY_BUFFER, buffers[model.id]);
+void Model::drawModel() {
+  setupModel();
+
+  glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glVertexPointer(3, GL_FLOAT, 0, 0);
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexs[model.id]);
-  glDrawElements(GL_TRIANGLES, indexCount[model.id], GL_UNSIGNED_INT, 0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
+  glDrawElements(GL_TRIANGLES, this->_ibo, GL_UNSIGNED_INT, 0);
 }

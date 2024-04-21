@@ -1,6 +1,8 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
+#include <GL/glut.h>
+
 #include <algorithm>
 #include <iostream>
 #include <set>
@@ -23,12 +25,12 @@ class Model {
   Model(std::string filename, std::vector<Point> points);
 
   void setupModel();
+  void drawModel();
 
  private:
+  GLuint _vbo, _ibo;
   Model(std::string filename, std::vector<Point> vbo,
         std::vector<unsigned int> ibo, int id);
 };
-
-void drawModel(const Model& model);
 
 #endif  // MODEL_HPP
