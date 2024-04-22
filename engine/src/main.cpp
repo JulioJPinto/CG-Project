@@ -5,7 +5,6 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-#include "draw.hpp"
 #include "imgui.h"
 #include "imgui_impl_glut.h"
 #include "imgui_impl_opengl3.h"
@@ -117,26 +116,7 @@ void saveCurrent() {
   getWindowSizeAndCamera(filename, newPos.multiply(1 / zoom), w);
 }
 
-void renderScene(void) {
-  // clear buffers
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  // set camera
-  glLoadIdentity();
-  // gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
-  gluLookAt(c.camera.position.x, c.camera.position.y, c.camera.position.z,
-            c.camera.lookAt.x, c.camera.lookAt.y, c.camera.lookAt.z,
-            c.camera.up.x, c.camera.up.y, c.camera.up.z);
-
-  glRotatef(cameraAngleY, 0.0f, 1.0f, 0.0f);
-  glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
-  glScalef(zoom, zoom, zoom);
-
-  // put drawing instructions here
-  drawAxis();
-
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  drawGroups(c.group);
-
+void frameCounter() {
   static int frame = 0;
   static float time = 0;
   static float fps = 0;
@@ -155,6 +135,29 @@ void renderScene(void) {
   if (i % 100 == 0) {
     std::cout << "FPS: " << std::to_string(fps) << std::endl;
   }
+}
+
+void renderScene(void) {
+  // clear buffers
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  // set camera
+  glLoadIdentity();
+  // gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
+  gluLookAt(c.camera.position.x, c.camera.position.y, c.camera.position.z,
+            c.camera.lookAt.x, c.camera.lookAt.y, c.camera.lookAt.z,
+            c.camera.up.x, c.camera.up.y, c.camera.up.z);
+
+  glRotatef(cameraAngleY, 0.0f, 1.0f, 0.0f);
+  glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
+  glScalef(zoom, zoom, zoom);
+
+  // put drawing instructions here
+  drawAxis();
+
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  c.group.drawGroup();
+
+  frameCounter();
 
   // End of frame
   glutSwapBuffers();

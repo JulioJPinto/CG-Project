@@ -64,15 +64,20 @@ Model::Model(std::string filename, std::vector<Point> points) {
   counter++;
 }
 
-Model getModel(std::string filename) {
+Model getModel(std::string name) {
   for (Model& model : models) {
-    if (model.filename == filename) {
+    if (!model.filename.compare(name)) {
       return model;
     }
   }
 
-  std::vector<Point> points = parseFile(filename);
-  return Model(filename, points);
+  std::vector<Point> points = parseFile(name);
+  Model m = Model(name, points);
+
+  models.push_back(m);
+  std::cout << "Primeiro: " << name << std::endl;
+
+  return m;
 }
 
 void Model::setupModel() {
@@ -94,7 +99,6 @@ void Model::setupModel() {
 void Model::drawModel() {
   if (!this->initialized) {
     setupModel();
-    std::cout << 1 << std::endl;
     this->initialized = true;
   }
 

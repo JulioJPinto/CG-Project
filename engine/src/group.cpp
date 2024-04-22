@@ -84,3 +84,24 @@ void Group::rotate(double angle, double x, double y, double z) {
 
   this->arr = result;
 }
+
+void Group::drawGroup() {
+  glPushMatrix();
+  GLfloat matrix[16] = {
+      this->arr[0][0], this->arr[1][0], this->arr[2][0], this->arr[3][0],
+      this->arr[0][1], this->arr[1][1], this->arr[2][1], this->arr[3][1],
+      this->arr[0][2], this->arr[1][2], this->arr[2][2], this->arr[3][2],
+      this->arr[0][3], this->arr[1][3], this->arr[2][3], this->arr[3][3]};
+
+  glMultMatrixf(matrix);
+
+  for (Model& model : this->models) {
+    model.drawModel();
+  }
+
+  for (Group& sub : this->subgroups) {
+    sub.drawGroup();
+  }
+
+  glPopMatrix();
+}

@@ -26,6 +26,8 @@ class Group {
   void scale(double x, double y, double z);
 
   void rotate(double angle, double x, double y, double z);
+
+  void drawGroup();
   // std::string toString();
 };
 
