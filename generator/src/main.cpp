@@ -1,21 +1,21 @@
 #include <iostream>
 #include <string>
 
-#include "../include/shapes/cone.hpp"
-#include "../include/shapes/cube.hpp"
-#include "../include/shapes/cylinder.hpp"
-#include "../include/shapes/patches.hpp"
-#include "../include/shapes/plane.hpp"
-#include "../include/shapes/sphere.hpp"
-#include "../include/shapes/torus.hpp"
+#include "shapes/cone.hpp"
+#include "shapes/cube.hpp"
+#include "shapes/cylinder.hpp"
+#include "shapes/patches.hpp"
+#include "shapes/plane.hpp"
+#include "shapes/sphere.hpp"
+#include "shapes/torus.hpp"
 
-void generateFigure(int argc, char* argv[]) {
+void generateFigure(int argc, char *argv[]) {
   if (argc < 5) {
     std::cerr << "Insufficient arguments\n";
     return;
   }
 
-  char* fileName = argv[argc - 1];
+  char *fileName = argv[argc - 1];
   std::string figureName = argv[1];
 
   if (figureName == "sphere" && argc == 6) {
@@ -35,12 +35,12 @@ void generateFigure(int argc, char* argv[]) {
     generateCube(length, divisions, fileName);
   } else if (figureName == "plane" && argc == 5) {
     // Generate Plane
-    std::cout << "Generating Plane\n";  // Added newline here
+    std::cout << "Generating Plane\n"; // Added newline here
     float length = std::stof(argv[2]);
     int divisions = std::stoi(argv[3]);
 
     generatePlane(length, divisions,
-                  fileName);  // Assuming saveToFile is available
+                  fileName); // Assuming saveToFile is available
   } else if (figureName == "cone" && argc == 7) {
     // Generate Cone
     std::cout << "Generating Cone\n";
@@ -71,7 +71,7 @@ void generateFigure(int argc, char* argv[]) {
   } else if (figureName == "patch" && argc == 5) {
     // Generate Patch
     std::cout << "Generating Patch\n";
-    char* bezier_patch = argv[2];
+    char *bezier_patch = argv[2];
     int tessellation = std::stoi(argv[3]);
     printf("Tessellation: %d\n", tessellation);
     printf("File name: %s\n", fileName);
@@ -83,7 +83,7 @@ void generateFigure(int argc, char* argv[]) {
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   generateFigure(argc, argv);
   return 0;
 }

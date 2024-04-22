@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 std::vector<Point> cubeTriangles(float length, int divisions) {
   float halfSize = length / 2.0f;
@@ -76,7 +76,7 @@ std::vector<Point> cubeTriangles(float length, int divisions) {
   return points;
 }
 
-bool generateCube(float length, int divisions, const char* filepath) {
+bool generateCube(float length, int divisions, const char *filepath) {
   std::vector<Point> triangles = cubeTriangles(length, divisions);
 
   if (triangles.empty()) {

@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
-bool generateCube(float length, int divisions, const char* filepath);
+bool generateCube(float length, int divisions, const char *filepath);
 
-#endif  // CUBE_HPP
+#endif // CUBE_HPP

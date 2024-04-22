@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 std::vector<Point> cylinderTriangles(const float radius, const float height,
                                      const int slices) {
@@ -58,7 +58,7 @@ std::vector<Point> cylinderTriangles(const float radius, const float height,
 }
 
 bool generateCylinder(float radius, float height, int slices,
-                      const char* filepath) {
+                      const char *filepath) {
   std::vector<Point> triangles = cylinderTriangles(radius, height, slices);
 
   if (triangles.empty()) {

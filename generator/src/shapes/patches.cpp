@@ -5,9 +5,9 @@
 #include <iostream>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
-std::vector<Point> patchTriangles(const char* bezier_patch,
+std::vector<Point> patchTriangles(const char *bezier_patch,
                                   const int tessellation) {
   std::vector<Point> controlPoints;
 
@@ -84,7 +84,7 @@ std::vector<Point> patchTriangles(const char* bezier_patch,
   return points;
 }
 
-Point bezierPatch(const std::vector<Point>& controlPoints, float u, float v) {
+Point bezierPatch(const std::vector<Point> &controlPoints, float u, float v) {
   Point p(0, 0, 0);
   for (int i = 0; i < 4; ++i) {
     for (int j = 0; j < 4; ++j) {
@@ -100,21 +100,21 @@ Point bezierPatch(const std::vector<Point>& controlPoints, float u, float v) {
 
 float bernstein(int i, float t) {
   switch (i) {
-    case 0:
-      return pow(1 - t, 3);
-    case 1:
-      return 3 * t * pow(1 - t, 2);
-    case 2:
-      return 3 * pow(t, 2) * (1 - t);
-    case 3:
-      return pow(t, 3);
-    default:
-      return 0;
+  case 0:
+    return pow(1 - t, 3);
+  case 1:
+    return 3 * t * pow(1 - t, 2);
+  case 2:
+    return 3 * pow(t, 2) * (1 - t);
+  case 3:
+    return pow(t, 3);
+  default:
+    return 0;
   }
 }
 
-bool generatePatch(const char* bezier_patch, const int tessellation,
-                   const char* fileName) {
+bool generatePatch(const char *bezier_patch, const int tessellation,
+                   const char *fileName) {
   std::vector<Point> triangles = patchTriangles(bezier_patch, tessellation);
 
   if (triangles.empty()) {

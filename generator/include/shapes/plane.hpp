@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
-bool generatePlane(float length, int divisions, const char* filepath);
+bool generatePlane(float length, int divisions, const char *filepath);
 
-#endif  // SOLAR_SYSTEM_PLANE_HPP
+#endif // SOLAR_SYSTEM_PLANE_HPP

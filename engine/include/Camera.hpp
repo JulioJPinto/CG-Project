@@ -3,11 +3,11 @@
 
 #include <string>
 
-#include "../../common/include/utils.hpp"
 #include "Camera.hpp"
+#include "utils.hpp"
 
 class Camera {
- public:
+public:
   Point position;
   Point lookAt;
   Point up;
@@ -19,11 +19,11 @@ class Camera {
   Camera(Point position, Point lookAt, Point up, int fov, float near,
          float far);
 
-  Camera(const Camera& other);
+  Camera(const Camera &other);
 
   void changeVectors(Point position, Point lookAt, Point up);
 
   //   std::string toString();
 };
 
-#endif  // CAMERA_HPP
+#endif // CAMERA_HPP

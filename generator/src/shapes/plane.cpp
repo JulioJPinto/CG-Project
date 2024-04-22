@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 std::vector<Point> planeTriangles(float length, int divisions) {
   float half = length / 2.0f;
@@ -36,7 +36,7 @@ std::vector<Point> planeTriangles(float length, int divisions) {
   return points;
 }
 
-bool generatePlane(float length, int divisions, const char* filepath) {
+bool generatePlane(float length, int divisions, const char *filepath) {
   std::vector<Point> triangles = planeTriangles(length, divisions);
 
   if (triangles.empty()) {

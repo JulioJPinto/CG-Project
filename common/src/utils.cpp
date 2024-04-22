@@ -48,9 +48,8 @@ std::vector<Point> parseFile(std::string filepath) {
   return points;
 }
 
-void saveToFile(
-    const std::vector<Point>& points,
-    const char* filepath) {  // Changed parameter type to const char*
+void saveToFile(const std::vector<Point> &points,
+                const char *filepath) { // Changed parameter type to const char*
 
   std::string buf(DIR);
   buf.append(filepath);
@@ -58,7 +57,7 @@ void saveToFile(
   std::ofstream file(buf);
 
   if (file.is_open()) {
-    for (const auto& point : points) {
+    for (const auto &point : points) {
       file << point.x << " " << point.y << " " << point.z << "\n";
     }
     file.close();

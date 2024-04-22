@@ -1,5 +1,12 @@
 #include <GL/glew.h>
-#include <GL/glut.h>
+extern "C" {
+#include <GL/gl.h>
+#ifdef __APPLE_CC__
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
+}
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -23,10 +30,10 @@ std::vector<float> vPointstoFloats(std::vector<Point> points) {
   return floats;
 }
 
-std::vector<Point> generateVBO(const std::vector<Point>& points) {
+std::vector<Point> generateVBO(const std::vector<Point> &points) {
   std::vector<Point> vbo;
   std::unordered_map<Point, int, PointHash> index_map;
-  for (const Point& point : points) {
+  for (const Point &point : points) {
     if (index_map.find(point) == index_map.end()) {
       index_map[point] = vbo.size();
       vbo.push_back(point);
@@ -35,14 +42,14 @@ std::vector<Point> generateVBO(const std::vector<Point>& points) {
   return vbo;
 }
 
-std::vector<unsigned int> generateIBO(const std::vector<Point>& points,
-                                      const std::vector<Point>& vbo) {
+std::vector<unsigned int> generateIBO(const std::vector<Point> &points,
+                                      const std::vector<Point> &vbo) {
   std::vector<unsigned int> ibo;
   std::unordered_map<Point, int, PointHash> index_map;
   for (size_t i = 0; i < vbo.size(); ++i) {
     index_map[vbo[i]] = i;
   }
-  for (const Point& point : points) {
+  for (const Point &point : points) {
     ibo.push_back(index_map[point]);
   }
   return ibo;
@@ -65,7 +72,7 @@ Model::Model(std::string filename, std::vector<Point> points) {
 }
 
 Model getModel(std::string name) {
-  for (Model& model : models) {
+  for (Model &model : models) {
     if (!model.filename.compare(name)) {
       return model;
     }

@@ -8,15 +8,15 @@
 #include <set>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
-std::vector<Point> generateVBO(const std::vector<Point>& points);
+std::vector<Point> generateVBO(const std::vector<Point> &points);
 
-std::vector<unsigned int> generateIBO(const std::vector<Point>& points,
-                                      const std::vector<Point>& vbo);
+std::vector<unsigned int> generateIBO(const std::vector<Point> &points,
+                                      const std::vector<Point> &vbo);
 
 class Model {
- public:
+public:
   std::string filename;
   std::vector<Point> vbo;
   std::vector<unsigned int> ibo;
@@ -28,7 +28,7 @@ class Model {
   void setupModel();
   void drawModel();
 
- private:
+private:
   GLuint _vbo, _ibo;
   Model(std::string filename, std::vector<Point> vbo,
         std::vector<unsigned int> ibo, int id);
@@ -36,4 +36,4 @@ class Model {
 
 Model getModel(std::string filename);
 
-#endif  // MODEL_HPP
+#endif // MODEL_HPP

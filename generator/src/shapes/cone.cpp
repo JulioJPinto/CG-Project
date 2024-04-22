@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 std::vector<Point> coneTriangles(const float radius, const float height,
                                  const size_t slices, const size_t stacks) {
@@ -55,7 +55,7 @@ std::vector<Point> coneTriangles(const float radius, const float height,
 }
 
 bool generateCone(float radius, float height, int slices, int stacks,
-                  const char* filepath) {
+                  const char *filepath) {
   std::vector<Point> triangles = coneTriangles(radius, height, slices, stacks);
 
   if (triangles.empty()) {

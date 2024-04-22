@@ -6,7 +6,7 @@
 #include "Window.hpp"
 
 class Window {
- public:
+public:
   int width;
   int height;
 
@@ -16,4 +16,4 @@ class Window {
   std::string toString();
 };
 
-#endif  // WINDOW_HPP
+#endif // WINDOW_HPP

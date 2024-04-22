@@ -1,13 +1,20 @@
-
 #include <GL/glew.h>
-#include <GL/glut.h>
+extern "C" {
+#include <GL/gl.h>
+#ifdef __APPLE_CC__
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
+}
 
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "backends/imgui_impl_glut.h"
+#include "backends/imgui_impl_opengl3.h"
 #include "imgui.h"
-#include "imgui_impl_glut.h"
-#include "imgui_impl_opengl3.h"
+
 #include "parse.hpp"
 #include "save.hpp"
 
@@ -165,20 +172,20 @@ void renderScene(void) {
 
 void processSpecialKeys(int key, int xx, int yy) {
   switch (key) {
-    case GLUT_KEY_LEFT:
-      cameraAngle -= 1.0f;
-      break;
-    case GLUT_KEY_RIGHT:
-      cameraAngle += 1.0f;
-      break;
-    case GLUT_KEY_UP:
-      cameraAngleY += 1.0f;
-      break;
-    case GLUT_KEY_DOWN:
-      cameraAngleY -= 1.0f;
-      break;
-    default:
-      break;
+  case GLUT_KEY_LEFT:
+    cameraAngle -= 1.0f;
+    break;
+  case GLUT_KEY_RIGHT:
+    cameraAngle += 1.0f;
+    break;
+  case GLUT_KEY_UP:
+    cameraAngleY += 1.0f;
+    break;
+  case GLUT_KEY_DOWN:
+    cameraAngleY -= 1.0f;
+    break;
+  default:
+    break;
   }
   glutPostRedisplay();
 }
@@ -186,34 +193,34 @@ void processSpecialKeys(int key, int xx, int yy) {
 void processNormalKeys(unsigned char key, int x, int y) {
   float value = zoom * 0.1;
   switch (key) {
-    case 'a':
-      if (axis) {
-        axis = 0;
-      } else {
-        axis = 1;
-      }
-      break;
-    case 'r':
-      cameraAngle = 0;
-      cameraAngleY = 0;
-      zoom = 1.0f;
-      break;
-    case 'o':
-      zoom -= value;
-      break;
-    case 'i':
-      zoom += value;
-      break;
-    case 's':
-      std::cout << "Saving Current Settings to file";
-      saveCurrent();
-      break;
-    default:
-      break;
+  case 'a':
+    if (axis) {
+      axis = 0;
+    } else {
+      axis = 1;
+    }
+    break;
+  case 'r':
+    cameraAngle = 0;
+    cameraAngleY = 0;
+    zoom = 1.0f;
+    break;
+  case 'o':
+    zoom -= value;
+    break;
+  case 'i':
+    zoom += value;
+    break;
+  case 's':
+    std::cout << "Saving Current Settings to file";
+    saveCurrent();
+    break;
+  default:
+    break;
   }
 }
 
-void setupConfig(char* arg) {
+void setupConfig(char *arg) {
   filename.assign(arg);
 
   if (filename.substr(filename.size() - 4) == ".xml") {
@@ -223,7 +230,7 @@ void setupConfig(char* arg) {
   }
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   if (argc == 1) {
     std::cout << "Invalid Arguments\n";
     std::cout << "Usage: ./engine <file_path>\n";

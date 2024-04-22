@@ -11,6 +11,7 @@ engine/CMakeFiles/*
 common/CMakeFiles/*
 .idea/*
 .vscode/*
+.cache/
 generator/generator
 engine/engine
 common/common

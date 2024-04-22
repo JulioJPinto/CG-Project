@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
-bool generateSphere(float radius, int slices, int stacks, const char* filepath);
+bool generateSphere(float radius, int slices, int stacks, const char *filepath);
 
-#endif  // SOLAR_SYSTEM_SPHERE_HPP
+#endif // SOLAR_SYSTEM_SPHERE_HPP
