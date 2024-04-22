@@ -149,8 +149,12 @@ void renderScene(void) {
     frame = 0;
   }
 
+  static int i = 0;
+  i++;
   // print fps
-  std::cout << "FPS: " << std::to_string(fps);
+  if (i % 100 == 0) {
+    std::cout << "FPS: " << std::to_string(fps) << std::endl;
+  }
 
   // End of frame
   glutSwapBuffers();

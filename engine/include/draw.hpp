@@ -9,6 +9,6 @@
 #include "draw.hpp"
 #include "parse.hpp"
 
-void drawGroups(const Group &group);
+void drawGroups(Group& group);
 
 #endif  // DRAW_HPP

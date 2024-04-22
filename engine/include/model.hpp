@@ -34,4 +34,6 @@ class Model {
         std::vector<unsigned int> ibo, int id);
 };
 
+Model getModel(std::string filename);
+
 #endif  // MODEL_HPP

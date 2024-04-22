@@ -58,24 +58,21 @@ Model::Model(std::string filename, std::vector<Point> vbo,
 
 Model::Model(std::string filename, std::vector<Point> points) {
   this->filename = filename;
+  this->id = counter;
+  this->vbo = generateVBO(points);
+  this->ibo = generateIBO(points, this->vbo);
+  counter++;
+}
 
-  // Check if the model already exists in the models vector
-  bool exists = false;
-  for (const Model& model : models) {
-    if (filename == model.filename) {
-      exists = true;
-      *this = model;
-      break;
+Model getModel(std::string filename) {
+  for (Model& model : models) {
+    if (model.filename == filename) {
+      return model;
     }
   }
 
-  if (!exists) {
-    this->id = counter;
-    this->vbo = generateVBO(points);
-    this->ibo = generateIBO(points, this->vbo);
-    models.push_back(*this);
-    counter++;
-  }
+  std::vector<Point> points = parseFile(filename);
+  return Model(filename, points);
 }
 
 void Model::setupModel() {
@@ -92,12 +89,13 @@ void Model::setupModel() {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * this->ibo.size(),
                this->ibo.data(), GL_STATIC_DRAW);
-  this->initialized = true;
 }
 
 void Model::drawModel() {
   if (!this->initialized) {
     setupModel();
+    std::cout << 1 << std::endl;
+    this->initialized = true;
   }
 
   glColor3f(1.0f, 1.0f, 1.0f);
