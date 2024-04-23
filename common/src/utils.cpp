@@ -2,11 +2,14 @@
 
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <string>
 #include <vector>
 
 #define DIR "../models/"
+
+std::map<std::string, std::vector<Point>> hash_models;
 
 std::string Point::toString() {
   std::ostringstream oss;
@@ -15,25 +18,32 @@ std::string Point::toString() {
 }
 
 std::vector<Point> parseFile(std::string filepath) {
+  if (hash_models.find(filepath) != hash_models.end()) {
+    return hash_models[filepath];
+  }
+
+  std::string filename = DIR + filepath;
   std::vector<Point> points;
 
-  size_t dotIndex = filepath.find_last_of(".");
+  size_t dotIndex = filename.find_last_of(".");
   if (dotIndex == std::string::npos) {
     std::cerr << "Error: Unable to determine file extension for " << filepath
               << std::endl;
     return points;
   }
 
-  std::string extension = filepath.substr(dotIndex + 1);
+  std::string extension = filename.substr(dotIndex + 1);
   if (extension == "obj") {
-    std::cout << "Processing .obj file: " << filepath << std::endl;
-    points = parseOBJfile(filepath);
+    std::cout << "Processing .obj file: " << filename << std::endl;
+    points = parseOBJfile(filename);
   } else if (extension == "3d") {
-    std::cout << "Processing .3d file: " << filepath << std::endl;
-    points = parse3Dfile(filepath);
+    std::cout << "Processing .3d file: " << filename << std::endl;
+    points = parse3Dfile(filename);
   } else {
-    std::cerr << "Error: Unsupported file format for " << filepath << std::endl;
+    std::cerr << "Error: Unsupported file format for " << filename << std::endl;
   }
+
+  hash_models[filepath] = points;
 
   return points;
 }

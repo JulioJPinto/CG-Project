@@ -1,13 +1,10 @@
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
+
+#include <GL/glew.h>
 #include <GL/glut.h>
-#endif
 
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-#include "draw.hpp"
 #include "imgui.h"
 #include "imgui_impl_glut.h"
 #include "imgui_impl_opengl3.h"
@@ -22,8 +19,10 @@ float cameraAngleY = 0.0f;
 float zoom = 1.0f;
 int axis = 1;
 
+int timebase;
+float frames;
+
 Configuration c;
-std::vector<Point> points;
 
 void reshape(int w, int h) {
   float aspect_ratio = (float)w / (float)h;
@@ -117,6 +116,27 @@ void saveCurrent() {
   getWindowSizeAndCamera(filename, newPos.multiply(1 / zoom), w);
 }
 
+void frameCounter() {
+  static int frame = 0;
+  static float time = 0;
+  static float fps = 0;
+
+  frame++;
+  time = glutGet(GLUT_ELAPSED_TIME);
+  if (time - timebase > 1000) {
+    fps = frame * 1000.0 / (time - timebase);
+    timebase = time;
+    frame = 0;
+  }
+
+  static int i = 0;
+  i++;
+  // print fps
+  if (i % 100 == 0) {
+    std::cout << "FPS: " << std::to_string(fps) << std::endl;
+  }
+}
+
 void renderScene(void) {
   // clear buffers
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -135,7 +155,9 @@ void renderScene(void) {
   drawAxis();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  drawGroups(c.group);
+  c.group.drawGroup();
+
+  frameCounter();
 
   // End of frame
   glutSwapBuffers();
@@ -198,8 +220,6 @@ void setupConfig(char* arg) {
     c = parseConfig(filename);
   } else {
     c = parseConfig("../scenes/default.xml");
-    std::vector<Point> file_points = parseFile(filename);
-    points.insert(points.end(), file_points.begin(), file_points.end());
   }
 }
 
@@ -219,6 +239,9 @@ int main(int argc, char** argv) {
   glutInitWindowSize(c.window.width, c.window.height);
   glutCreateWindow("CG@DI");
 
+  glewInit();
+  glEnableClientState(GL_VERTEX_ARRAY);
+
   // put callback registry here
   glutIdleFunc(renderScene);
   glutDisplayFunc(renderScene);
@@ -226,11 +249,6 @@ int main(int argc, char** argv) {
 
   glutSpecialFunc(processSpecialKeys);
   glutKeyboardFunc(processNormalKeys);
-
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  // Setup Dear ImGui style
-  ImGui::StyleColorsDark();
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
