@@ -18,6 +18,7 @@ build
 CMakeCache.txt
 compile_commands.json
 CMakeFiles/*
+_deps/*
 # Prerequisites
 *.d
 
@@ -51,6 +52,8 @@ CMakeFiles/*
 *.exe
 *.out
 *.app
+cg-engine
+cg-generator
 
 .vscode
 build

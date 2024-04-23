@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 Group::Group() {
   this->models = std::vector<Model>();

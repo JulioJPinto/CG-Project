@@ -3,9 +3,8 @@
 
 #include <string>
 
-#include "../../lib/rapidxml-1.13/rapidxml.hpp"
 #include "Configuration.hpp"
-#include "parse.hpp"
+#include "rapidxml/rapidxml.hpp"
 
 Configuration parseConfig(std::string filename);
 

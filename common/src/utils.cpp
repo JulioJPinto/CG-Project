@@ -1,4 +1,4 @@
-#include "../include/utils.hpp"
+#include "utils.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#define DIR "../models/"
+#define DIR "models/"
 
 std::map<std::string, std::vector<Point>> hash_models;
 

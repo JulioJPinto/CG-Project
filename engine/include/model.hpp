@@ -1,14 +1,21 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include <GL/glut.h>
+extern "C" {
+#include <GL/gl.h>
+#ifdef __APPLE_CC__
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
+}
 
 #include <algorithm>
 #include <iostream>
 #include <set>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 std::vector<Point> generateVBO(const std::vector<Point>& points);
 

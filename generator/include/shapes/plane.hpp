@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 bool generatePlane(float length, int divisions, const char* filepath);
 

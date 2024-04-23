@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 #include "model.hpp"
 
 class Group {

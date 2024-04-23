@@ -1,11 +1,11 @@
-#include "../../include/shapes/patches.hpp"
+#include "shapes/patches.hpp"
 
 #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 std::vector<Point> patchTriangles(const char* bezier_patch,
                                   const int tessellation) {
