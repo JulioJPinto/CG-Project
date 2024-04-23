@@ -233,6 +233,7 @@ int main(int argc, char** argv) {
   setupConfig(argv[1]);
 
   // put GLUT�s init here
+  putenv("vblank_mode=0");
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
   glutInitWindowPosition(100, 100);
