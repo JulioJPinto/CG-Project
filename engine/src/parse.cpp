@@ -86,13 +86,13 @@ Group parseGroup(rapidxml::xml_node<>* groupNode) {
   }
 
   // Parse subgroups node
-  // rapidxml::xml_node<>* subgroupsNode = groupNode->first_node("group");
-  // while (subgroupsNode) {
+  rapidxml::xml_node<>* subgroupsNode = groupNode->first_node("group");
+  while (subgroupsNode) {
     
-  //   Group subgroup = parseGroup(subgroupsNode);
-  //   group.subgroups.push_back(subgroup);
-  //   subgroupsNode = subgroupsNode->next_sibling("group");
-  // }
+    Group subgroup = parseGroup(subgroupsNode);
+    group.subgroups.push_back(subgroup);
+    subgroupsNode = subgroupsNode->next_sibling("group");
+  }
 
   return group;
 }
@@ -114,10 +114,10 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
         float x = std::stof(node->first_attribute("x")->value());
         float y = std::stof(node->first_attribute("y")->value());
         float z = std::stof(node->first_attribute("z")->value());
-        group.rotations.time = time;
-        group.rotations.x = x;
-        group.rotations.y = y;
-        group.rotations.z = z;
+        group.rotations.time = float(time);
+        group.rotations.x = float(x);
+        group.rotations.y = float(y);
+        group.rotations.z = float(z);
 
       } else {
         float angle = std::stof(node->first_attribute("angle")->value());
@@ -145,9 +145,10 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
           curvePoints.push_back(Point(x, y, z));
           node->remove_node(point);
         }
-        group.translates.time = time;
-        group.translates.align = align;
-        group.translates.curvePoints = curvePoints;
+        group.translates.time = float(time);
+        group.translates.align = float(align);
+        std::vector<Point> cPoints = curvePoints;
+        group.translates.curvePoints = cPoints;
         std::cout << group.translates.time << std::endl;
         std::cout << group.translates.align << std::endl;
         std::cout << group.translates.curvePoints.size() << std::endl;

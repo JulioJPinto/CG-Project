@@ -10,18 +10,8 @@
         <transform>
             <rotate time="3" x="0" y="1" z="0" />
         </transform>
-            <group>
-                <transform>
-                    <translate time = "10" align="true"> <!-- O campo align diz se o objecto deve ser orientado na curva -->
-                        <point x = "0" y = "0" z = "4" />
-                        <point x = "4" y = "0" z = "0" />
-                        <point x = "0" y = "0" z = "-4" />
-                        <point x = "-4" y = "10" z = "0" />
-                    </translate>
-                </transform>
-                <models> 
-                    <model file="bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
-                </models>
-            </group>
+        <models> 
+            <model file="bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+        </models>
     </group>
 </world>

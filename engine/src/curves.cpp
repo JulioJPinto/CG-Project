@@ -23,18 +23,12 @@ std::pair<Point, Point> get_cutmoll_rom_position(std::vector<Point> curve, float
     
     t -= segment;
     
-
-
     auto fst_idx = segment + curve.size() - 1;
-
-    
 
     auto p1 = curve[(fst_idx + 0) % curve.size()];
     auto p2 = curve[(fst_idx + 1) % curve.size()];
     auto p3 = curve[(fst_idx + 2) % curve.size()];
     auto p4 = curve[(fst_idx + 3) % curve.size()];
-
-    
 
     const std::array<std::array<float, 4>, 3> p{{
         {p1.x, p2.x, p3.x, p4.x},
@@ -71,7 +65,7 @@ std::pair<Point, Point> get_cutmoll_rom_position(std::vector<Point> curve, float
 
 
 Rotations::Rotations() {
-    this->time = 1;
+    this->time = 0;
     this->x = 0;
     this->y = 0;
     this->z = 0;
@@ -91,7 +85,7 @@ void Rotations::ApplyRotation(float elapsed) {
 }
 
 Translates::Translates() {
-    this->time = 1;
+    this->time = 0;
     this->align = false;
     this->y_axis = Point(0, 1, 0);
 }
@@ -123,7 +117,9 @@ std::array<float, 16> Translates::rotationMatrix(Point x, Point y, Point z) {
 }
 
 void Translates::ApplyTranslate(float elapsed) {
-    if(this->time = 0) {
+    this->renderCatmullRomCurve();
+    
+    if(this->time == 0) {
         return;
     }
     float time = elapsed / this->time;
