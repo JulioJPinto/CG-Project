@@ -101,7 +101,6 @@ std::vector<Point> parseOBJfile(std::string filename) {
 }
 
 std::vector<Point> parse3Dfile(std::string filename) {
-  printf("%s\n", filename.c_str());
   std::vector<Point> points;
   std::ifstream file(filename);
 

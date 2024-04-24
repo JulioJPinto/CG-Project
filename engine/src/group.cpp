@@ -9,25 +9,33 @@
 #include "utils.hpp"
 
 Group::Group() {
-  this->models = std::vector<Model>();
-  this->subgroups = std::vector<Group>();
-  this->points = std::vector<Point>();
+  this->models = {};
+  this->subgroups = {};
+  this->points = {};
+  this->arr = {{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
+  this->rotations = Rotations();
+  this->translates = Translates();
 }
 
 Group::Group(std::vector<Model> models, std::vector<Group> subgroups,
              std::vector<Point> points,
-             std::array<std::array<double, 4>, 4> arr) {
+             std::array<std::array<float, 4>, 4> arr,
+             Rotations rotations,
+             Translates translates) {
   this->models = models;
   this->subgroups = subgroups;
   this->points = points;
   this->arr = arr;
+  this->rotations = rotations;
+  this->translates = translates;
+
 }
 
-void Group::translate(double x, double y, double z) {
-  std::array<std::array<double, 4>, 4> translationMatrix = {
+void Group::translate(float x, float y, float z) {
+  std::array<std::array<float, 4>, 4> translationMatrix = {
       {{1, 0, 0, x}, {0, 1, 0, y}, {0, 0, 1, z}, {0, 0, 0, 1}}};
 
-  std::array<std::array<double, 4>, 4> result = {
+  std::array<std::array<float, 4>, 4> result = {
       {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}};
 
   for (int i = 0; i < 4; i++) {
@@ -41,11 +49,11 @@ void Group::translate(double x, double y, double z) {
   this->arr = result;
 }
 
-void Group::scale(double x, double y, double z) {
-  std::array<std::array<double, 4>, 4> scaleMatrix = {
+void Group::scale(float x, float y, float z) {
+  std::array<std::array<float, 4>, 4> scaleMatrix = {
       {{x, 0, 0, 0}, {0, y, 0, 0}, {0, 0, z, 0}, {0, 0, 0, 1}}};
 
-  std::array<std::array<double, 4>, 4> result = {
+  std::array<std::array<float, 4>, 4> result = {
       {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}};
 
   for (int i = 0; i < 4; i++) {
@@ -59,9 +67,9 @@ void Group::scale(double x, double y, double z) {
   this->arr = result;
 }
 
-void Group::rotate(double angle, double x, double y, double z) {
+void Group::rotate(float angle, float x, float y, float z) {
   float rad = angle * M_PI / 180;
-  std::array<std::array<double, 4>, 4> rotateMatrix = {
+  std::array<std::array<float, 4>, 4> rotateMatrix = {
       {{x * x + (1 - x * x) * cos(rad), x * y * (1 - cos(rad)) - z * sin(rad),
         x * z * (1 - cos(rad)) + y * sin(rad), 0},
        {y * x * (1 - cos(rad)) + z * sin(rad), y * y + (1 - y * y) * cos(rad),
@@ -71,7 +79,7 @@ void Group::rotate(double angle, double x, double y, double z) {
         0},
        {0, 0, 0, 1}}};
 
-  std::array<std::array<double, 4>, 4> result = {
+  std::array<std::array<float, 4>, 4> result = {
       {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}};
 
   for (int i = 0; i < 4; i++) {
@@ -87,6 +95,11 @@ void Group::rotate(double angle, double x, double y, double z) {
 
 void Group::drawGroup() {
   glPushMatrix();
+
+  float elapsed = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+  this->translates.ApplyTranslate(elapsed);
+  this->rotations.ApplyRotation(elapsed);
+  
   GLfloat matrix[16] = {
       this->arr[0][0], this->arr[1][0], this->arr[2][0], this->arr[3][0],
       this->arr[0][1], this->arr[1][1], this->arr[2][1], this->arr[3][1],

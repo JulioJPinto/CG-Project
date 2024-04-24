@@ -82,7 +82,6 @@ Model getModel(std::string name) {
   Model m = Model(name, points);
 
   models.push_back(m);
-  std::cout << "Primeiro: " << name << std::endl;
 
   return m;
 }

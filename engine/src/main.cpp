@@ -15,6 +15,7 @@ extern "C" {
 #include "Configuration.hpp"
 #include "parse.hpp"
 #include "menuimgui.hpp"
+#include "curves.hpp"
 
 std::string filename;
 
@@ -103,6 +104,7 @@ void renderScene(void) {
   drawAxis();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
   c.group.drawGroup();
 
   //renderMenu();

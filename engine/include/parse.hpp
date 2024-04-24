@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Configuration.hpp"
+#include "curves.hpp"
 #include "rapidxml/rapidxml.hpp"
 
 Configuration parseConfig(std::string filename);

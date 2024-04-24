@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+
 Configuration parseConfig(std::string filename) {
   // open file in read mode
   std::ifstream file(filename);
@@ -85,12 +86,13 @@ Group parseGroup(rapidxml::xml_node<>* groupNode) {
   }
 
   // Parse subgroups node
-  rapidxml::xml_node<>* subgroupsNode = groupNode->first_node("group");
-  while (subgroupsNode) {
-    Group subgroup = parseGroup(subgroupsNode);
-    group.subgroups.push_back(subgroup);
-    subgroupsNode = subgroupsNode->next_sibling("group");
-  }
+  // rapidxml::xml_node<>* subgroupsNode = groupNode->first_node("group");
+  // while (subgroupsNode) {
+    
+  //   Group subgroup = parseGroup(subgroupsNode);
+  //   group.subgroups.push_back(subgroup);
+  //   subgroupsNode = subgroupsNode->next_sibling("group");
+  // }
 
   return group;
 }
@@ -102,21 +104,61 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
        node = node->next_sibling()) {
     std::string nodeName = node->name();
     if (nodeName == "scale") {
-      double x = std::stod(node->first_attribute("x")->value());
-      double y = std::stod(node->first_attribute("y")->value());
-      double z = std::stod(node->first_attribute("z")->value());
+      float x = std::stof(node->first_attribute("x")->value());
+      float y = std::stof(node->first_attribute("y")->value());
+      float z = std::stof(node->first_attribute("z")->value());
       group.scale(x, y, z);
     } else if (nodeName == "rotate") {
-      double angle = std::stod(node->first_attribute("angle")->value());
-      double x = std::stod(node->first_attribute("x")->value());
-      double y = std::stod(node->first_attribute("y")->value());
-      double z = std::stod(node->first_attribute("z")->value());
-      group.rotate(angle, x, y, z);
+      if(node->first_attribute("time")) {
+        float time = std::stof(node->first_attribute("time")->value());
+        float x = std::stof(node->first_attribute("x")->value());
+        float y = std::stof(node->first_attribute("y")->value());
+        float z = std::stof(node->first_attribute("z")->value());
+        group.rotations.time = time;
+        group.rotations.x = x;
+        group.rotations.y = y;
+        group.rotations.z = z;
+
+      } else {
+        float angle = std::stof(node->first_attribute("angle")->value());
+        float x = std::stof(node->first_attribute("x")->value());
+        float y = std::stof(node->first_attribute("y")->value());
+        float z = std::stof(node->first_attribute("z")->value());
+        group.rotate(angle, x, y, z);
+      }
+      
     } else if (nodeName == "translate") {
-      double x = std::stod(node->first_attribute("x")->value());
-      double y = std::stod(node->first_attribute("y")->value());
-      double z = std::stod(node->first_attribute("z")->value());
-      group.translate(x, y, z);
+      if(node->first_attribute("time")) {
+        float time = std::stof(node->first_attribute("time")->value());
+        
+        bool align = true;
+        if (node->first_attribute("align")) {
+          align =
+              std::string(node->first_attribute("align")->value()) == "true";
+        }
+        std::vector<Point> curvePoints;
+        while (node->first_node("point")) {
+          rapidxml::xml_node<>* point = node->first_node("point");
+          float x = std::stof(point->first_attribute("x")->value());
+          float y = std::stof(point->first_attribute("y")->value());
+          float z = std::stof(point->first_attribute("z")->value());
+          curvePoints.push_back(Point(x, y, z));
+          node->remove_node(point);
+        }
+        group.translates.time = time;
+        group.translates.align = align;
+        group.translates.curvePoints = curvePoints;
+        std::cout << group.translates.time << std::endl;
+        std::cout << group.translates.align << std::endl;
+        std::cout << group.translates.curvePoints.size() << std::endl;
+        
+      } else {
+        float x = std::stof(node->first_attribute("x")->value());
+        float y = std::stof(node->first_attribute("y")->value());
+        float z = std::stof(node->first_attribute("z")->value());
+        group.translate(x, y, z);
+      }
+      
     }
   }
 }
