@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
-#include "utils.hpp"
 #include "model.hpp"
+#include "utils.hpp"
 
 class Rotations {
  public:
@@ -19,7 +19,6 @@ class Rotations {
   Rotations(float time, float x, float y, float z);
 
   void ApplyRotation(float elapsed);
-
 };
 
 class Translates {
@@ -28,7 +27,7 @@ class Translates {
   bool align;
   std::vector<Point> curvePoints;
   Point y_axis;
-  
+
   Translates();
   Translates(float time, bool align, std::vector<Point> curve);
 
@@ -39,7 +38,6 @@ class Translates {
   std::pair<Point, Point> getLocation(float elapsed);
 
   std::array<float, 16> rotationMatrix(Point x, Point y, Point z);
-
 };
 
 void renderCatmullRomCurve();
@@ -47,6 +45,5 @@ void renderCatmullRomCurve();
 auto buildRotMatrix(Point x, Point y, Point z) -> std::vector<float>;
 
 auto get_location(float elapsed) -> std::pair<Point, Point>;
-
 
 #endif  // CURVES_HPP

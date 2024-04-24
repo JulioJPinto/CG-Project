@@ -18,17 +18,14 @@ Group::Group() {
 }
 
 Group::Group(std::vector<Model> models, std::vector<Group> subgroups,
-             std::vector<Point> points,
-             std::array<std::array<float, 4>, 4> arr,
-             Rotations rotations,
-             Translates translates) {
+             std::vector<Point> points, std::array<std::array<float, 4>, 4> arr,
+             Rotations rotations, Translates translates) {
   this->models = models;
   this->subgroups = subgroups;
   this->points = points;
   this->arr = arr;
   this->rotations = rotations;
   this->translates = translates;
-
 }
 
 void Group::translate(float x, float y, float z) {
@@ -99,7 +96,7 @@ void Group::drawGroup() {
   float elapsed = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
   this->translates.ApplyTranslate(elapsed);
   this->rotations.ApplyRotation(elapsed);
-  
+
   GLfloat matrix[16] = {
       this->arr[0][0], this->arr[1][0], this->arr[2][0], this->arr[3][0],
       this->arr[0][1], this->arr[1][1], this->arr[2][1], this->arr[3][1],

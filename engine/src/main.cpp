@@ -13,9 +13,9 @@ extern "C" {
 #include <math.h>
 
 #include "Configuration.hpp"
-#include "parse.hpp"
-#include "menuimgui.hpp"
 #include "curves.hpp"
+#include "menuimgui.hpp"
+#include "parse.hpp"
 
 std::string filename;
 
@@ -109,7 +109,7 @@ void renderScene(void) {
 
   c.group.drawGroup();
 
-  //renderMenu();
+  // renderMenu();
 
   frameCounter();
 
@@ -198,7 +198,7 @@ int main(int argc, char** argv) {
   glutInitWindowSize(c.window.width, c.window.height);
   glutCreateWindow("CG@DI");
 
-  //setupMenu();
+  // setupMenu();
 
   glewInit();
   glEnableClientState(GL_VERTEX_ARRAY);
@@ -211,8 +211,6 @@ int main(int argc, char** argv) {
   glutSpecialFunc(processSpecialKeys);
   glutKeyboardFunc(processNormalKeys);
 
-  
-
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
@@ -221,7 +219,7 @@ int main(int argc, char** argv) {
   // enter GLUT�s main cycle
   glutMainLoop();
 
-  //shutDownMenu();
+  // shutDownMenu();
 
   return 1;
 }

@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 
-#include "utils.hpp"
-#include "model.hpp"
 #include "curves.hpp"
+#include "model.hpp"
+#include "utils.hpp"
 
 class Group {
  public:
@@ -22,8 +22,7 @@ class Group {
 
   Group();
   Group(std::vector<Model> models, std::vector<Group> subgroups,
-        std::vector<Point> points,
-        std::array<std::array<float, 4>, 4> arr,
+        std::vector<Point> points, std::array<std::array<float, 4>, 4> arr,
         Rotations rotations,
         Translates translates);  // Updated constructor
 

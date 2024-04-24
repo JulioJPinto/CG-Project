@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 
-
 Configuration parseConfig(std::string filename) {
   // open file in read mode
   std::ifstream file(filename);
@@ -88,7 +87,6 @@ Group parseGroup(rapidxml::xml_node<>* groupNode) {
   // Parse subgroups node
   rapidxml::xml_node<>* subgroupsNode = groupNode->first_node("group");
   while (subgroupsNode) {
-    
     Group subgroup = parseGroup(subgroupsNode);
     group.subgroups.push_back(subgroup);
     subgroupsNode = subgroupsNode->next_sibling("group");
@@ -109,7 +107,7 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
       float z = std::stof(node->first_attribute("z")->value());
       group.scale(x, y, z);
     } else if (nodeName == "rotate") {
-      if(node->first_attribute("time")) {
+      if (node->first_attribute("time")) {
         float time = std::stof(node->first_attribute("time")->value());
         float x = std::stof(node->first_attribute("x")->value());
         float y = std::stof(node->first_attribute("y")->value());
@@ -126,11 +124,11 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
         float z = std::stof(node->first_attribute("z")->value());
         group.rotate(angle, x, y, z);
       }
-      
+
     } else if (nodeName == "translate") {
-      if(node->first_attribute("time")) {
+      if (node->first_attribute("time")) {
         float time = std::stof(node->first_attribute("time")->value());
-        
+
         bool align = true;
         if (node->first_attribute("align")) {
           align =
@@ -152,14 +150,13 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
         std::cout << group.translates.time << std::endl;
         std::cout << group.translates.align << std::endl;
         std::cout << group.translates.curvePoints.size() << std::endl;
-        
+
       } else {
         float x = std::stof(node->first_attribute("x")->value());
         float y = std::stof(node->first_attribute("y")->value());
         float z = std::stof(node->first_attribute("z")->value());
         group.translate(x, y, z);
       }
-      
     }
   }
 }

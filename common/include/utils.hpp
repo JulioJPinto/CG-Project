@@ -1,12 +1,12 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <cmath>
 
 #include "utils.hpp"
 
