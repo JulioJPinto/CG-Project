@@ -173,14 +173,6 @@ void setupConfig(char* arg) {
   }
 }
 
-void flaghandles(int argc, char** argv) {
-  for (int i = 2; i < argc; i++) {
-    if (!(argv[i] == "-vsync-off")) {
-      putenv("vblank_mode=0");
-    }
-  }
-}
-
 int main(int argc, char** argv) {
   if (argc == 1) {
     std::cout << "Invalid Arguments\n";
@@ -189,7 +181,6 @@ int main(int argc, char** argv) {
   }
 
   setupConfig(argv[1]);
-  flaghandles(argc, argv);
 
   // put GLUT�s init here
   glutInit(&argc, argv);

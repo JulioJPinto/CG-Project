@@ -97,7 +97,7 @@ void Group::drawGroup() {
   this->translates.ApplyTranslate(elapsed);
   this->rotations.ApplyRotation(elapsed);
 
-  GLfloat matrix[16] = {
+  float matrix[16] = {
       this->arr[0][0], this->arr[1][0], this->arr[2][0], this->arr[3][0],
       this->arr[0][1], this->arr[1][1], this->arr[2][1], this->arr[3][1],
       this->arr[0][2], this->arr[1][2], this->arr[2][2], this->arr[3][2],
