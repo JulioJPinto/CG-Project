@@ -131,7 +131,7 @@ void Translates::ApplyTranslate(float elapsed) {
     return;
   }
 
-  //this->renderCatmullRomCurve();
+  // this->renderCatmullRomCurve();
 
   float time = elapsed / this->time;
 
