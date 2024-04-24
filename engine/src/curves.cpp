@@ -79,7 +79,6 @@ void Rotations::ApplyRotation(float elapsed) {
   if (this->time == 0) {
     return;
   }
-  std::cout << this->time << std::endl;
   float angle = 360 * (elapsed / this->time);
   glRotatef(angle, this->x, this->y, this->z);
 }
@@ -132,7 +131,7 @@ void Translates::ApplyTranslate(float elapsed) {
     return;
   }
 
-  this->renderCatmullRomCurve();
+  //this->renderCatmullRomCurve();
 
   float time = elapsed / this->time;
 

@@ -7,8 +7,6 @@
 #include <string>
 #include <vector>
 
-#define DIR "models/"
-
 std::map<std::string, std::vector<Point>> hash_models;
 
 std::string Point::toString() {
@@ -22,7 +20,7 @@ std::vector<Point> parseFile(std::string filepath) {
     return hash_models[filepath];
   }
 
-  std::string filename = DIR + filepath;
+  std::string filename = filepath;
   std::vector<Point> points;
 
   size_t dotIndex = filename.find_last_of(".");
@@ -52,10 +50,7 @@ void saveToFile(
     const std::vector<Point>& points,
     const char* filepath) {  // Changed parameter type to const char*
 
-  std::string buf(DIR);
-  buf.append(filepath);
-
-  std::ofstream file(buf);
+  std::ofstream file(filepath);
 
   if (file.is_open()) {
     for (const auto& point : points) {

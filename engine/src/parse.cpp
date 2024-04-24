@@ -147,9 +147,6 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
         group.translates.align = float(align);
         std::vector<Point> cPoints = curvePoints;
         group.translates.curvePoints = cPoints;
-        std::cout << group.translates.time << std::endl;
-        std::cout << group.translates.align << std::endl;
-        std::cout << group.translates.curvePoints.size() << std::endl;
 
       } else {
         float x = std::stof(node->first_attribute("x")->value());
