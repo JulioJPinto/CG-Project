@@ -1,5 +1,12 @@
 #include <GL/glew.h>
-#include <GL/glut.h>
+extern "C" {
+#include <GL/gl.h>
+#ifdef __APPLE_CC__
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
+}
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -75,7 +82,6 @@ Model getModel(std::string name) {
   Model m = Model(name, points);
 
   models.push_back(m);
-  std::cout << "Primeiro: " << name << std::endl;
 
   return m;
 }

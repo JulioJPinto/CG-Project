@@ -5,27 +5,32 @@
 #include <string>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "curves.hpp"
 #include "model.hpp"
+#include "utils.hpp"
 
 class Group {
  public:
   std::vector<Model> models;
   std::vector<Group> subgroups;
   std::vector<Point> points;
-  std::array<std::array<double, 4>, 4> arr = {
+  std::array<std::array<float, 4>, 4> arr = {
       {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
+
+  Rotations rotations;
+  Translates translates;
 
   Group();
   Group(std::vector<Model> models, std::vector<Group> subgroups,
-        std::vector<Point> points,
-        std::array<std::array<double, 4>, 4> arr);  // Updated constructor
+        std::vector<Point> points, std::array<std::array<float, 4>, 4> arr,
+        Rotations rotations,
+        Translates translates);  // Updated constructor
 
-  void translate(double x, double y, double z);
+  void translate(float x, float y, float z);
 
-  void scale(double x, double y, double z);
+  void scale(float x, float y, float z);
 
-  void rotate(double angle, double x, double y, double z);
+  void rotate(float angle, float x, float y, float z);
 
   void drawGroup();
   // std::string toString();

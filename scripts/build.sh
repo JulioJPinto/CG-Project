@@ -1,11 +1,5 @@
 #!/bin/bash
-build_dir=build
+cmake -Bbuild && cmake --build build
 
-cmake -S . -B $build_dir
-
-cd engine
-make
-cd ..
-cd generator
-make
-cd ..
+cp build/cg-engine cg-engine
+cp build/cg-generator cg-generator

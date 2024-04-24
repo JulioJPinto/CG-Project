@@ -1,15 +1,21 @@
 
 #include <GL/glew.h>
-#include <GL/glut.h>
+extern "C" {
+#include <GL/gl.h>
+#ifdef __APPLE_CC__
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
+}
 
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-#include "imgui.h"
-#include "imgui_impl_glut.h"
-#include "imgui_impl_opengl3.h"
+#include "Configuration.hpp"
+#include "curves.hpp"
+#include "menuimgui.hpp"
 #include "parse.hpp"
-#include "save.hpp"
 
 std::string filename;
 
@@ -55,65 +61,10 @@ void drawAxis(void) {
     glColor3f(0.0f, 0.0f, 50.0f);
     glVertex3f(0.0f, 0.0f, -500.0f);
     glVertex3f(0.0f, 0.0f, 500.0f);
+
+    glColor3f(1.0f, 1.0f, 1.0f);
     glEnd();
   }
-}
-
-Point rotatePoint(Point point) {
-  float x = point.x;
-  float y = point.y;
-  float z = point.z;
-
-  float r = sqrt(x * x + y * y + z * z);
-
-  float alfa = atan2(y, x);
-  float beta = acos(z / r);
-
-  // Convert angles from degrees to radians
-  float angle = (cameraAngle + alfa) * M_PI / 180.0;
-  float angleY = (cameraAngleY + beta) * M_PI / 180.0;
-
-  // Rotation matrices
-  std::vector<std::vector<double>> rotZ = {
-      {1, 0, 0}, {0, cos(angle), -sin(angle)}, {0, sin(angle), cos(angle)}};
-
-  std::vector<std::vector<double>> rotY = {
-      {cos(angleY), 0, sin(angleY)}, {0, 1, 0}, {-sin(angleY), 0, cos(angleY)}};
-
-  std::vector<std::vector<double>> rotX = {
-      {cos(angle), -sin(angle), 0}, {sin(angle), cos(angle), 0}, {0, 0, 1}};
-
-  double newX = rotX[0][0] * x + rotX[0][1] * y + rotX[0][2] * z;
-  double newY = rotX[1][0] * x + rotX[1][1] * y + rotX[1][2] * z;
-  double newZ = rotX[2][0] * x + rotX[2][1] * y + rotX[2][2] * z;
-
-  x = newX;
-  y = newY;
-  z = newZ;
-
-  newX = rotY[0][0] * x + rotY[0][1] * y + rotY[0][2] * z;
-  newY = rotY[1][0] * x + rotY[1][1] * y + rotY[1][2] * z;
-  newZ = rotY[2][0] * x + rotY[2][1] * y + rotY[2][2] * z;
-
-  x = newX;
-  y = newY;
-  z = newZ;
-
-  newX = (rotZ[0][0] * x + rotZ[0][1] * y + rotZ[0][2] * z);
-  newY = (rotZ[1][0] * x + rotZ[1][1] * y + rotZ[1][2] * z);
-  newZ = (rotZ[2][0] * x + rotZ[2][1] * y + rotZ[2][2] * z);
-
-  return Point(newZ, newY, newX);
-}
-
-void saveCurrent() {
-  Point newPos = c.camera.position;
-  if (cameraAngle != 0 || cameraAngleY != 0) {
-    newPos = rotatePoint(c.camera.position);
-  }
-  Window w(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-
-  getWindowSizeAndCamera(filename, newPos.multiply(1 / zoom), w);
 }
 
 void frameCounter() {
@@ -155,7 +106,10 @@ void renderScene(void) {
   drawAxis();
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
   c.group.drawGroup();
+
+  // renderMenu();
 
   frameCounter();
 
@@ -204,10 +158,6 @@ void processNormalKeys(unsigned char key, int x, int y) {
     case 'i':
       zoom += value;
       break;
-    case 's':
-      std::cout << "Saving Current Settings to file";
-      saveCurrent();
-      break;
     default:
       break;
   }
@@ -248,6 +198,8 @@ int main(int argc, char** argv) {
   glutInitWindowSize(c.window.width, c.window.height);
   glutCreateWindow("CG@DI");
 
+  // setupMenu();
+
   glewInit();
   glEnableClientState(GL_VERTEX_ARRAY);
 
@@ -266,6 +218,8 @@ int main(int argc, char** argv) {
 
   // enter GLUT�s main cycle
   glutMainLoop();
+
+  // shutDownMenu();
 
   return 1;
 }

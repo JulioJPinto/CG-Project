@@ -1,4 +1,4 @@
-#include "../include/utils.hpp"
+#include "utils.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#define DIR "../models/"
+#define DIR "models/"
 
 std::map<std::string, std::vector<Point>> hash_models;
 
@@ -101,7 +101,6 @@ std::vector<Point> parseOBJfile(std::string filename) {
 }
 
 std::vector<Point> parse3Dfile(std::string filename) {
-  printf("%s\n", filename.c_str());
   std::vector<Point> points;
   std::ifstream file(filename);
 

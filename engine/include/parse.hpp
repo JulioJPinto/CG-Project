@@ -1,11 +1,11 @@
 #ifndef PARSE_HPP
 #define PARSE_HPP
 
+#include <rapidxml/rapidxml.hpp>
 #include <string>
 
-#include "../../lib/rapidxml-1.13/rapidxml.hpp"
 #include "Configuration.hpp"
-#include "parse.hpp"
+#include "curves.hpp"
 
 Configuration parseConfig(std::string filename);
 

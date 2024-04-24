@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
 
-#include "../include/shapes/cone.hpp"
-#include "../include/shapes/cube.hpp"
-#include "../include/shapes/cylinder.hpp"
-#include "../include/shapes/patches.hpp"
-#include "../include/shapes/plane.hpp"
-#include "../include/shapes/sphere.hpp"
-#include "../include/shapes/torus.hpp"
+#include "shapes/cone.hpp"
+#include "shapes/cube.hpp"
+#include "shapes/cylinder.hpp"
+#include "shapes/patches.hpp"
+#include "shapes/plane.hpp"
+#include "shapes/sphere.hpp"
+#include "shapes/torus.hpp"
 
 void generateFigure(int argc, char* argv[]) {
   if (argc < 5) {

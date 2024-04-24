@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 bool generateTorus(float majorRadius, float minorRadius, int sides, int rings,
                    const char* filepath);

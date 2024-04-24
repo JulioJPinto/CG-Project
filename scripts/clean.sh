@@ -19,7 +19,13 @@ rm -rf */build
 rm -rf */engine
 rm -rf */generator
 rm -rf */common
+rm -rf _deps
 
+rm -rf */libimgui.a
+rm -rf */libcommon.a
+rm -rf libimgui.a
 
+rm -rf cg-engine
+rm -rf cg-generator
 
 echo "Cleanup complete."

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 std::vector<Point> sphereTriangles(float radius, int slices, int stacks) {
   std::vector<Point> points;

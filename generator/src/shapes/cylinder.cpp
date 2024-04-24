@@ -1,11 +1,11 @@
-#include "../../include/shapes/cylinder.hpp"
+#include "shapes/cylinder.hpp"
 
 #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <vector>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 std::vector<Point> cylinderTriangles(const float radius, const float height,
                                      const int slices) {

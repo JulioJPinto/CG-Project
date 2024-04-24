@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "../../common/include/utils.hpp"
+#include "utils.hpp"
 
 std::vector<Point> patchTriangles(const char* bezier_patch,
                                   const int tessellation);

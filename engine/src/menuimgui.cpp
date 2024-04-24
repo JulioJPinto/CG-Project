@@ -8,8 +8,6 @@ void setupMenu() {
   (void)io;
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
-  ImGui::StyleColorsDark();
-
   ImGui_ImplGLUT_Init();
   ImGui_ImplOpenGL3_Init();
   ImGui_ImplGLUT_InstallFuncs();
