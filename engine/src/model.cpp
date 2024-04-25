@@ -15,10 +15,7 @@ extern "C" {
 
 #include "model.hpp"
 
-#define MAX 10
-
-std::vector<Model> models;
-int counter = 0;
+unsigned int counter = 0;
 
 std::vector<float> vPointstoFloats(std::vector<Point> points) {
   std::vector<float> floats;
@@ -56,11 +53,13 @@ std::vector<unsigned int> generateIBO(const std::vector<Point>& points,
 }
 
 Model::Model(std::string filename, std::vector<Point> vbo,
-             std::vector<unsigned int> ibo, int id) {
+             std::vector<unsigned int> ibo, int id, std::vector<Point> points) {
   this->filename = filename;
   this->vbo = vbo;
   this->ibo = ibo;
   this->id = id;
+  this->initialized = false;
+  this->_points = points;
 }
 
 Model::Model(std::string filename, std::vector<Point> points) {
@@ -68,22 +67,9 @@ Model::Model(std::string filename, std::vector<Point> points) {
   this->id = counter;
   this->vbo = generateVBO(points);
   this->ibo = generateIBO(points, this->vbo);
+  this->initialized = false;
+  this->_points = points;
   counter++;
-}
-
-Model getModel(std::string name) {
-  for (Model& model : models) {
-    if (!model.filename.compare(name)) {
-      return model;
-    }
-  }
-
-  std::vector<Point> points = parseFile(name);
-  Model m = Model(name, points);
-
-  models.push_back(m);
-
-  return m;
 }
 
 void Model::setupModel() {
@@ -104,8 +90,8 @@ void Model::setupModel() {
 
 void Model::drawModel() {
   if (!this->initialized) {
-    setupModel();
     this->initialized = true;
+    setupModel();
   }
 
   glColor3f(1.0f, 1.0f, 1.0f);
@@ -115,3 +101,5 @@ void Model::drawModel() {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);
 }
+
+std::vector<Point> Model::getPoints() { return this->_points; }

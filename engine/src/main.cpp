@@ -28,6 +28,8 @@ int axis = 1;
 int timebase;
 float frames;
 
+bool freeze = false;
+
 Configuration c;
 
 void reshape(int w, int h) {
@@ -158,6 +160,8 @@ void processNormalKeys(unsigned char key, int x, int y) {
     case 'i':
       zoom += value;
       break;
+    case 'f':
+      freeze = !freeze;
     default:
       break;
   }

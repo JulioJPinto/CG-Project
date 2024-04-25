@@ -7,27 +7,26 @@
 #include "curves.hpp"
 #include "utils.hpp"
 
+static const std::array<std::array<float, 4>, 4> cutmoll_rom_matrix{{
+    {-0.5f, +1.5f, -1.5f, +0.5f},
+    {+1.0f, -2.5f, +2.0f, -0.5f},
+    {-0.5f, +0.0f, +0.5f, +0.0f},
+    {+0.0f, +1.0f, +0.0f, +0.0f},
+}};
+
 std::pair<Point, Point> get_cutmoll_rom_position(std::vector<Point> curve,
                                                  float global_time) {
-  static const std::array<std::array<float, 4>, 4> matrix{{
-      {-0.5f, +1.5f, -1.5f, +0.5f},
-      {+1.0f, -2.5f, +2.0f, -0.5f},
-      {-0.5f, +0.0f, +0.5f, +0.0f},
-      {+0.0f, +1.0f, +0.0f, +0.0f},
-  }};
+  const std::array<std::array<float, 4>, 4> matrix = cutmoll_rom_matrix;
 
-  auto t = global_time * curve.size();
-
-  auto segment = (int)floor(t);
-
+  float t = global_time * curve.size();
+  float segment = (int)floor(t);
   t -= segment;
 
-  auto fst_idx = segment + curve.size() - 1;
-
-  auto p1 = curve[(fst_idx + 0) % curve.size()];
-  auto p2 = curve[(fst_idx + 1) % curve.size()];
-  auto p3 = curve[(fst_idx + 2) % curve.size()];
-  auto p4 = curve[(fst_idx + 3) % curve.size()];
+  int first = segment + curve.size() - 1;
+  Point p1 = curve[(first + 0) % curve.size()];
+  Point p2 = curve[(first + 1) % curve.size()];
+  Point p3 = curve[(first + 2) % curve.size()];
+  Point p4 = curve[(first + 3) % curve.size()];
 
   const std::array<std::array<float, 4>, 3> p{{
       {p1.x, p2.x, p3.x, p4.x},
@@ -35,11 +34,13 @@ std::pair<Point, Point> get_cutmoll_rom_position(std::vector<Point> curve,
       {p1.z, p2.z, p3.z, p4.z},
   }};
 
-  const std::array<float, 4> tv = {t * t * t, t * t, t, 1};
-  const std::array<float, 4> tvd = {3 * t * t, 2 * t, 1, 0};
+  const std::array<float, 4> tv = {t * t * t, t * t, t,
+                                   1};  // time matrix for point
+  const std::array<float, 4> devtv = {3 * t * t, 2 * t, 1,
+                                      0};  // time matrix for derivate
 
-  std::array<float, 3> pv{};
-  std::array<float, 3> dv{};
+  std::array<float, 3> pv{};  // Point
+  std::array<float, 3> dv{};  // Derivative
 
   for (size_t i = 0; i < 3; ++i) {
     std::array<float, 4> a{};
@@ -52,9 +53,10 @@ std::pair<Point, Point> get_cutmoll_rom_position(std::vector<Point> curve,
 
     for (size_t j = 0; j < 4; j++) {
       pv[i] += tv[j] * a[j];
-      dv[i] += tvd[j] * a[j];
+      dv[i] += devtv[j] * a[j];
     }
   }
+
   return {
       Point(pv[0], pv[1], pv[2]),
       Point(dv[0], dv[1], dv[2]),

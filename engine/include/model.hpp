@@ -35,12 +35,13 @@ class Model {
   void setupModel();
   void drawModel();
 
+  std::vector<Point> getPoints();
+
  private:
   GLuint _vbo, _ibo;
+  std::vector<Point> _points;
   Model(std::string filename, std::vector<Point> vbo,
-        std::vector<unsigned int> ibo, int id);
+        std::vector<unsigned int> ibo, int id, std::vector<Point> points);
 };
-
-Model getModel(std::string filename);
 
 #endif  // MODEL_HPP
