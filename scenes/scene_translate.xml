@@ -16,7 +16,7 @@
                     </translate>
                 </transform>
                 <models> 
-                    <model file="bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+                    <model file="models/bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
                 </models>
                 <group>
                     <transform>
@@ -28,7 +28,7 @@
                         </translate>
                     </transform>
                     <models> 
-                        <model file="bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+                        <model file="models/bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
                     </models>
                 </group>
             </group>

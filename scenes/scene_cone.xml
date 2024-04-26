@@ -8,7 +8,7 @@
     </camera>
     <group> 
           <models> 
-            <model file="cone.3d" /> 
+            <model file="models/cone.3d" /> 
          </models>
      </group>
 </world>

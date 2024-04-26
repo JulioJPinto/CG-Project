@@ -8,8 +8,8 @@
     </camera>
     <group> 
           <models> 
-            <model file="ferrari.obj" />
-            <model file="sphere.3d" /> 
+            <model file="models/ferrari.obj" />
+            <model file="models/sphere.3d" /> 
          </models>
      </group>
 </world>

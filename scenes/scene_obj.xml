@@ -8,7 +8,7 @@
     </camera>
     <group> 
           <models> 
-            <model file="bunny.obj" /> 
+            <model file="models/bunny.obj" /> 
          </models>
      </group>
 </world>

@@ -95,7 +95,7 @@ Translates::Translates(float time, bool align, std::vector<Point> curve) {
   this->time = time;
   this->align = align;
   this->curvePoints = curve;
-  this->y_axis = curve[0];
+  this->y_axis = Point(0, 1, 0);
 }
 
 std::pair<Point, Point> Translates::getLocation(float elapsed) {

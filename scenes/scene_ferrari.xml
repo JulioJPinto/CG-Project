@@ -8,7 +8,7 @@
     </camera>
     <group> 
           <models> 
-            <model file="ferrari.obj" /> 
+            <model file="models/ferrari.obj" /> 
          </models>
      </group>
 </world>

@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <filesystem>
 
 std::map<std::string, std::vector<Point>> hash_models;
 
@@ -14,6 +15,12 @@ std::string Point::toString() {
   oss << "(" << x << ", " << y << ", " << z << ")";
   return oss.str();
 }
+
+
+bool fileExists(const std::string& filepath) {
+    return std::filesystem::exists(filepath);
+}
+
 
 std::vector<Point> parseFile(std::string filepath) {
   if (hash_models.find(filepath) != hash_models.end()) {
@@ -28,6 +35,10 @@ std::vector<Point> parseFile(std::string filepath) {
     std::cerr << "Error: Unable to determine file extension for " << filepath
               << std::endl;
     return points;
+  }
+
+  if (!fileExists(filepath)) {
+    std::cerr << "Error: File does not exist: " << filepath << std::endl;
   }
 
   std::string extension = filename.substr(dotIndex + 1);

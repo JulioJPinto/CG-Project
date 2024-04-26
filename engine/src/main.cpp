@@ -28,7 +28,6 @@ int axis = 1;
 int timebase;
 float frames;
 
-bool freeze = false;
 
 Configuration c;
 
@@ -84,7 +83,6 @@ void frameCounter() {
 
   static int i = 0;
   i++;
-  // print fps
   if (i % 100 == 0) {
     std::cout << "FPS: " << std::to_string(fps) << std::endl;
   }
@@ -160,8 +158,6 @@ void processNormalKeys(unsigned char key, int x, int y) {
     case 'i':
       zoom += value;
       break;
-    case 'f':
-      freeze = !freeze;
     default:
       break;
   }
