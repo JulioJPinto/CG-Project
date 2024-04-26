@@ -13,18 +13,19 @@ class Group {
  public:
   std::vector<Model> models;
   std::vector<Group> subgroups;
-  std::vector<Point> points;
   std::array<std::array<float, 4>, 4> arr = {
       {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
 
-  Rotations rotations;
-  Translates translates;
+  std::vector<Rotations> rotations;
+  std::vector<Translates> translates;
+  std::vector<TimeTransform> order;
 
   Group();
   Group(std::vector<Model> models, std::vector<Group> subgroups,
-        std::vector<Point> points, std::array<std::array<float, 4>, 4> arr,
-        Rotations rotations,
-        Translates translates);  // Updated constructor
+        std::array<std::array<float, 4>, 4> arr,
+        std::vector<Rotations> rotations,
+        std::vector<Translates> translates,
+        std::vector<TimeTransform> order);  // Updated constructor
 
   void translate(float x, float y, float z);
 

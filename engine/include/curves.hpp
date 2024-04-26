@@ -8,6 +8,11 @@
 #include "model.hpp"
 #include "utils.hpp"
 
+enum TimeTransform{
+  ROTATION,
+  TRANSLATE
+};
+
 class Rotations {
  public:
   float time;
@@ -39,11 +44,5 @@ class Translates {
 
   std::array<float, 16> rotationMatrix(Point x, Point y, Point z);
 };
-
-void renderCatmullRomCurve();
-
-auto buildRotMatrix(Point x, Point y, Point z) -> std::vector<float>;
-
-auto get_location(float elapsed) -> std::pair<Point, Point>;
 
 #endif  // CURVES_HPP

@@ -11,18 +11,18 @@
 Group::Group() {
   this->models = {};
   this->subgroups = {};
-  this->points = {};
   this->arr = {{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
-  this->rotations = Rotations();
-  this->translates = Translates();
+  this->rotations = {};
+  this->translates = {};
 }
 
 Group::Group(std::vector<Model> models, std::vector<Group> subgroups,
-             std::vector<Point> points, std::array<std::array<float, 4>, 4> arr,
-             Rotations rotations, Translates translates) {
+             std::array<std::array<float, 4>, 4> arr,
+             std::vector<Rotations> rotations,
+             std::vector<Translates> translates,
+             std::vector<TimeTransform> order) {
   this->models = models;
   this->subgroups = subgroups;
-  this->points = points;
   this->arr = arr;
   this->rotations = rotations;
   this->translates = translates;
@@ -94,8 +94,19 @@ void Group::drawGroup() {
   glPushMatrix();
 
   float elapsed = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
-  this->translates.ApplyTranslate(elapsed);
-  this->rotations.ApplyRotation(elapsed);
+  int t = 0; int r = 0;
+  for(TimeTransform type : this->order) {
+    switch(type) {
+      case ROTATION:
+        rotations[r].ApplyRotation(elapsed);
+        r++;
+        break;
+      case TRANSLATE:
+        translates[t].ApplyTranslate(elapsed);
+        t++;
+        break;
+    }
+  }
 
   float matrix[16] = {
       this->arr[0][0], this->arr[1][0], this->arr[2][0], this->arr[3][0],

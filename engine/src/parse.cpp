@@ -112,10 +112,10 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
         float x = std::stof(node->first_attribute("x")->value());
         float y = std::stof(node->first_attribute("y")->value());
         float z = std::stof(node->first_attribute("z")->value());
-        group.rotations.time = float(time);
-        group.rotations.x = float(x);
-        group.rotations.y = float(y);
-        group.rotations.z = float(z);
+        Rotations r = Rotations(float(time),float(x), float(y),float(z));
+        group.rotations.push_back(r);
+        group.order.push_back(ROTATION);
+        
 
       } else {
         float angle = std::stof(node->first_attribute("angle")->value());
@@ -143,10 +143,9 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
           curvePoints.push_back(Point(x, y, z));
           node->remove_node(point);
         }
-        group.translates.time = float(time);
-        group.translates.align = float(align);
-        std::vector<Point> cPoints = curvePoints;
-        group.translates.curvePoints = cPoints;
+        Translates t = Translates(float(time), align, curvePoints);
+        group.translates.push_back(t);
+        group.order.push_back(TRANSLATE);
 
       } else {
         float x = std::stof(node->first_attribute("x")->value());
@@ -165,8 +164,6 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
     const std::string& file = modelNode->first_attribute("file")->value();
     const std::vector<Point>& file_points = parseFile(file);
     const Model& model = Model(file, file_points);
-    group.points.insert(group.points.end(), file_points.begin(),
-                        file_points.end());
     group.models.push_back(model);
 
     modelNode = modelNode->next_sibling("model");

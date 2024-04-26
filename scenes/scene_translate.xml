@@ -6,30 +6,18 @@
     <up x="0" y="1" z="0" /> 
         <projection fov="60" near="1" far="1000" />
     </camera>
-            <group>
-                <transform>
-                    <translate time = "10" align="true"> <!-- O campo align diz se o objecto deve ser orientado na curva -->
-                        <point x = "0" y = "0" z = "4" />
-                        <point x = "4" y = "0" z = "0" />
-                        <point x = "0" y = "0" z = "-4" />
-                        <point x = "-4" y = "10" z = "0" />
-                    </translate>
-                </transform>
-                <models> 
-                    <model file="models/bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
-                </models>
-                <group>
-                    <transform>
-                        <translate time = "10" align="true"> <!-- O campo align diz se o objecto deve ser orientado na curva -->
-                            <point x = "0" y = "0" z = "4" />
-                            <point x = "4" y = "0" z = "0" />
-                            <point x = "0" y = "0" z = "-4" />
-                            <point x = "-4" y = "10" z = "0" />
-                        </translate>
-                    </transform>
-                    <models> 
-                        <model file="models/bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
-                    </models>
-                </group>
-            </group>
+    <group>
+        <transform>
+            <rotate time="3" x="0" y="1" z="0" />
+            <translate time = "10" align="true"> <!-- O campo align diz se o objecto deve ser orientado na curva -->
+                <point x = "0" y = "0" z = "4" />
+                <point x = "4" y = "0" z = "0" />
+                <point x = "0" y = "0" z = "-4" />
+                <point x = "-4" y = "10" z = "0" />
+            </translate>
+        </transform>
+        <models> 
+            <model file="models/bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+        </models>
+    </group>
 </world>
