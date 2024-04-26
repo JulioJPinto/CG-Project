@@ -28,7 +28,6 @@ int axis = 1;
 int timebase;
 float frames;
 
-
 Configuration c;
 
 void reshape(int w, int h) {

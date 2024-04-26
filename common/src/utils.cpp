@@ -1,12 +1,12 @@
 #include "utils.hpp"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <filesystem>
 
 std::map<std::string, std::vector<Point>> hash_models;
 
@@ -16,11 +16,9 @@ std::string Point::toString() {
   return oss.str();
 }
 
-
 bool fileExists(const std::string& filepath) {
-    return std::filesystem::exists(filepath);
+  return std::filesystem::exists(filepath);
 }
-
 
 std::vector<Point> parseFile(std::string filepath) {
   if (hash_models.find(filepath) != hash_models.end()) {
