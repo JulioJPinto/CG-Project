@@ -14,6 +14,7 @@ Group::Group() {
   this->arr = {{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
   this->rotations = {};
   this->translates = {};
+  this->order = {};
 }
 
 Group::Group(std::vector<Model> models, std::vector<Group> subgroups,
@@ -26,6 +27,7 @@ Group::Group(std::vector<Model> models, std::vector<Group> subgroups,
   this->arr = arr;
   this->rotations = rotations;
   this->translates = translates;
+  this->order = order;
 }
 
 void Group::translate(float x, float y, float z) {
