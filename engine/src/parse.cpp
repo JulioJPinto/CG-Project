@@ -142,7 +142,7 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
           curvePoints.push_back(Point(x, y, z));
           node->remove_node(point);
         }
-        Translates t = Translates(float(time), align, curvePoints);
+        Translations t = Translations(float(time), align, curvePoints);
         group.translates.push_back(t);
         group.order.push_back(TRANSLATE);
 

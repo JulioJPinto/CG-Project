@@ -20,7 +20,7 @@ Group::Group() {
 Group::Group(std::vector<Model> models, std::vector<Group> subgroups,
              std::array<std::array<float, 4>, 4> arr,
              std::vector<Rotations> rotations,
-             std::vector<Translates> translates,
+             std::vector<Translations> translates,
              std::vector<TimeTransform> order) {
   this->models = models;
   this->subgroups = subgroups;
@@ -94,18 +94,18 @@ void Group::rotate(float angle, float x, float y, float z) {
 
 void applyTimeTransformations(std::vector<TimeTransform> order,
                               std::vector<Rotations> rotations,
-                              std::vector<Translates> translates) {
-  float elapsed = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+                              std::vector<Translations> translates) {
+  float elapsed_time = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
   int t = 0;
   int r = 0;
   for (TimeTransform type : order) {
     switch (type) {
       case ROTATION:
-        rotations[r].ApplyRotation(elapsed);
+        rotations[r].applyRotation(elapsed_time);
         r++;
         break;
       case TRANSLATE:
-        translates[t].ApplyTranslate(elapsed);
+        translates[t].applyTranslations(elapsed_time);
         t++;
         break;
     }

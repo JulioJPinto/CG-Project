@@ -20,24 +20,24 @@ class Rotations {
   Rotations();
   Rotations(float time, float x, float y, float z);
 
-  void ApplyRotation(float elapsed);
+  void applyRotation(float elapsed_time);
 };
 
-class Translates {
+class Translations {
  public:
   float time;
   bool align;
   std::vector<Point> curvePoints;
   Point y_axis;
 
-  Translates();
-  Translates(float time, bool align, std::vector<Point> curve);
+  Translations();
+  Translations(float time, bool align, std::vector<Point> curve);
 
-  void ApplyTranslate(float elapsed);
+  void applyTranslations(float elapsed_time);
 
   void renderCatmullRomCurve();
 
-  std::pair<Point, Point> getLocation(float elapsed);
+  std::pair<Point, Point> getLocation(float elapsed_time);
 
   std::array<float, 16> rotationMatrix(Point x, Point y, Point z);
 };

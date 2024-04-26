@@ -17,13 +17,13 @@ class Group {
       {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
 
   std::vector<Rotations> rotations;
-  std::vector<Translates> translates;
+  std::vector<Translations> translates;
   std::vector<TimeTransform> order;
 
   Group();
   Group(std::vector<Model> models, std::vector<Group> subgroups,
         std::array<std::array<float, 4>, 4> arr,
-        std::vector<Rotations> rotations, std::vector<Translates> translates,
+        std::vector<Rotations> rotations, std::vector<Translations> translates,
         std::vector<TimeTransform> order);  // Updated constructor
 
   void translate(float x, float y, float z);

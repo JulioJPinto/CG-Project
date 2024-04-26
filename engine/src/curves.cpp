@@ -7,16 +7,16 @@
 #include "curves.hpp"
 #include "utils.hpp"
 
-static const std::array<std::array<float, 4>, 4> cutmoll_rom_matrix{{
+static const std::array<std::array<float, 4>, 4> catmoll_rom_matrix{{
     {-0.5f, +1.5f, -1.5f, +0.5f},
     {+1.0f, -2.5f, +2.0f, -0.5f},
     {-0.5f, +0.0f, +0.5f, +0.0f},
     {+0.0f, +1.0f, +0.0f, +0.0f},
 }};
 
-std::pair<Point, Point> get_cutmoll_rom_position(std::vector<Point> curve,
-                                                 float global_time) {
-  const std::array<std::array<float, 4>, 4> matrix = cutmoll_rom_matrix;
+std::pair<Point, Point> catmollRomPosition(std::vector<Point> curve,
+                                           float global_time) {
+  const std::array<std::array<float, 4>, 4> matrix = catmoll_rom_matrix;
 
   float t = global_time * curve.size();
   float segment = (int)floor(t);
@@ -77,37 +77,37 @@ Rotations::Rotations(float time, float x, float y, float z) {
   this->z = z;
 }
 
-void Rotations::ApplyRotation(float elapsed) {
+void Rotations::applyRotation(float elapsed_time) {
   if (this->time == 0) {
     return;
   }
-  float angle = 360 * (elapsed / this->time);
+  float angle = 360 * (elapsed_time / this->time);
   glRotatef(angle, this->x, this->y, this->z);
 }
 
-Translates::Translates() {
+Translations::Translations() {
   this->time = 0;
   this->align = false;
   this->y_axis = Point(0, 1, 0);
 }
 
-Translates::Translates(float time, bool align, std::vector<Point> curve) {
+Translations::Translations(float time, bool align, std::vector<Point> curve) {
   this->time = time;
   this->align = align;
   this->curvePoints = curve;
   this->y_axis = Point(0, 1, 0);
 }
 
-std::pair<Point, Point> Translates::getLocation(float elapsed) {
+std::pair<Point, Point> Translations::getLocation(float elapsed_time) {
   int point_count = this->curvePoints.size();
-  float gt = elapsed / this->time;
+  float gt = elapsed_time / this->time;
   float t = gt * point_count;
   size_t index = std::floor(t);
   t = t - index;
-  return get_cutmoll_rom_position(this->curvePoints, t);
+  return catmollRomPosition(this->curvePoints, t);
 }
 
-std::array<float, 16> Translates::rotationMatrix(Point x, Point y, Point z) {
+std::array<float, 16> Translations::rotationMatrix(Point x, Point y, Point z) {
   return std::array<float, 16>{{
       x.x,
       x.y,
@@ -128,17 +128,17 @@ std::array<float, 16> Translates::rotationMatrix(Point x, Point y, Point z) {
   }};
 }
 
-void Translates::ApplyTranslate(float elapsed) {
+void Translations::applyTranslations(float elapsed_time) {
   if (this->time == 0) {
     return;
   }
 
   // this->renderCatmullRomCurve();
 
-  float time = elapsed / this->time;
+  float time = elapsed_time / this->time;
 
   std::pair<Point, Point> position_dir =
-      get_cutmoll_rom_position(this->curvePoints, time);
+      catmollRomPosition(this->curvePoints, time);
   Point pos = position_dir.first;
   Point dir = position_dir.second;
 
@@ -152,7 +152,7 @@ void Translates::ApplyTranslate(float elapsed) {
   }
 }
 
-void Translates::renderCatmullRomCurve() {
+void Translations::renderCatmullRomCurve() {
   // draw curve using line segments with GL_LINE_LOOP
   float gt = 0.0;
   const float NUM_STEPS = 100;
