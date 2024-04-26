@@ -35,9 +35,9 @@ std::pair<Point, Point> catmollRomPosition(std::vector<Point> curve,
   }};
 
   const std::array<float, 4> timeP = {t * t * t, t * t, t,
-                                   1};  // time matrix for point
+                                      1};  // time matrix for point
   const std::array<float, 4> timeDP = {3 * t * t, 2 * t, 1,
-                                      0};  // time matrix for derivate
+                                       0};  // time matrix for derivate
 
   std::array<float, 3> pv{};  // Point
   std::array<float, 3> dv{};  // Derivative
