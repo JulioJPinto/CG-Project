@@ -1,0 +1,14 @@
+<world> 
+    <window width="1080" height="720" /> 
+    <camera> 
+        <position x="8" y="8" z="8" /> 
+        <lookAt x="0" y="0" z="0" /> <!-- gluLookAt center-->
+        <up x="0" y="1" z="0" /> <!-- gluLookAt up-->
+        <projection fov="90" near="1" far="1000" /> <!--gluPerspective-->
+    </camera>
+    <group> 
+          <models> 
+            <model file="models/duck.3d" /> 
+         </models>
+     </group>
+</world>
