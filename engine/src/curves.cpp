@@ -137,7 +137,10 @@ void Translates::ApplyTranslate(float elapsed) {
 
   float time = elapsed / this->time;
 
-  auto [pos, dir] = get_cutmoll_rom_position(this->curvePoints, time);
+  std::pair<Point, Point> position_dir =
+      get_cutmoll_rom_position(this->curvePoints, time);
+  Point pos = position_dir.first;
+  Point dir = position_dir.second;
 
   glTranslatef(pos.x, pos.y, pos.z);
 

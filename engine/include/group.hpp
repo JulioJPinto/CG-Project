@@ -33,7 +33,6 @@ class Group {
   void rotate(float angle, float x, float y, float z);
 
   void drawGroup();
-  // std::string toString();
 };
 
 #endif  // GROUP_HPP
