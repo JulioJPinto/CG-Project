@@ -8,10 +8,7 @@
 #include "model.hpp"
 #include "utils.hpp"
 
-enum TimeTransform{
-  ROTATION,
-  TRANSLATE
-};
+enum TimeTransform { ROTATION, TRANSLATE };
 
 class Rotations {
  public:

@@ -112,10 +112,9 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
         float x = std::stof(node->first_attribute("x")->value());
         float y = std::stof(node->first_attribute("y")->value());
         float z = std::stof(node->first_attribute("z")->value());
-        Rotations r = Rotations(float(time),float(x), float(y),float(z));
+        Rotations r = Rotations(float(time), float(x), float(y), float(z));
         group.rotations.push_back(r);
         group.order.push_back(ROTATION);
-        
 
       } else {
         float angle = std::stof(node->first_attribute("angle")->value());

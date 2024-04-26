@@ -94,9 +94,10 @@ void Group::drawGroup() {
   glPushMatrix();
 
   float elapsed = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
-  int t = 0; int r = 0;
-  for(TimeTransform type : this->order) {
-    switch(type) {
+  int t = 0;
+  int r = 0;
+  for (TimeTransform type : this->order) {
+    switch (type) {
       case ROTATION:
         rotations[r].ApplyRotation(elapsed);
         r++;
