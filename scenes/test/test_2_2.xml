@@ -12,21 +12,21 @@
 		    <translate x="0" y="1" z="0" />
         </transform>
         <models> 
-            <model file="box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
+            <model file="models/box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
         </models>
 			<group> 
 				<transform> 
 					<translate x="0" y="1" z="0" />
 				</transform>
 				<models> 
-					<model file="cone_1_2_4_3.3d" /> <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
+					<model file="models/cone_1_2_4_3.3d" /> <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
 				</models>
 				<group> 
 					<transform> 
 						<translate x="0" y="3" z="0" />
 					</transform>
 					<models> 
-						<model file="sphere_1_8_8.3d" /> <!-- generator sphere 1 8 8 sphere_1_8_8.3d -->
+						<model file="models/sphere_1_8_8.3d" /> <!-- generator sphere 1 8 8 sphere_1_8_8.3d -->
 					</models>
 				</group>
 			</group>

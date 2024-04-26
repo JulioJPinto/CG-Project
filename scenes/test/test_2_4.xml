@@ -17,7 +17,7 @@
                 <translate x="3.5" y="0" z="0" />
             </transform>
 			<models> 
-				<model file="box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
+				<model file="models/box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
 			</models>
         </group>
         <group> 
@@ -26,7 +26,7 @@
                 <translate x="3.5" y="0" z="0" />
             </transform>
 			<models> 
-				<model file="box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
+				<model file="models/box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
 			</models>
         </group>
         <group> 
@@ -35,7 +35,7 @@
                 <translate x="3.5" y="0" z="0" />
             </transform>
 			<models> 
-				<model file="box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
+				<model file="models/box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
 			</models>
         </group>
         <group> 
@@ -44,7 +44,7 @@
                 <translate x="3.5" y="0" z="0" />
             </transform>
 			<models> 
-				<model file="box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
+				<model file="models/box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
 			</models>
         </group>
         <group> 
@@ -53,7 +53,7 @@
                 <translate x="3.5" y="0" z="0" />
             </transform>
 			<models> 
-				<model file="box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
+				<model file="models/box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
 			</models>
         </group>
         <group> 
@@ -62,7 +62,7 @@
                 <translate x="3.5" y="0" z="0" />
             </transform>
 			<models> 
-				<model file="box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
+				<model file="models/box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
 			</models>
         </group>
         <group> 
@@ -71,7 +71,7 @@
                 <translate x="3.5" y="0" z="0" />
             </transform>
 			<models> 
-				<model file="box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
+				<model file="models/box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
 			</models>
         </group>
 	</group>

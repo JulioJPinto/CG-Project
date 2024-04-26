@@ -90,13 +90,13 @@ void Group::rotate(float angle, float x, float y, float z) {
   this->arr = result;
 }
 
-void Group::drawGroup() {
-  glPushMatrix();
-
+void applyTimeTransformations(std::vector<TimeTransform> order,
+                              std::vector<Rotations> rotations,
+                              std::vector<Translates> translates) {
   float elapsed = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
   int t = 0;
   int r = 0;
-  for (TimeTransform type : this->order) {
+  for (TimeTransform type : order) {
     switch (type) {
       case ROTATION:
         rotations[r].ApplyRotation(elapsed);
@@ -108,6 +108,12 @@ void Group::drawGroup() {
         break;
     }
   }
+}
+
+void Group::drawGroup() {
+  glPushMatrix();
+
+  applyTimeTransformations(this->order, this->rotations, this->translates);
 
   float matrix[16] = {
       this->arr[0][0], this->arr[1][0], this->arr[2][0], this->arr[3][0],
