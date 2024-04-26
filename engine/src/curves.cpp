@@ -34,9 +34,9 @@ std::pair<Point, Point> catmollRomPosition(std::vector<Point> curve,
       {p1.z, p2.z, p3.z, p4.z},
   }};
 
-  const std::array<float, 4> tv = {t * t * t, t * t, t,
+  const std::array<float, 4> timeP = {t * t * t, t * t, t,
                                    1};  // time matrix for point
-  const std::array<float, 4> devtv = {3 * t * t, 2 * t, 1,
+  const std::array<float, 4> timeDP = {3 * t * t, 2 * t, 1,
                                       0};  // time matrix for derivate
 
   std::array<float, 3> pv{};  // Point
@@ -52,8 +52,8 @@ std::pair<Point, Point> catmollRomPosition(std::vector<Point> curve,
     }
 
     for (size_t j = 0; j < 4; j++) {
-      pv[i] += tv[j] * a[j];
-      dv[i] += devtv[j] * a[j];
+      pv[i] += timeP[j] * a[j];
+      dv[i] += timeDP[j] * a[j];
     }
   }
 
@@ -145,9 +145,9 @@ void Translations::applyTranslations(float elapsed_time) {
   glTranslatef(pos.x, pos.y, pos.z);
 
   if (this->align) {
-    auto x = dir.normalize();
-    auto z = Point(x).cross(this->y_axis).normalize();
-    auto y = Point(z).cross(x).normalize();
+    Point x = dir.normalize();
+    Point z = Point(x).cross(this->y_axis).normalize();
+    Point y = Point(z).cross(x).normalize();
     glMultMatrixf(rotationMatrix(x, y, z).data());
   }
 }
