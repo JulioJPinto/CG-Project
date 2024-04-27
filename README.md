@@ -1,53 +1,55 @@
 # CG
 Project for Computer Graphics Class using OpenGL / Glut.
 
-
-# Correr o projeto
-
-Gerar a Makefile:
-```sh
-$ cmake .
-```
-
-Gerar os executáveis:
-```sh
-$ make
-```
-
-## Utilizar o generator
+## Compilar o projeto
 
 ```sh
-$ cd generator
+$ ./scripts/build.sh
 ```
 
-### Gerar uma figura
+## Correr o _engine_:
 
 ```sh
-$ ./generator <figura> <dados> <ficheiro de output> 
+$ ./cg-engine <path>
 ```
-Nota: Todos os ficheiros gerados pelo **generator** serão criados na pasta `models`.
 
-**Lista de figuras e inputs**:
-1. `./generator plane <length> <divisions> <output>`
-2. `./generator box <length> <divisions> <output>`
-3. `./generator cone <radius> <height> <slices> <stacks> <output>`
-4. `./generator cylinder <radius> <height> <slices> <output>`
-5. `./generator sphere <radius> <slices> <stacks> <output>`
-6. `./generator torus <majorRadius> <minorRadius> <sides> <rings> <output>`
-
-## Utilizar o engine
+Para correr o projeto com o vsync desativado (em máquina Linux):
 ```sh
-$ cd engine
+$ export vblank_mode=0 && ./cg-engine <path>
 ```
 
-### Abrir uma cena (.xml)
-```sh
-$ ./engine <path>
-```
-Nota: Todas as cenas que utilizamos poderão se encontradas na pasta `scenes`.
+## Correr o _generator_:
 
-### Abrir um modelo (.3d/.obj)
 ```sh
-$ ./engine <path>
+$ ./cg-generator <model> [args] <path>
 ```
-Nota: Todas os modelos que utilizamos poderão se encontradas na pasta `models`.
+| Model| args|
+|:---|:---|
+|`plane`| `<length> <divisions>`|
+|`box`|`<length> <divisions>`|
+|`cylinder`|`<radius> <height> <slices>`|
+|`cone`|`<radius> <height> <slices> <stacks>`|
+|`sphere`|`<radius> <slices> <stacks>`|
+|`torus`|`<innerRadius> <outerRadius> <slices> <stacks>`|
+|`patch`| `<bezier_patch> <tesselation>`| 
+
+
+
+# Fases do Projeto
+
+### 1ª Fase
+- [Commit](https://github.com/JulioJPinto/CG-Project/tree/68b48d8db92162917e5cf2f37ba2e90da1f4d138)
+- [Report](https://github.com/JulioJPinto/CG-Project/blob/68b48d8db92162917e5cf2f37ba2e90da1f4d138/Relat%C3%B3rio%20CG%20-%20Fase%201.pdf)
+
+### 2ª Fase
+- [Commit](https://github.com/JulioJPinto/CG-Project/tree/a9d251c0a458038bd26efecb48b57872c04f35f2)
+- [Report](https://github.com/JulioJPinto/CG-Project/blob/a9d251c0a458038bd26efecb48b57872c04f35f2/Relat%C3%B3rio%20CG%20-%20Fase%202.pdf)
+
+### 3ª Fase
+- Commit
+- [Report](https://github.com/JulioJPinto/CG-Project/blob/main/Relat%C3%B3rio%20CG%20-%20Fase%203.pdf)
+
+### 4ª Fase
+- Commit
+- Report
+
