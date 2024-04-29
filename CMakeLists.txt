@@ -76,4 +76,5 @@ target_link_libraries(cg-engine PUBLIC
     GL
     GLU
     CustomImgui
+    glm
 )

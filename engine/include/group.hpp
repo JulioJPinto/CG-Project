@@ -2,6 +2,8 @@
 #define GROUP_HPP
 
 #include <array>  // Include for std::array
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <string>
 #include <vector>
 
@@ -13,8 +15,7 @@ class Group {
  public:
   std::vector<Model> models;
   std::vector<Group> subgroups;
-  std::array<std::array<float, 4>, 4> arr = {
-      {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
+  glm::mat4 transformations = glm::mat4(1.0f);
 
   std::vector<Rotations> rotations;
   std::vector<Translations> translates;
@@ -22,8 +23,8 @@ class Group {
 
   Group();
   Group(std::vector<Model> models, std::vector<Group> subgroups,
-        std::array<std::array<float, 4>, 4> arr,
-        std::vector<Rotations> rotations, std::vector<Translations> translates,
+        glm::mat4 transformations, std::vector<Rotations> rotations,
+        std::vector<Translations> translates,
         std::vector<TimeTransform> order);  // Updated constructor
 
   void translate(float x, float y, float z);
