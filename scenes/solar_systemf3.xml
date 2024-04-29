@@ -15920,8 +15920,6 @@
         </group>
         <group name="Halley's Comet">
             <transform>
-                <rotate angle="-10" x="0" y="0" z="1" />
-                <translate x="53.59311740890688" y="0" z="0" />
                 <translate time="69.35" align="True">
                     <point x="57.454959514170035" y="0" z="0.0" />
                     <point x="56.95120172433361" y="0" z="10.042033447770468" />
@@ -15960,8 +15958,9 @@
                     <point x="55.39616452993821" y="0" z="-20.16255498141069" />
                     <point x="56.95120172433361" y="0" z="-10.042033447770471" />
                 </translate>
+                <translate x="53.59311740890688" y="0" z="0" />
                 <rotate angle="-90" x="1" y="0" z="0" />
-                <scale x="0.1" y="0.1" z="0.1" />
+                <scale x="0.1" y="0.1" z="0.1" />   
             </transform>
             <models>
                 <model file="models/bezier_10.3d">
