@@ -5,8 +5,9 @@
 #include "save3d.hpp"
 #include "utils.hpp"
 
-std::pair<std::pair<std::vector<Point>, std::vector<Point>>, std::vector<Point2D>> cubeAllPoints(
-    float length, int divisions) {
+std::pair<std::pair<std::vector<Point>, std::vector<Point>>,
+          std::vector<Point2D>>
+cubeAllPoints(float length, int divisions) {
   float halfSize = length / 2.0f;
   float step = length / divisions;
 
@@ -153,7 +154,9 @@ std::pair<std::pair<std::vector<Point>, std::vector<Point>>, std::vector<Point2D
 }
 
 bool generateCube(float length, int divisions, const char* filepath) {
-  std::pair<std::pair<std::vector<Point>, std::vector<Point>>, std::vector<Point2D>> cube = cubeAllPoints(length, divisions);
+  std::pair<std::pair<std::vector<Point>, std::vector<Point>>,
+            std::vector<Point2D>>
+      cube = cubeAllPoints(length, divisions);
 
   save3Dfile(cube.first.first, cube.first.second, cube.second, filepath);
 
