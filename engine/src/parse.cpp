@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "read.hpp"
+
 Configuration parseConfig(std::string filename) {
   // open file in read mode
   std::ifstream file(filename);
@@ -161,8 +163,11 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
   rapidxml::xml_node<>* modelNode = modelsNode->first_node("model");
   while (modelNode) {
     const std::string& file = modelNode->first_attribute("file")->value();
-    const std::vector<Point>& file_points = parseFile(file);
-    const Model& model = Model(file, file_points);
+    const Model& model = readFile(file.data());
+    if (model.id == -1) {
+      std::cerr << "Error reading model file: " << file << std::endl;
+      return;
+    }
     group.models.push_back(model);
 
     modelNode = modelNode->next_sibling("model");

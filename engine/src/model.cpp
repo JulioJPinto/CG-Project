@@ -52,6 +52,13 @@ std::vector<unsigned int> generateIBO(const std::vector<Point>& points,
   return ibo;
 }
 
+Model::Model() {
+  this->filename = "";
+  this->id = -1;
+  this->initialized = false;
+  counter++;
+}
+
 Model::Model(std::string filename, std::vector<Point> vbo,
              std::vector<unsigned int> ibo, int id, std::vector<Point> points) {
   this->filename = filename;
@@ -67,6 +74,19 @@ Model::Model(std::string filename, std::vector<Point> points) {
   this->id = counter;
   this->vbo = generateVBO(points);
   this->ibo = generateIBO(points, this->vbo);
+  this->initialized = false;
+  this->_points = points;
+  counter++;
+}
+
+Model::Model(std::string filename, std::vector<Point> points,
+             std::vector<Point> normals, std::vector<Point2D> textures) {
+  this->filename = filename;
+  this->id = counter;
+  this->vbo = generateVBO(points);
+  this->ibo = generateIBO(points, this->vbo);
+  this->normals = normals;
+  this->textures = textures;
   this->initialized = false;
   this->_points = points;
   counter++;

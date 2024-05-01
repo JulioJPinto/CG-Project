@@ -8,7 +8,7 @@
     </camera>
     <group> 
           <models> 
-            <model file="models/cylinder.3d" /> 
+            <model file="models/simple/cone.3d" /> 
          </models>
      </group>
 </world>

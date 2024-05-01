@@ -8,12 +8,7 @@
     </camera>
     <group> 
           <models> 
-            <model file="models/plane.3d" />
-            <model file="models/cone.3d" />
-            <model file="models/torus.3d" />
-            <model file="models/sphere.3d" />
-            <model file="models/cylinder.3d" />
-            <model file="models/box.3d" />
+            <model file="models/simple/torus.3d" /> 
          </models>
      </group>
 </world>

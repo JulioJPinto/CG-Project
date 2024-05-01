@@ -8,8 +8,6 @@
 #include <string>
 #include <vector>
 
-std::map<std::string, std::vector<Point>> hash_models;
-
 std::string Point::toString() {
   std::ostringstream oss;
   oss << "(" << x << ", " << y << ", " << z << ")";
@@ -21,10 +19,6 @@ bool fileExists(const std::string& filepath) {
 }
 
 std::vector<Point> parseFile(std::string filepath) {
-  if (hash_models.find(filepath) != hash_models.end()) {
-    return hash_models[filepath];
-  }
-
   std::string filename = filepath;
   std::vector<Point> points;
 
@@ -49,8 +43,6 @@ std::vector<Point> parseFile(std::string filepath) {
   } else {
     std::cerr << "Error: Unsupported file format for " << filename << std::endl;
   }
-
-  hash_models[filepath] = points;
 
   return points;
 }

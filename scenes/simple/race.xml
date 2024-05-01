@@ -22,7 +22,7 @@
                 <translate x="0" y="2" z="0" />
             </transform>
             <models> 
-                <model file="models/ferrari.obj" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+                <model file="models/simple/ferrari.obj" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
             </models>
             
          </group>
@@ -32,7 +32,7 @@
             </transform>
 
             <models> 
-                <model file="models/track.obj" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+                <model file="models/simple/track.obj" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
             </models>
         </group>
      </group>

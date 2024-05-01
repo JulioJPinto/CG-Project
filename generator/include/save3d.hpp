@@ -6,8 +6,9 @@
 
 #include "utils.hpp"
 
-void save3Dfile(const std::vector<Point>& points,
-                const std::vector<Point>& normals,
-                const std::vector<Point2D>& textures, const char* filepath);
+void save3DAdvancedfile(const std::vector<Point>& points,
+                        const std::vector<Point>& normals,
+                        const std::vector<Point2D>& textures,
+                        const char* filepath);
 
 #endif  // SAVE3D_HPP

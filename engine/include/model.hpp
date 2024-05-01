@@ -27,10 +27,15 @@ class Model {
   std::string filename;
   std::vector<Point> vbo;
   std::vector<unsigned int> ibo;
+  std::vector<Point> normals;
+  std::vector<Point2D> textures;
   int id;
   bool initialized = false;
 
+  Model();
   Model(std::string filename, std::vector<Point> points);
+  Model(std::string filename, std::vector<Point> points,
+        std::vector<Point> normals, std::vector<Point2D> textures);
 
   void setupModel();
   void drawModel();
@@ -42,6 +47,9 @@ class Model {
   std::vector<Point> _points;
   Model(std::string filename, std::vector<Point> vbo,
         std::vector<unsigned int> ibo, int id, std::vector<Point> points);
+  Model(std::string filename, std::vector<Point> vbo,
+        std::vector<unsigned int> ibo, int id, std::vector<Point> points,
+        std::vector<Point> normals, std::vector<Point2D> textures);
 };
 
 #endif  // MODEL_HPP

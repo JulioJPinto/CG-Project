@@ -22,7 +22,7 @@
 				<scale x="0.5" y="0.5" z="0.5" />
 			</transform>
 			<models> 
-				<model file="models/bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+				<model file="models/simple/bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
 			</models>
 		</group>
  	</group>

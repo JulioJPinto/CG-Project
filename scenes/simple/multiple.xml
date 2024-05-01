@@ -8,7 +8,12 @@
     </camera>
     <group> 
           <models> 
-            <model file="models/ferrari.obj" /> 
+            <model file="models/simple/plane.3d" />
+            <model file="models/simple/cone.3d" />
+            <model file="models/simple/torus.3d" />
+            <model file="models/simple/sphere.3d" />
+            <model file="models/simple/cylinder.3d" />
+            <model file="models/simple/box.3d" />
          </models>
      </group>
 </world>
