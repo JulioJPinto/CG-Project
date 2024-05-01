@@ -98,12 +98,17 @@ torusAllPoints(float majorRadius, float minorRadius, int sides, int rings) {
 }
 
 bool generateTorus(float majorRadius, float minorRadius, int sides, int rings,
-                   const char* filepath) {
+                   const char* filepath, bool advanced) {
   std::pair<std::pair<std::vector<Point>, std::vector<Point>>,
             std::vector<Point2D>>
       torus = torusAllPoints(majorRadius, minorRadius, sides, rings);
 
-  save3Dfile(torus.first.first, torus.first.second, torus.second, filepath);
+  if (advanced) {
+    save3DAdvancedfile(torus.first.first, torus.first.second, torus.second,
+                       filepath);
+  } else {
+    saveToFile(torus.first.first, filepath);
+  }
 
   return true;
 }

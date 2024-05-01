@@ -61,12 +61,18 @@ planeAllPoints(float length, int divisions) {
   return std::pair(std::pair(points, normals), textures);
 }
 
-bool generatePlane(float length, int divisions, const char* filepath) {
+bool generatePlane(float length, int divisions, const char* filepath,
+                   bool advanced) {
   std::pair<std::pair<std::vector<Point>, std::vector<Point>>,
             std::vector<Point2D>>
       plane = planeAllPoints(length, divisions);
 
-  save3Dfile(plane.first.first, plane.first.second, plane.second, filepath);
+  if (advanced) {
+    save3DAdvancedfile(plane.first.first, plane.first.second, plane.second,
+                       filepath);
+  } else {
+    saveToFile(plane.first.first, filepath);
+  }
 
   return true;
 }

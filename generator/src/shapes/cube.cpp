@@ -153,12 +153,18 @@ cubeAllPoints(float length, int divisions) {
   return std::pair(std::pair(points, normals), textures);
 }
 
-bool generateCube(float length, int divisions, const char* filepath) {
+bool generateCube(float length, int divisions, const char* filepath,
+                  bool advanced) {
   std::pair<std::pair<std::vector<Point>, std::vector<Point>>,
             std::vector<Point2D>>
       cube = cubeAllPoints(length, divisions);
 
-  save3Dfile(cube.first.first, cube.first.second, cube.second, filepath);
+  if (advanced) {
+    save3DAdvancedfile(cube.first.first, cube.first.second, cube.second,
+                       filepath);
+  } else {
+    saveToFile(cube.first.first, filepath);
+  }
 
   return true;
 }

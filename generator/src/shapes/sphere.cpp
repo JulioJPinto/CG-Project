@@ -85,13 +85,18 @@ sphereAllPoints(float radius, int slices, int stacks) {
   return std::pair(std::pair(points, normals), textures);
 }
 
-bool generateSphere(float radius, int slices, int stacks,
-                    const char* filepath) {
+bool generateSphere(float radius, int slices, int stacks, const char* filepath,
+                    bool advanced) {
   std::pair<std::pair<std::vector<Point>, std::vector<Point>>,
             std::vector<Point2D>>
       sphere = sphereAllPoints(radius, slices, stacks);
 
-  save3Dfile(sphere.first.first, sphere.first.second, sphere.second, filepath);
+  if (advanced) {
+    save3DAdvancedfile(sphere.first.first, sphere.first.second, sphere.second,
+                       filepath);
+  } else {
+    saveToFile(sphere.first.first, filepath);
+  }
 
   return true;
 }
