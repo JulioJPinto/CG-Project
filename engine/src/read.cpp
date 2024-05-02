@@ -16,44 +16,20 @@ std::unordered_map<std::string, Model> hash_models;
 Model read3DAdvancedFile(const char* filepath) {
   std::ifstream file(filepath);
 
-  std::vector<Point> points;
-  std::vector<Point> normals;
-  std::vector<Point2D> textures;
+  std::vector<Vertex> points;
 
   std::string line;
   while (std::getline(file, line)) {
     std::istringstream iss(line);
     char type;
-    if (iss >> type) {
-      switch (type) {
-        case 'p': {
-          float x, y, z;
-          if (iss >> x >> y >> z) {
-            points.push_back(Point(x, y, z));
-          }
-          break;
-        }
-        case 'n': {
-          float x, y, z;
-          if (iss >> x >> y >> z) {
-            normals.push_back(Point(x, y, z));
-          }
-          break;
-        }
-        case 't': {
-          float u, v;
-          if (iss >> u >> v) {
-            textures.push_back(Point2D(u, v));
-          }
-          break;
-        }
-        default:
-          break;
-      }
+    float x,y,z,nx,ny,nz,tx,ty;
+    if (iss >> type >> x >> y >> z >> nx >> ny >> nz >> tx >> ty) {
+      points.push_back(Vertex(x, y, z, nx, ny, nz, tx, ty));      
     }
+
   }
 
-  Model model(filepath, points, normals, textures);
+  Model model(filepath, points);
   hash_models[filepath] = model;
 
   return model;
@@ -62,11 +38,17 @@ Model read3DAdvancedFile(const char* filepath) {
 Model read3DSimpleFile(const char* filepath) {
   std::ifstream file(filepath);
 
-  std::vector<Point> points;
+  std::vector<Vertex> points;
 
-  Point point;
-  while (file >> point.x >> point.y >> point.z) {
-    points.push_back(point);
+  std::string line;
+  while (std::getline(file, line)) {
+    std::istringstream iss(line);
+    char type;
+    float x,y,z,nx,ny,nz,tx,ty;
+    if (iss >> type >> x >> y >> z ) {
+      points.push_back(Vertex(Point(x, y, z)));      
+    }
+
   }
 
   Model model(filepath, points);

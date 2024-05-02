@@ -17,20 +17,25 @@ extern "C" {
 
 unsigned int counter = 0;
 
-std::vector<float> vPointstoFloats(std::vector<Point> points) {
+std::vector<float> vPointstoFloats(std::vector<Vertex> points) {
   std::vector<float> floats;
-  for (size_t i = 0; i < points.size(); i++) {
-    floats.push_back(points[i].x);
-    floats.push_back(points[i].y);
-    floats.push_back(points[i].z);
+  for(const Vertex& point : points) {
+    floats.push_back(point.position.x);
+    floats.push_back(point.position.y);
+    floats.push_back(point.position.z);
+    floats.push_back(point.normal.x);
+    floats.push_back(point.normal.y);
+    floats.push_back(point.normal.z);
+    floats.push_back(point.texture.x);
+    floats.push_back(point.texture.y);
   }
   return floats;
 }
 
-std::vector<Point> generateVBO(const std::vector<Point>& points) {
-  std::vector<Point> vbo;
-  std::unordered_map<Point, int, PointHash> index_map;
-  for (const Point& point : points) {
+std::vector<Vertex> generateVBO(const std::vector<Vertex>& points) {
+  std::vector<Vertex> vbo;
+  std::unordered_map<Vertex, int, VertexHash> index_map;
+  for (const Vertex& point : points) {
     if (index_map.find(point) == index_map.end()) {
       index_map[point] = vbo.size();
       vbo.push_back(point);
@@ -39,14 +44,14 @@ std::vector<Point> generateVBO(const std::vector<Point>& points) {
   return vbo;
 }
 
-std::vector<unsigned int> generateIBO(const std::vector<Point>& points,
-                                      const std::vector<Point>& vbo) {
+std::vector<unsigned int> generateIBO(const std::vector<Vertex>& points,
+                                      const std::vector<Vertex>& vbo) {
   std::vector<unsigned int> ibo;
-  std::unordered_map<Point, int, PointHash> index_map;
+  std::unordered_map<Vertex, int, VertexHash> index_map;
   for (size_t i = 0; i < vbo.size(); ++i) {
     index_map[vbo[i]] = i;
   }
-  for (const Point& point : points) {
+  for (const Vertex& point : points) {
     ibo.push_back(index_map[point]);
   }
   return ibo;
@@ -59,17 +64,18 @@ Model::Model() {
   counter++;
 }
 
-Model::Model(std::string filename, std::vector<Point> vbo,
-             std::vector<unsigned int> ibo, int id, std::vector<Point> points) {
+Model::Model(std::string filename, std::vector<Vertex> vbo,
+        std::vector<unsigned int> ibo, int id, std::vector<Vertex> points) {
   this->filename = filename;
   this->vbo = vbo;
   this->ibo = ibo;
   this->id = id;
   this->initialized = false;
   this->_points = points;
+
 }
 
-Model::Model(std::string filename, std::vector<Point> points) {
+Model::Model(std::string filename, std::vector<Vertex> points) {
   this->filename = filename;
   this->id = counter;
   this->vbo = generateVBO(points);
@@ -79,27 +85,28 @@ Model::Model(std::string filename, std::vector<Point> points) {
   counter++;
 }
 
-Model::Model(std::string filename, std::vector<Point> points,
-             std::vector<Point> normals, std::vector<Point2D> textures) {
-  this->filename = filename;
-  this->id = counter;
-  this->vbo = generateVBO(points);
-  this->ibo = generateIBO(points, this->vbo);
-  this->normals = normals;
-  this->textures = textures;
-  this->initialized = false;
-  this->_points = points;
-  counter++;
-}
 
 void Model::setupModel() {
   std::vector<float> floats = vPointstoFloats(this->vbo);
 
   // Generate and bind vertex buffer
+  
   glGenBuffers(1, &this->_vbo);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floats.size(), floats.data(),
                GL_STATIC_DRAW);
+               
+  //Specify the layout of the position data
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+  glEnableVertexAttribArray(0);
+
+  // Specify the layout of the vertex normal data
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+  glEnableVertexAttribArray(1);
+
+  // Specify the layout of the texture coordinate data
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+  glEnableVertexAttribArray(2);
 
   // Generate and bind index buffer
   glGenBuffers(1, &this->_ibo);
@@ -107,13 +114,6 @@ void Model::setupModel() {
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * this->ibo.size(),
                this->ibo.data(), GL_STATIC_DRAW);
 
-  if (normals.size() > 0) {
-    std::vector<float> normalFloats = vPointstoFloats(this->normals);
-    glGenBuffers(1, &this->_normals);
-    glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normalFloats.size(),
-                 normalFloats.data(), GL_STATIC_DRAW);
-  }
 }
 
 void Model::drawModel() {
@@ -128,6 +128,7 @@ void Model::drawModel() {
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);
+
 }
 
-std::vector<Point> Model::getPoints() { return this->_points; }
+std::vector<Vertex> Model::getPoints() { return this->_points; }

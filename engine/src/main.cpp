@@ -104,7 +104,7 @@ void renderScene(void) {
   // put drawing instructions here
   drawAxis();
 
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glPolygonMode(GL_FRONT, GL_LINE);
 
   c.group.drawGroup();
 
@@ -204,6 +204,11 @@ int main(int argc, char** argv) {
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
+  // glEnable(GL_NORMALIZE);
+  // glEnable(GL_LIGHTING);
+  // glEnable(GL_LIGHT0);
+  // glEnable(GL_TEXTURE);
+  
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
   // enter GLUT�s main cycle

@@ -44,6 +44,10 @@ struct Point2D {
   float y;
 
   Point2D(float x_val = 0.0f, float y_val = 0.0f) : x(x_val), y(y_val) {}
+
+  bool operator==(const Point2D& other) const {
+    return x == other.x && y == other.y;
+  }
 };
 
 struct PointHash {
@@ -52,6 +56,13 @@ struct PointHash {
            std::hash<float>()(p.z);
   }
 };
+
+struct Point2DHash {
+  size_t operator()(const Point2D& p) const {
+    return std::hash<float>()(p.x) ^ std::hash<float>()(p.y);
+  }
+};
+
 
 // Function to convert Point to string
 std::vector<Point> parseFile(std::string filename);
