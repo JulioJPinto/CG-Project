@@ -106,6 +106,14 @@ void Model::setupModel() {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * this->ibo.size(),
                this->ibo.data(), GL_STATIC_DRAW);
+
+  if (normals.size() > 0) {
+    std::vector<float> normalFloats = vPointstoFloats(this->normals);
+    glGenBuffers(1, &this->_normals);
+    glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normalFloats.size(),
+                 normalFloats.data(), GL_STATIC_DRAW);
+  }
 }
 
 void Model::drawModel() {

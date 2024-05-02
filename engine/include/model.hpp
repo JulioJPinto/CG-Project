@@ -43,7 +43,7 @@ class Model {
   std::vector<Point> getPoints();
 
  private:
-  GLuint _vbo, _ibo;
+  GLuint _vbo, _ibo, _normals, _textures;
   std::vector<Point> _points;
   Model(std::string filename, std::vector<Point> vbo,
         std::vector<unsigned int> ibo, int id, std::vector<Point> points);
