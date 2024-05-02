@@ -63,7 +63,6 @@ struct Point2DHash {
   }
 };
 
-
 // Function to convert Point to string
 std::vector<Point> parseFile(std::string filename);
 void saveToFile(const std::vector<Point>& points, const char* filepath);

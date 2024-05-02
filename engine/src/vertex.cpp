@@ -1,2 +1,3 @@
-#include "utils.hpp"
 #include "vertex.hpp"
+
+#include "utils.hpp"

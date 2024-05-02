@@ -22,11 +22,10 @@ Model read3DAdvancedFile(const char* filepath) {
   while (std::getline(file, line)) {
     std::istringstream iss(line);
     char type;
-    float x,y,z,nx,ny,nz,tx,ty;
+    float x, y, z, nx, ny, nz, tx, ty;
     if (iss >> type >> x >> y >> z >> nx >> ny >> nz >> tx >> ty) {
-      points.push_back(Vertex(x, y, z, nx, ny, nz, tx, ty));      
+      points.push_back(Vertex(x, y, z, nx, ny, nz, tx, ty));
     }
-
   }
 
   Model model(filepath, points);
@@ -44,11 +43,10 @@ Model read3DSimpleFile(const char* filepath) {
   while (std::getline(file, line)) {
     std::istringstream iss(line);
     char type;
-    float x,y,z,nx,ny,nz,tx,ty;
-    if (iss >> type >> x >> y >> z ) {
-      points.push_back(Vertex(Point(x, y, z)));      
+    float x, y, z, nx, ny, nz, tx, ty;
+    if (iss >> type >> x >> y >> z) {
+      points.push_back(Vertex(Point(x, y, z)));
     }
-
   }
 
   Model model(filepath, points);

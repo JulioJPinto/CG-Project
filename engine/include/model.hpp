@@ -15,8 +15,8 @@ extern "C" {
 #include <set>
 #include <vector>
 
-#include "vertex.hpp"
 #include "utils.hpp"
+#include "vertex.hpp"
 
 std::vector<Vertex> generateVBO(const std::vector<Vertex>& points);
 

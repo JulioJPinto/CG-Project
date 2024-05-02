@@ -13,7 +13,9 @@ void save3DAdvancedfile(const std::vector<Point>& points,
   file << "# " << points.size() << std::endl;
 
   for (size_t i = 0; i < points.size(); i++) {
-    file << "p " << points[i].x << " " << points[i].y << " " << points[i].z << " " << normals[i].x << " " << normals[i].y << " " << normals[i].z << " " << textures[i].x << " " << textures[i].y << std::endl;
+    file << "p " << points[i].x << " " << points[i].y << " " << points[i].z
+         << " " << normals[i].x << " " << normals[i].y << " " << normals[i].z
+         << " " << textures[i].x << " " << textures[i].y << std::endl;
   }
 
   file.close();

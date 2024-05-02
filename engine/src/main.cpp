@@ -208,7 +208,7 @@ int main(int argc, char** argv) {
   // glEnable(GL_LIGHTING);
   // glEnable(GL_LIGHT0);
   // glEnable(GL_TEXTURE);
-  
+
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
   // enter GLUT�s main cycle

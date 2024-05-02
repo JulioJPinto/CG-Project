@@ -19,7 +19,7 @@ unsigned int counter = 0;
 
 std::vector<float> vPointstoFloats(std::vector<Vertex> points) {
   std::vector<float> floats;
-  for(const Vertex& point : points) {
+  for (const Vertex& point : points) {
     floats.push_back(point.position.x);
     floats.push_back(point.position.y);
     floats.push_back(point.position.z);
@@ -65,14 +65,14 @@ Model::Model() {
 }
 
 Model::Model(std::string filename, std::vector<Vertex> vbo,
-        std::vector<unsigned int> ibo, int id, std::vector<Vertex> points) {
+             std::vector<unsigned int> ibo, int id,
+             std::vector<Vertex> points) {
   this->filename = filename;
   this->vbo = vbo;
   this->ibo = ibo;
   this->id = id;
   this->initialized = false;
   this->_points = points;
-
 }
 
 Model::Model(std::string filename, std::vector<Vertex> points) {
@@ -85,27 +85,28 @@ Model::Model(std::string filename, std::vector<Vertex> points) {
   counter++;
 }
 
-
 void Model::setupModel() {
   std::vector<float> floats = vPointstoFloats(this->vbo);
 
   // Generate and bind vertex buffer
-  
+
   glGenBuffers(1, &this->_vbo);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floats.size(), floats.data(),
                GL_STATIC_DRAW);
-               
-  //Specify the layout of the position data
+
+  // Specify the layout of the position data
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
 
   // Specify the layout of the vertex normal data
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+                        (void*)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
 
   // Specify the layout of the texture coordinate data
-  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+                        (void*)(6 * sizeof(float)));
   glEnableVertexAttribArray(2);
 
   // Generate and bind index buffer
@@ -113,7 +114,6 @@ void Model::setupModel() {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * this->ibo.size(),
                this->ibo.data(), GL_STATIC_DRAW);
-
 }
 
 void Model::drawModel() {
@@ -128,7 +128,6 @@ void Model::drawModel() {
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);
-
 }
 
 std::vector<Vertex> Model::getPoints() { return this->_points; }
