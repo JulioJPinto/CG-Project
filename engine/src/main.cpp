@@ -108,16 +108,16 @@ void renderScene(void) {
   float pos[4] = {3.0, 3.0, 3.0, 0.0};
   glLightfv(GL_LIGHT0, GL_POSITION, pos);
 
-  float dark[] = { 0.2, 0.2, 0.2, 1.0 };
-  float white[] = { 0.8, 0.8, 0.8, 1.0 };
-  float red[] = { 0.8, 0.2, 0.2, 1.0 }; 
+  float dark[] = {0.2, 0.2, 0.2, 1.0};
+  float white[] = {0.8, 0.8, 0.8, 1.0};
+  float red[] = {0.8, 0.2, 0.2, 1.0};
 
   glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
   glMaterialfv(GL_FRONT, GL_SPECULAR, white);
   glMaterialf(GL_FRONT, GL_SHININESS, 128);
 
   glutSolidTeapot(1.0);
-  //c.group.drawGroup();
+  // c.group.drawGroup();
 
   // renderMenu();
 
