@@ -89,24 +89,23 @@ void Model::setupModel() {
   std::vector<float> floats = vPointstoFloats(this->vbo);
 
   // Generate and bind vertex buffer
-
   glGenBuffers(1, &this->_vbo);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floats.size(), floats.data(),
+  glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float) * floats.size(), floats.data(),
                GL_STATIC_DRAW);
 
   // Specify the layout of the position data
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), floats.data());
   glEnableVertexAttribArray(0);
 
   // Specify the layout of the vertex normal data
   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-                        (void*)(3 * sizeof(float)));
+                        floats.data() + 3);
   glEnableVertexAttribArray(1);
 
   // Specify the layout of the texture coordinate data
   glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-                        (void*)(6 * sizeof(float)));
+                         floats.data() + 6);
   glEnableVertexAttribArray(2);
 
   // Generate and bind index buffer

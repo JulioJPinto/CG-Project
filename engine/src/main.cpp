@@ -101,12 +101,23 @@ void renderScene(void) {
   glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
   glScalef(zoom, zoom, zoom);
 
-  // put drawing instructions here
   drawAxis();
 
-  glPolygonMode(GL_FRONT, GL_LINE);
+  // put drawing instructions here
 
-  c.group.drawGroup();
+  float pos[4] = {3.0, 3.0, 3.0, 0.0};
+  glLightfv(GL_LIGHT0, GL_POSITION, pos);
+
+  float dark[] = { 0.2, 0.2, 0.2, 1.0 };
+  float white[] = { 0.8, 0.8, 0.8, 1.0 };
+  float red[] = { 0.8, 0.2, 0.2, 1.0 }; 
+
+  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+  glMaterialf(GL_FRONT, GL_SHININESS, 128);
+
+  glutSolidTeapot(1.0);
+  //c.group.drawGroup();
 
   // renderMenu();
 
@@ -192,6 +203,7 @@ int main(int argc, char** argv) {
 
   glewInit();
   glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
 
   // put callback registry here
   glutIdleFunc(renderScene);
@@ -204,12 +216,17 @@ int main(int argc, char** argv) {
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
-  // glEnable(GL_NORMALIZE);
-  // glEnable(GL_LIGHTING);
-  // glEnable(GL_LIGHT0);
-  // glEnable(GL_TEXTURE);
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
 
-  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  float dark[4] = {0.2, 0.2, 0.2, 1.0};
+  float white[4] = {1.0, 1.0, 1.0, 1.0};
+  float black[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  // light colors
+  glLightfv(GL_LIGHT0, GL_AMBIENT, dark);
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, white);
+  glLightfv(GL_LIGHT0, GL_SPECULAR, white);
+  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, black);
 
   // enter GLUT�s main cycle
   glutMainLoop();

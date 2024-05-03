@@ -9,6 +9,8 @@ def find_unique_lines(file_name):
             if cleaned_line not in unique_lines:
                 unique_lines[cleaned_line] = line_number
             line_number += 1
+        
+        print(f"Total lines: {line_number - 1}")
     
     return unique_lines
 
