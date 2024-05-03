@@ -3,7 +3,7 @@
 
 #include "utils.hpp"
 
-typedef struct Vertex {
+struct Vertex {
   Point position;
   Point normal;
   Point2D texture;

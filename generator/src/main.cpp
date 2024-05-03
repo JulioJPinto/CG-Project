@@ -77,7 +77,7 @@ void generateFigure(int argc, char* argv[]) {
     float height = std::stof(argv[3]);
     int slices = std::stoi(argv[4]);
 
-    generateCylinder(radius, height, slices, fileName);
+    generateCylinder(radius, height, slices, fileName, advanced);
   } else if (figureName == "patch" && figureArgs == 5) {
     // Generate Patch
     std::cout << "Generating Patch\n";

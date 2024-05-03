@@ -8,7 +8,7 @@
     </camera>
     <group> 
           <models> 
-            <model file="models/advanced/sphere.3d" />     
+            <model file="models/advanced/box.3d" />     
          </models>
      </group>
 </world>
