@@ -1,11 +1,5 @@
 #include "group.hpp"
 
-#include <array>
-#include <cmath>    // for M_PI
-#include <cstring>  // for memcpy
-#include <iostream>
-#include <string>
-
 #include "utils.hpp"
 
 Group::Group() {

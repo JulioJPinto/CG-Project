@@ -1,10 +1,4 @@
 #include "parse.hpp"
-
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <vector>
-
 #include "read.hpp"
 
 Configuration parseConfig(std::string filename) {

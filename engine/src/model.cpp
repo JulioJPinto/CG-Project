@@ -17,15 +17,29 @@ extern "C" {
 
 unsigned int counter = 0;
 
-std::vector<float> vPointstoFloats(std::vector<Vertex> points) {
+std::vector<float> positionsFloats(std::vector<Vertex> points) {
   std::vector<float> floats;
   for (const Vertex& point : points) {
     floats.push_back(point.position.x);
     floats.push_back(point.position.y);
     floats.push_back(point.position.z);
+  }
+  return floats;
+}
+
+std::vector<float> normalFloats(std::vector<Vertex> points) {
+  std::vector<float> floats;
+  for (const Vertex& point : points) {
     floats.push_back(point.normal.x);
     floats.push_back(point.normal.y);
     floats.push_back(point.normal.z);
+  }
+  return floats;
+}
+
+std::vector<float> textureFloats(std::vector<Vertex> points) {
+  std::vector<float> floats;
+  for (const Vertex& point : points) {
     floats.push_back(point.texture.x);
     floats.push_back(point.texture.y);
   }
@@ -86,28 +100,25 @@ Model::Model(std::string filename, std::vector<Vertex> points) {
 }
 
 void Model::setupModel() {
-  std::vector<float> floats = vPointstoFloats(this->vbo);
+  std::vector<float> points = positionsFloats(this->vbo);
+  std::vector<float> normals = normalFloats(this->vbo);
+  std::vector<float> textures = textureFloats(this->vbo);
 
   // Generate and bind vertex buffer
   glGenBuffers(1, &this->_vbo);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
-  glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float) * floats.size(),
-               floats.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(float) * points.size(),
+               points.data(), GL_STATIC_DRAW);
 
-  // Specify the layout of the position data
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-                        floats.data());
-  glEnableVertexAttribArray(0);
+  glGenBuffers(1, &this->_normals);
+  glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
+  glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(float) * normals.size(),
+               normals.data(), GL_STATIC_DRAW);
 
-  // Specify the layout of the vertex normal data
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-                        floats.data() + 3);
-  glEnableVertexAttribArray(1);
-
-  // Specify the layout of the texture coordinate data
-  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-                        floats.data() + 6);
-  glEnableVertexAttribArray(2);
+  glGenBuffers(1, &this->_textures);
+  glBindBuffer(GL_ARRAY_BUFFER, this->_textures);
+  glBufferData(GL_ARRAY_BUFFER, 2 * sizeof(float) * textures.size(),
+               textures.data(), GL_STATIC_DRAW);
 
   // Generate and bind index buffer
   glGenBuffers(1, &this->_ibo);
@@ -125,6 +136,9 @@ void Model::drawModel() {
   glColor3f(1.0f, 1.0f, 1.0f);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glVertexPointer(3, GL_FLOAT, 0, 0);
+
+  glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
+  glNormalPointer(GL_FLOAT,0,0);
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);

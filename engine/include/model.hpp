@@ -40,7 +40,7 @@ class Model {
   std::vector<Vertex> getPoints();
 
  private:
-  GLuint _vbo, _ibo;
+  GLuint _vbo, _ibo, _normals, _textures;
   std::vector<Vertex> _points;
   Model(std::string filename, std::vector<Vertex> vbo,
         std::vector<unsigned int> ibo, int id, std::vector<Vertex> points);

@@ -116,8 +116,8 @@ void renderScene(void) {
   glMaterialfv(GL_FRONT, GL_SPECULAR, white);
   glMaterialf(GL_FRONT, GL_SHININESS, 128);
 
-  glutSolidTeapot(1.0);
-  // c.group.drawGroup();
+  // glutSolidTeapot(1.0);
+  c.group.drawGroup();
 
   // renderMenu();
 
