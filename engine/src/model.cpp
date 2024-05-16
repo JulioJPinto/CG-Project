@@ -138,7 +138,7 @@ void Model::drawModel() {
   glVertexPointer(3, GL_FLOAT, 0, 0);
 
   glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
-  glNormalPointer(GL_FLOAT,0,0);
+  glNormalPointer(GL_FLOAT, 0, 0);
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);

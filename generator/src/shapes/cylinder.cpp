@@ -31,37 +31,59 @@ calculateCylinder(const float radius, const float height, const int slices) {
     pz = radius * cos(r);
     points.push_back(Point(px, -half, pz));
 
-    for (int i = 0; i < 3; i++) {
-      Point n(0.0f, -1.0f, 0.0f);
-      points.push_back(n);
+    Point n1(0.0f, -1.0f, 0.0f);
+    for (int j = 0; j < 3; j++) {
+      normals.push_back(n1);  // Push normals to normals vector
     }
+
+    textures.push_back(Point2D(0.5f, 0.5f));
+    textures.push_back(Point2D(0.5f, 0.5f));
+    textures.push_back(Point2D(0.5f, 0.5f));
 
     // face
     points.push_back(Point(px, -half, pz));
     points.push_back(Point(px, half, pz));
+
+    Point n2(px, 0.0f, pz);
+    for (int j = 0; j < 2; j++) {
+      normals.push_back(n2);  // Push normals to normals vector
+    }
+
     r -= alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
     points.push_back(Point(px, half, pz));
 
-    for (int i = 0; i < 3; i++) {
-      Point n(px, 0.0f, pz);
-      points.push_back(n);
-    }
+    n2 = Point(px, 0.0f, pz);
+    normals.push_back(n2);  // Push normals to normals vector
+
+    textures.push_back(Point2D(0.5f, 0.5f));
+    textures.push_back(Point2D(0.5f, 0.5f));
+    textures.push_back(Point2D(0.5f, 0.5f));
 
     points.push_back(Point(px, half, pz));
     points.push_back(Point(px, -half, pz));
+
+    Point n3 = Point(px, 0.0f, pz);
+
+    for (int j = 0; j < 2; j++) {
+      normals.push_back(n3);  // Push normals to normals vector
+    }
+
     r += alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
     points.push_back(Point(px, -half, pz));
 
-    for (int i = 0; i < 3; i++) {
-      Point n(px, 0.0f, pz);
-      points.push_back(n);
-    }
+    n3 = Point(px, 0.0f, pz);
 
-    // topo
+    normals.push_back(n3);  // Push normals to normals vector
+
+    textures.push_back(Point2D(0.5f, 0.5f));
+    textures.push_back(Point2D(0.5f, 0.5f));
+    textures.push_back(Point2D(0.5f, 0.5f));
+
+    // top
     r += alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
@@ -72,33 +94,17 @@ calculateCylinder(const float radius, const float height, const int slices) {
     pz = radius * cos(r);
     points.push_back(Point(px, half, pz));
 
-    for (int i = 0; i < 3; i++) {
-      Point n(0.0f, 1.0f, 0.0f);
-      points.push_back(n);
+    Point n4(0.0f, 1.0f, 0.0f);
+    for (int j = 0; j < 3; j++) {
+      normals.push_back(n4);  // Push normals to normals vector
     }
 
-    // Calculate texture coordinates
-    float theta =
-        static_cast<float>(i) / static_cast<float>(slices - 1) * 2.0f * M_PI;
-    textures.push_back(
-        Point2D(static_cast<float>(i) / static_cast<float>(slices - 1), 0.0f));
-    textures.push_back(
-        Point2D(static_cast<float>(i) / static_cast<float>(slices - 1), 1.0f));
-    textures.push_back(Point2D(
-        static_cast<float>((i + 1) % slices) / static_cast<float>(slices - 1),
-        1.0f));
-
-    textures.push_back(Point2D(
-        static_cast<float>((i + 1) % slices) / static_cast<float>(slices - 1),
-        1.0f));
-    textures.push_back(Point2D(
-        static_cast<float>((i + 1) % slices) / static_cast<float>(slices - 1),
-        0.0f));
-    textures.push_back(
-        Point2D(static_cast<float>(i) / static_cast<float>(slices - 1), 0.0f));
+    textures.push_back(Point2D(0.5f, 0.5f));
+    textures.push_back(Point2D(0.5f, 0.5f));
+    textures.push_back(Point2D(0.5f, 0.5f));
   }
 
-  return std::pair(std::pair(points, normals), textures);
+  return std::make_pair(std::make_pair(points, normals), textures);
 }
 
 bool generateCylinder(float radius, float height, int slices,

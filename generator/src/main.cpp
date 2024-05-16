@@ -59,7 +59,7 @@ void generateFigure(int argc, char* argv[]) {
     int slices = std::stoi(argv[4]);
     int stacks = std::stoi(argv[5]);
 
-    generateCone(radius, height, slices, stacks, fileName);
+    generateCone(radius, height, slices, stacks, fileName, advanced);
 
   } else if (figureName == "torus" && figureArgs == 7) {
     // Generate Torus
@@ -85,7 +85,7 @@ void generateFigure(int argc, char* argv[]) {
     int tessellation = std::stoi(argv[3]);
     std::cout << "Tessellation: " << tessellation << std::endl;
     std::cout << "Bezier patch: " << bezier_patch << std::endl;
-    generatePatch(bezier_patch, tessellation, fileName);
+    generatePatch(bezier_patch, tessellation, fileName, advanced);
 
   } else {
     std::cerr << "Invalid arguments\n";

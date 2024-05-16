@@ -1,4 +1,5 @@
 #include "parse.hpp"
+
 #include "read.hpp"
 
 Configuration parseConfig(std::string filename) {
