@@ -24,6 +24,7 @@ float cameraAngleY = 0.0f;
 
 float zoom = 1.0f;
 int axis = 1;
+int wireframe = 1;
 
 int timebase;
 float frames;
@@ -101,20 +102,10 @@ void renderScene(void) {
   glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
   glScalef(zoom, zoom, zoom);
 
+  //setup all lights
+  setupLights(c.lights);
+
   drawAxis();
-
-  // put drawing instructions here
-
-  float pos[4] = {3.0, 3.0, 3.0, 0.0};
-  glLightfv(GL_LIGHT0, GL_POSITION, pos);
-
-  float dark[] = {0.2, 0.2, 0.2, 1.0};
-  float white[] = {0.8, 0.8, 0.8, 1.0};
-  float red[] = {0.8, 0.2, 0.2, 1.0};
-
-  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, white);
-  glMaterialf(GL_FRONT, GL_SHININESS, 128);
 
   // glutSolidTeapot(1.0);
   c.group.drawGroup();
@@ -168,6 +159,14 @@ void processNormalKeys(unsigned char key, int x, int y) {
     case 'i':
       zoom += value;
       break;
+    case 'c':
+      if (wireframe) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        wireframe = 0;
+      } else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        wireframe = 1;
+      }
     default:
       break;
   }
@@ -177,9 +176,11 @@ void setupConfig(char* arg) {
   filename.assign(arg);
 
   if (filename.substr(filename.size() - 4) == ".xml") {
+    printf("XML\n");
     c = parseConfig(filename);
   } else {
-    c = parseConfig("../scenes/default.xml");
+    std::cout << "Invalid file format\n";
+    exit(1);
   }
 }
 
@@ -216,17 +217,9 @@ int main(int argc, char** argv) {
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
-  glEnable(GL_LIGHTING);
-  glEnable(GL_LIGHT0);
-
-  float dark[4] = {0.2, 0.2, 0.2, 1.0};
-  float white[4] = {1.0, 1.0, 1.0, 1.0};
-  float black[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-  // light colors
-  glLightfv(GL_LIGHT0, GL_AMBIENT, dark);
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, white);
-  glLightfv(GL_LIGHT0, GL_SPECULAR, white);
-  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, black);
+  if(c.lights.size() != 0) {
+    glEnable(GL_LIGHTING);
+  }
 
   // enter GLUT�s main cycle
   glutMainLoop();

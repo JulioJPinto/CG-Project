@@ -133,6 +133,8 @@ void Model::drawModel() {
     setupModel();
   }
 
+  setupMaterial(this->material);
+
   glColor3f(1.0f, 1.0f, 1.0f);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glVertexPointer(3, GL_FLOAT, 0, 0);

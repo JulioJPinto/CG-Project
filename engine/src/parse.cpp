@@ -12,6 +12,8 @@ Configuration parseConfig(std::string filename) {
     exit(1);
   }
 
+  printf("Parsing file: %s\n", filename.c_str());
+
   // read the XML file content into a string
   std::string xmlContent((std::istreambuf_iterator<char>(file)),
                          std::istreambuf_iterator<char>());
@@ -21,15 +23,18 @@ Configuration parseConfig(std::string filename) {
   rapidxml::xml_document<> doc;
   doc.parse<0>(&xmlContent[0]);
 
+  printf("Parsing XML\n");
   // access the root node
   rapidxml::xml_node<>* root = doc.first_node("world");
 
+  printf("Parsing window\n");
   // window information
   char* width = root->first_node("window")->first_attribute("width")->value();
   char* height = root->first_node("window")->first_attribute("height")->value();
 
   Window window_info = Window(std::stoi(width), std::stoi(height));
 
+  printf("Parsing camera\n");
   // camera information
   rapidxml::xml_node<>* camera = root->first_node("camera");
 
@@ -55,6 +60,48 @@ Configuration parseConfig(std::string filename) {
 
   Camera camera_info = Camera(position, lookAt, up, fov, near, far);
 
+  // light information
+  printf("Parsing lights\n");
+  std::vector<Light> list_lights;
+  rapidxml::xml_node<>* lights = root->first_node("lights");
+  if (lights) {
+    for (rapidxml::xml_node<>* light = lights->first_node("light");
+         light && list_lights.size() < 8;
+         light = light->next_sibling("light")) {
+      switch (light->first_attribute("type")->value()[0]) {
+        case 'p': {
+          float x = std::stof(light->first_attribute("posX")->value());
+          float y = std::stof(light->first_attribute("posY")->value());
+          float z = std::stof(light->first_attribute("posZ")->value());
+          Light l = createPointLight(glm::vec4(x, y, z, 1));
+          list_lights.push_back(l);
+        } break;
+        case 'd': {
+          float x = std::stof(light->first_attribute("dirX")->value());
+          float y = std::stof(light->first_attribute("dirY")->value());
+          float z = std::stof(light->first_attribute("dirZ")->value());
+          Light l = createDirectionLight(glm::vec4(x, y, z, 1));
+          list_lights.push_back(l);
+        } break;
+        case 's': {
+          float x = std::stof(light->first_attribute("posX")->value());
+          float y = std::stof(light->first_attribute("posY")->value());
+          float z = std::stof(light->first_attribute("posZ")->value());
+          float dx = std::stof(light->first_attribute("dirX")->value());
+          float dy = std::stof(light->first_attribute("dirY")->value());
+          float dz = std::stof(light->first_attribute("dirZ")->value());
+          float cutoff = std::stof(light->first_attribute("cutoff")->value());
+          Light l = createSpotLight(glm::vec4(x, y, z, 1),
+                                    glm::vec4(dx, dy, dz, 1), cutoff);
+          list_lights.push_back(l);
+        } break;
+        default:
+          break;
+      }
+    }
+  }
+
+  std::cout << "Parsing group" << std::endl;
   // group information
   rapidxml::xml_node<>* group = root->first_node("group");
 
@@ -62,7 +109,7 @@ Configuration parseConfig(std::string filename) {
   Group groupInfo = parseGroup(group);
 
   // Return the configuration object
-  return Configuration(window_info, camera_info, groupInfo);
+  return Configuration(window_info, camera_info, groupInfo, list_lights);
 }
 
 // Parse a group node recursively
@@ -158,13 +205,47 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
   rapidxml::xml_node<>* modelNode = modelsNode->first_node("model");
   while (modelNode) {
     const std::string& file = modelNode->first_attribute("file")->value();
-    const Model& model = readFile(file.data());
+    Model model = readFile(file.data());
     if (model.id == -1) {
       std::cerr << "Error reading model file: " << file << std::endl;
       return;
     }
-    group.models.push_back(model);
+    rapidxml::xml_node<>* color = modelNode->first_node("color");
+    if (color) {
+      rapidxml::xml_node<>* diffuse = color->first_node("diffuse");
+      glm::vec4 diffuse_vec = glm::vec4(
+          std::stof(diffuse->first_attribute("R")->value()) / 255.0f,
+          std::stof(diffuse->first_attribute("G")->value()) / 255.0f,
+          std::stof(diffuse->first_attribute("B")->value()) / 255.0f, 1.0f);
+      rapidxml::xml_node<>* ambient = color->first_node("ambient");
+      glm::vec4 ambient_vec = glm::vec4(
+          std::stof(ambient->first_attribute("R")->value()) / 255.0f,
+          std::stof(ambient->first_attribute("G")->value()) / 255.0f,
+          std::stof(ambient->first_attribute("B")->value()) / 255.0f, 1.0f);
+      rapidxml::xml_node<>* specular = color->first_node("specular");
+      glm::vec4 specular_vec = glm::vec4(
+          std::stof(specular->first_attribute("R")->value()) / 255.0f,
+          std::stof(specular->first_attribute("G")->value()) / 255.0f,
+          std::stof(specular->first_attribute("B")->value()) / 255.0f, 1.0f);
+      rapidxml::xml_node<>* emissive = color->first_node("emissive");
+      glm::vec4 emission_vec = glm::vec4(
+          std::stof(emissive->first_attribute("R")->value()) / 255.0f,
+          std::stof(emissive->first_attribute("G")->value()) / 255.0f,
+          std::stof(emissive->first_attribute("B")->value()) / 255.0f, 1.0f);
+      rapidxml::xml_node<>* shininess = color->first_node("shininess");
+      float shininess_val =
+          std::stof(shininess->first_attribute("value")->value());
 
+      model.material = createMaterial(diffuse_vec, ambient_vec, specular_vec,
+                                      emission_vec, shininess_val);
+    } else {
+      model.material = createMaterial(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f),
+                                      glm::vec4(0.8f, 0.8f, 0.8f, 1.0f),
+                                      glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),
+                                      glm::vec4(0.0f, 0.0f, 0.0f, 1.0f), 0.0f);
+    }
+
+    group.models.push_back(model);
     modelNode = modelNode->next_sibling("model");
   }
 }

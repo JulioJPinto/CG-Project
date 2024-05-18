@@ -15,6 +15,7 @@ extern "C" {
 #include <set>
 #include <vector>
 
+#include "light.hpp"
 #include "utils.hpp"
 #include "vertex.hpp"
 
@@ -30,6 +31,7 @@ class Model {
   std::vector<unsigned int> ibo;
   int id;
   bool initialized = false;
+  Material material;
 
   Model();
   Model(std::string filename, std::vector<Vertex> points);
