@@ -25,6 +25,8 @@ float cameraAngleY = 0.0f;
 float zoom = 1.0f;
 int axis = 1;
 int wireframe = 1;
+bool isDragging = false;
+int lastMouseX, lastMouseY;
 
 int timebase;
 float frames;
@@ -116,6 +118,33 @@ void renderScene(void) {
 
   // End of frame
   glutSwapBuffers();
+}
+
+void mouse(int button, int state, int x, int y) {
+    if (button == GLUT_LEFT_BUTTON) {
+        if (state == GLUT_DOWN) {
+            isDragging = true;
+            lastMouseX = x;
+            lastMouseY = y;
+        } else if (state == GLUT_UP) {
+            isDragging = false;
+        }
+    }
+}
+
+void motion(int x, int y) {
+    if (isDragging) {
+        int dx = x - lastMouseX;
+        int dy = y - lastMouseY;
+
+        cameraAngleY += dx * 0.1f;
+        cameraAngle += dy * 0.1f;
+
+        lastMouseX = x;
+        lastMouseY = y;
+
+        glutPostRedisplay();
+    }
 }
 
 void processSpecialKeys(int key, int xx, int yy) {
@@ -213,6 +242,8 @@ int main(int argc, char** argv) {
 
   glutSpecialFunc(processSpecialKeys);
   glutKeyboardFunc(processNormalKeys);
+  glutMouseFunc(mouse);
+  glutMotionFunc(motion);
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
