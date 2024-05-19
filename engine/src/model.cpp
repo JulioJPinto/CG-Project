@@ -140,8 +140,7 @@ void Model::drawModel() {
   glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
   glNormalPointer(GL_FLOAT, 0, 0);
 
-  setupMaterial(this->material);
-
+  glColor3f(1.0, 1.0, 1.0);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);
 }

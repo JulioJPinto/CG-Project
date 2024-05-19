@@ -230,7 +230,6 @@ int main(int argc, char** argv) {
   glutCreateWindow("CG@DI");
 
   // setupMenu();
-
   glewInit();
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
