@@ -51,6 +51,7 @@ void reshape(int w, int h) {
 
 void drawAxis(void) {
   if (axis) {
+    glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
     // x-axis (red)
     glColor3f(50.0f, 0.0f, 0.0f);
@@ -67,6 +68,7 @@ void drawAxis(void) {
 
     glColor3f(1.0f, 1.0f, 1.0f);
     glEnd();
+    glEnable(GL_LIGHTING);
   }
 }
 
@@ -95,7 +97,6 @@ void renderScene(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   // set camera
   glLoadIdentity();
-  // gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
   gluLookAt(c.camera.position.x, c.camera.position.y, c.camera.position.z,
             c.camera.lookAt.x, c.camera.lookAt.y, c.camera.lookAt.z,
             c.camera.up.x, c.camera.up.y, c.camera.up.z);
@@ -104,15 +105,11 @@ void renderScene(void) {
   glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
   glScalef(zoom, zoom, zoom);
 
-  // setup all lights
-  setupLights(c.lights);
-
   drawAxis();
 
-  // glutSolidTeapot(1.0);
-  c.group.drawGroup();
+  setupLights(c.lights);
 
-  // renderMenu();
+  c.group.drawGroup();
 
   frameCounter();
 
@@ -248,8 +245,14 @@ int main(int argc, char** argv) {
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
+
   if (c.lights.size() != 0) {
+    std::cout << "Setting up lights\n";
     glEnable(GL_LIGHTING);
+    for (int i = 0; i < c.lights.size(); i++) {
+      glEnable(GL_LIGHT0 + i);
+      std::cout << "Light " << i << std::endl;
+    }
   }
 
   // enter GLUT�s main cycle

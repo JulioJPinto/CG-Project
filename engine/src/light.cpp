@@ -1,5 +1,7 @@
 #include "light.hpp"
 
+#include <iostream>
+
 Light createDirectionLight(glm::vec4 direction) {
   Light light;
   light.type = DIRECTIONAL;
@@ -46,6 +48,7 @@ void setupMaterial(Material m) {
 void setupLights(std::vector<Light> lights) {
   for (int i = 0; i < lights.size() && lights.size() < 8; i++) {
     Light light = lights[i];
+
     switch (light.type) {
       case DIRECTIONAL:
         glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.direction));

@@ -5,6 +5,12 @@ rm -rf build
 rm -rf */.cmake
 
 # Remove the CMake cache
+rm -rf CMakeCache.txt
+rm -rf CMakeFiles
+rm cmake_install.cmake
+rm Makefile
+rm -rf cg-generator
+rm -rf cg-engine
 rm -rf */cg-generator
 rm -rf */cg-engine
 rm -rf */imgui.ini  
