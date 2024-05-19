@@ -105,16 +105,20 @@ void Model::setupModel() {
   std::vector<float> textures = textureFloats(this->vbo);
 
   // Generate and bind vertex buffer
+  std::cout << "Generating buffers" << std::endl;
+  std::cout << "Points size: " << points.size() / 3 << std::endl;
   glGenBuffers(1, &this->_vbo);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(float) * points.size(),
                points.data(), GL_STATIC_DRAW);
 
+  std::cout << "Normals size: " << normals.size() / 3 << std::endl;
   glGenBuffers(1, &this->_normals);
   glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
   glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(float) * normals.size(),
                normals.data(), GL_STATIC_DRAW);
 
+  std::cout << "Textures size: " << textures.size() << std::endl;
   glGenBuffers(1, &this->_textures);
   glBindBuffer(GL_ARRAY_BUFFER, this->_textures);
   glBufferData(GL_ARRAY_BUFFER, 2 * sizeof(float) * textures.size(),
@@ -132,13 +136,18 @@ void Model::drawModel() {
     this->initialized = true;
     setupModel();
   }
+  std::cout << "Setting up material" << std::endl;
 
   setupMaterial(this->material);
 
+  std::cout << "Drawing model " << this->id << std::endl;
+
+  std::cout << "VBO size: " << this->vbo.size() << std::endl;
   glColor3f(1.0f, 1.0f, 1.0f);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glVertexPointer(3, GL_FLOAT, 0, 0);
 
+  std::cout << "Normals size: " << this->vbo.size() << std::endl;
   glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
   glNormalPointer(GL_FLOAT, 0, 0);
 

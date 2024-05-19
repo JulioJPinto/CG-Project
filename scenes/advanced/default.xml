@@ -10,7 +10,7 @@
 
     <group> 
           <models> 
-            <model file="models/simple/track.obj" />     
+            <model file="models/advanced/teapot10.3d" />     
          </models>
      </group>
 </world>
