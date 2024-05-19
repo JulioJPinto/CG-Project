@@ -46,22 +46,50 @@ void setupMaterial(Material m) {
 }
 
 void setupLights(std::vector<Light> lights) {
+  if (lights.size() != 0) {
+    std::cout << "Setting up lights\n";
+    float amb[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+    glEnable(GL_LIGHTING);
+    for (int i = 0; i < lights.size(); i++) {
+      float white[4] = {1.0, 1.0, 1.0, 1.0};
+
+      glEnable(GL_LIGHT0 + i);
+      glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, white);
+      glLightfv(GL_LIGHT0 + i, GL_SPECULAR, white);
+      std::cout << "Light " << i << std::endl;
+    }
+  }
+}
+
+void drawLights(std::vector<Light> lights) {
   for (int i = 0; i < lights.size() && lights.size() < 8; i++) {
     Light light = lights[i];
 
     switch (light.type) {
-      case DIRECTIONAL:
-        glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.direction));
+      case DIRECTIONAL: {
+        float direction[4] = {light.direction.x, light.direction.y,
+                              light.direction.z, 0.0f};
+        glLightfv(GL_LIGHT0 + i, GL_POSITION, direction);
         break;
-      case POINT:
-        glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.position));
+      }
+      case POINT: {
+        float position[4] = {light.position.x, light.position.y,
+                             light.position.z, 1.0f};
+        glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
         break;
-      case SPOT:
-        glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.position));
-        glLightfv(GL_LIGHT0 + i, GL_SPOT_DIRECTION,
-                  glm::value_ptr(light.direction));
+      }
+      case SPOT: {
+        float postion[4] = {light.position.x, light.position.y,
+                            light.position.z, 1.0f};
+        glLightfv(GL_LIGHT0 + i, GL_POSITION, postion);
+        float direction[4] = {light.direction.x, light.direction.y,
+                              light.direction.z, 0.0f};
+        glLightfv(GL_LIGHT0 + i, GL_SPOT_DIRECTION, direction);
         glLightf(GL_LIGHT0 + i, GL_SPOT_CUTOFF, light.cutoff);
         break;
+      }
     }
   }
 }

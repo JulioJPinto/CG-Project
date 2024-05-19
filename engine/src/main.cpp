@@ -107,7 +107,7 @@ void renderScene(void) {
 
   drawAxis();
 
-  setupLights(c.lights);
+  drawLights(c.lights);
 
   c.group.drawGroup();
 
@@ -245,15 +245,7 @@ int main(int argc, char** argv) {
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
-
-  if (c.lights.size() != 0) {
-    std::cout << "Setting up lights\n";
-    glEnable(GL_LIGHTING);
-    for (int i = 0; i < c.lights.size(); i++) {
-      glEnable(GL_LIGHT0 + i);
-      std::cout << "Light " << i << std::endl;
-    }
-  }
+  setupLights(c.lights);
 
   // enter GLUT�s main cycle
   glutMainLoop();

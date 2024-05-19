@@ -29,6 +29,8 @@ Light createSpotLight(glm::vec4 position, glm::vec4 direction, float cutoff);
 
 void setupLights(std::vector<Light> lights);
 
+void drawLights(std::vector<Light> lights);
+
 typedef struct {
   glm::vec4 ambient;
   glm::vec4 diffuse;
