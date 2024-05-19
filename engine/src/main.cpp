@@ -104,7 +104,7 @@ void renderScene(void) {
   glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
   glScalef(zoom, zoom, zoom);
 
-  //setup all lights
+  // setup all lights
   setupLights(c.lights);
 
   drawAxis();
@@ -121,30 +121,30 @@ void renderScene(void) {
 }
 
 void mouse(int button, int state, int x, int y) {
-    if (button == GLUT_LEFT_BUTTON) {
-        if (state == GLUT_DOWN) {
-            isDragging = true;
-            lastMouseX = x;
-            lastMouseY = y;
-        } else if (state == GLUT_UP) {
-            isDragging = false;
-        }
+  if (button == GLUT_LEFT_BUTTON) {
+    if (state == GLUT_DOWN) {
+      isDragging = true;
+      lastMouseX = x;
+      lastMouseY = y;
+    } else if (state == GLUT_UP) {
+      isDragging = false;
     }
+  }
 }
 
 void motion(int x, int y) {
-    if (isDragging) {
-        int dx = x - lastMouseX;
-        int dy = y - lastMouseY;
+  if (isDragging) {
+    int dx = x - lastMouseX;
+    int dy = y - lastMouseY;
 
-        cameraAngleY += dx * 0.1f;
-        cameraAngle += dy * 0.1f;
+    cameraAngleY += dx * 0.1f;
+    cameraAngle += dy * 0.1f;
 
-        lastMouseX = x;
-        lastMouseY = y;
+    lastMouseX = x;
+    lastMouseY = y;
 
-        glutPostRedisplay();
-    }
+    glutPostRedisplay();
+  }
 }
 
 void processSpecialKeys(int key, int xx, int yy) {
@@ -248,7 +248,7 @@ int main(int argc, char** argv) {
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
-  if(c.lights.size() != 0) {
+  if (c.lights.size() != 0) {
     glEnable(GL_LIGHTING);
   }
 

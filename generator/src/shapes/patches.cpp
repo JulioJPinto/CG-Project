@@ -121,25 +121,22 @@ patchTriangles(const char* bezier_patch, const int tessellation) {
 }
 
 Point calculateNormal(const Point& p1, const Point& p2, const Point& p3) {
-    // Calculate normal using cross product
-    Point v1(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);  // (p2 - p1)
-    Point v2(p3.x - p1.x, p3.y - p1.y, p3.z - p1.z);  // (p3 - p1)
+  // Calculate normal using cross product
+  Point v1(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);  // (p2 - p1)
+  Point v2(p3.x - p1.x, p3.y - p1.y, p3.z - p1.z);  // (p3 - p1)
 
-    Point n(
-        v1.y * v2.z - v1.z * v2.y,
-        v1.z * v2.x - v1.x * v2.z,
-        v1.x * v2.y - v1.y * v2.x
-    );
+  Point n(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z,
+          v1.x * v2.y - v1.y * v2.x);
 
-    // Normalize the normal vector
-    float length = std::sqrt(n.x * n.x + n.y * n.y + n.z * n.z);
-    if (length != 0) {
-        n.x /= length;
-        n.y /= length;
-        n.z /= length;
-    }
+  // Normalize the normal vector
+  float length = std::sqrt(n.x * n.x + n.y * n.y + n.z * n.z);
+  if (length != 0) {
+    n.x /= length;
+    n.y /= length;
+    n.z /= length;
+  }
 
-    return n;
+  return n;
 }
 
 Point bezierPatch(const std::vector<Point>& controlPoints, float u, float v) {

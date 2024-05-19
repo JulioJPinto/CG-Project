@@ -44,20 +44,21 @@ void setupMaterial(Material m) {
 }
 
 void setupLights(std::vector<Light> lights) {
-    for (int i = 0; i < lights.size() && lights.size() < 8; i++) {
-        Light light = lights[i];
-        switch (light.type) {
-        case DIRECTIONAL:
-            glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.direction));
-            break;
-        case POINT:
-            glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.position));
-            break;
-        case SPOT:
-            glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.position));
-            glLightfv(GL_LIGHT0 + i, GL_SPOT_DIRECTION, glm::value_ptr(light.direction));
-            glLightf(GL_LIGHT0 + i, GL_SPOT_CUTOFF, light.cutoff);
-            break;
-        }
+  for (int i = 0; i < lights.size() && lights.size() < 8; i++) {
+    Light light = lights[i];
+    switch (light.type) {
+      case DIRECTIONAL:
+        glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.direction));
+        break;
+      case POINT:
+        glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.position));
+        break;
+      case SPOT:
+        glLightfv(GL_LIGHT0 + i, GL_POSITION, glm::value_ptr(light.position));
+        glLightfv(GL_LIGHT0 + i, GL_SPOT_DIRECTION,
+                  glm::value_ptr(light.direction));
+        glLightf(GL_LIGHT0 + i, GL_SPOT_CUTOFF, light.cutoff);
+        break;
     }
+  }
 }

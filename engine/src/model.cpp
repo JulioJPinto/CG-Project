@@ -109,14 +109,14 @@ void Model::setupModel() {
   std::cout << "Points size: " << points.size() / 3 << std::endl;
   glGenBuffers(1, &this->_vbo);
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * points.size(),
-               points.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * points.size(), points.data(),
+               GL_STATIC_DRAW);
 
   std::cout << "Normals size: " << normals.size() / 3 << std::endl;
   glGenBuffers(1, &this->_normals);
   glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals.size(),
-               normals.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals.size(), normals.data(),
+               GL_STATIC_DRAW);
 
   std::cout << "Textures size: " << textures.size() << std::endl;
   glGenBuffers(1, &this->_textures);

@@ -22,9 +22,9 @@ Model readOBJfile(const char* filepath) {
 
   if (!file.is_open()) {
     std::cerr << "Error opening file: " << filepath << std::endl;
-    return Model(); // Return an empty model or handle the error as appropriate
+    return Model();  // Return an empty model or handle the error as appropriate
   }
-  
+
   std::string line;
   while (std::getline(file, line)) {
     std::istringstream iss(line);
@@ -53,7 +53,7 @@ Model readOBJfile(const char* filepath) {
           if (!index_str.empty())
             indices.push_back(std::stoi(index_str) - 1);
           else
-            indices.push_back(-1); // If texture or normal index is missing
+            indices.push_back(-1);  // If texture or normal index is missing
         }
         int point_index = indices[0];
         int texture_index = indices[1];
@@ -67,8 +67,8 @@ Model readOBJfile(const char* filepath) {
         nz = normals[normal_index].z;
         tx = 0;
         ty = 1;
-        
-        if(texture_index == -1) {
+
+        if (texture_index == -1) {
           printf("Texture index is -1\n");
         }
         if (normal_index == -1) {
@@ -82,7 +82,6 @@ Model readOBJfile(const char* filepath) {
         }
 
         vertices.push_back(Vertex(x, y, z, nx, ny, nz, tx, ty));
-
       }
     }
   }
@@ -101,8 +100,6 @@ Model readOBJfile(const char* filepath) {
 
   return model;
 }
-
-
 
 Model read3DAdvancedFile(const char* filepath) {
   std::ifstream file(filepath);

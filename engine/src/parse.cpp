@@ -220,7 +220,8 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
         <shininess value="0" />
       </color>
     */
-    //Set the vector for diffuse, ambient, specular and emissive based on the above example
+    // Set the vector for diffuse, ambient, specular and emissive based on the
+    // above example
     glm::vec4 diffuse_vec = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
     glm::vec4 ambient_vec = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
     glm::vec4 specular_vec = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
@@ -228,46 +229,46 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
     float shininess_val = 0.0f;
 
     if (color) {
-
       rapidxml::xml_node<>* diffuse = color->first_node("diffuse");
-      if(diffuse) {
+      if (diffuse) {
         diffuse_vec = glm::vec4(
-        std::stof(diffuse->first_attribute("R")->value()) / 255.0f,
-        std::stof(diffuse->first_attribute("G")->value()) / 255.0f,
-        std::stof(diffuse->first_attribute("B")->value()) / 255.0f, 1.0f);
-      } 
-      
+            std::stof(diffuse->first_attribute("R")->value()) / 255.0f,
+            std::stof(diffuse->first_attribute("G")->value()) / 255.0f,
+            std::stof(diffuse->first_attribute("B")->value()) / 255.0f, 1.0f);
+      }
+
       rapidxml::xml_node<>* ambient = color->first_node("ambient");
       if (ambient) {
         ambient_vec = glm::vec4(
-        std::stof(ambient->first_attribute("R")->value()) / 255.0f,
-        std::stof(ambient->first_attribute("G")->value()) / 255.0f,
-        std::stof(ambient->first_attribute("B")->value()) / 255.0f, 1.0f);
+            std::stof(ambient->first_attribute("R")->value()) / 255.0f,
+            std::stof(ambient->first_attribute("G")->value()) / 255.0f,
+            std::stof(ambient->first_attribute("B")->value()) / 255.0f, 1.0f);
       }
 
       rapidxml::xml_node<>* specular = color->first_node("specular");
       if (specular) {
         specular_vec = glm::vec4(
-        std::stof(specular->first_attribute("R")->value()) / 255.0f,
-        std::stof(specular->first_attribute("G")->value()) / 255.0f,
-        std::stof(specular->first_attribute("B")->value()) / 255.0f, 1.0f);
+            std::stof(specular->first_attribute("R")->value()) / 255.0f,
+            std::stof(specular->first_attribute("G")->value()) / 255.0f,
+            std::stof(specular->first_attribute("B")->value()) / 255.0f, 1.0f);
       }
 
       rapidxml::xml_node<>* emissive = color->first_node("emissive");
       if (emissive) {
         emission_vec = glm::vec4(
-        std::stof(emissive->first_attribute("R")->value()) / 255.0f,
-        std::stof(emissive->first_attribute("G")->value()) / 255.0f,
-        std::stof(emissive->first_attribute("B")->value()) / 255.0f, 1.0f);
+            std::stof(emissive->first_attribute("R")->value()) / 255.0f,
+            std::stof(emissive->first_attribute("G")->value()) / 255.0f,
+            std::stof(emissive->first_attribute("B")->value()) / 255.0f, 1.0f);
       }
 
       rapidxml::xml_node<>* shininess = color->first_node("shininess");
       if (shininess) {
         shininess_val = std::stof(shininess->first_attribute("value")->value());
       }
-    } 
+    }
 
-    Material material = createMaterial(ambient_vec, diffuse_vec, specular_vec, emission_vec, shininess_val);
+    Material material = createMaterial(ambient_vec, diffuse_vec, specular_vec,
+                                       emission_vec, shininess_val);
     model.material = material;
 
     group.models.push_back(model);
