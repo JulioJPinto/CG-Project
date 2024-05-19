@@ -17,7 +17,7 @@
 			<transform> 
 			</transform>
 			<models> 
-				<model file="plane_2_3.3d" > <!-- generator plane 2 3 plane_2_3.3d -->
+				<model file="models/advanced/plane_2_3.3d" > <!-- generator plane 2 3 plane_2_3.3d -->
 				<texture file = "relva.jpg" />
 				</model>
 			</models>
@@ -28,7 +28,7 @@
 				<scale x="0.2" y="0.2" z="0.2" />
 			</transform>
 			<models> 
-				<model file="cone_1_2_4_3.3d" > <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
+				<model file="models/advanced/cone_1_2_4_3.3d" > <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
 					<texture file = "cone.jpg" />
 				</model>
 			</models>
@@ -40,7 +40,7 @@
 				<!--rotate angle=-90 x="1" y="0" z="0" /-->
 			</transform>
 			<models> 
-				<model file="sphere_1_8_8.3d" > <!-- generator sphere 1 8 8 sphere_1_8_8.3d -->
+				<model file="models/advanced/sphere_1_8_8.3d" > <!-- generator sphere 1 8 8 sphere_1_8_8.3d -->
 					<texture file = "earth.jpg" />
 				</model>
 			</models>
@@ -52,7 +52,7 @@
 				<rotate angle="-90" x="1" y="0" z="0" />
 			</transform>
 			<models> 
-				<model file="bezier_10.3d" > <!-- generator patch teapot.patch 10 bezier_10.3d -->
+				<model file="models/advanced/bezier_10.3d" > <!-- generator patch teapot.patch 10 bezier_10.3d -->
 					<texture file = "teapot.jpg" />
 				</model>
 			</models>
@@ -63,7 +63,7 @@
 				<translate x = "2.5" y = "1.0" z = "-2.5" />
 			</transform>
 			<models> 
-				<model file="box_2_3.3d" > <!-- generator 2 3 box_2_3.3d -->
+				<model file="models/advanced/box_2_3.3d" > <!-- generator 2 3 box_2_3.3d -->
 					<texture file = "box.jpg" />
 				</model>
 			</models>

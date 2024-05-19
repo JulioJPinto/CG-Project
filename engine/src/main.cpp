@@ -247,6 +247,7 @@ int main(int argc, char** argv) {
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
+  glEnable(GL_RESCALE_NORMAL);
   setupLights(c.lights);
 
   // enter GLUT�s main cycle
