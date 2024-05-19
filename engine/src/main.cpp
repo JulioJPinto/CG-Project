@@ -107,9 +107,12 @@ void renderScene(void) {
 
   drawAxis();
 
-  drawLights(c.lights);
+  bool lights = c.lights.size() != 0;
+  if(lights) {
+    drawLights(c.lights);
+  }  
 
-  c.group.drawGroup();
+  c.group.drawGroup(lights);
 
   frameCounter();
 

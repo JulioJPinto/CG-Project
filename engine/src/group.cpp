@@ -64,7 +64,7 @@ void applyTimeTransformations(std::vector<TimeTransform> order,
   }
 }
 
-void Group::drawGroup() {
+void Group::drawGroup(bool lights) {
   glPushMatrix();
 
   applyTimeTransformations(this->order, this->rotations, this->translates);
@@ -80,11 +80,15 @@ void Group::drawGroup() {
   glMultMatrixf(matrixArray);
 
   for (Model& model : this->models) {
+    if(lights) {
+      setupMaterial(model.material);
+    }
+
     model.drawModel();
   }
 
   for (Group& sub : this->subgroups) {
-    sub.drawGroup();
+    sub.drawGroup(lights);
   }
 
   glPopMatrix();
