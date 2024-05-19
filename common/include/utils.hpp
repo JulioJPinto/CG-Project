@@ -39,10 +39,27 @@ typedef struct Point {
 
 } Point;
 
+struct Point2D {
+  float x;
+  float y;
+
+  Point2D(float x_val = 0.0f, float y_val = 0.0f) : x(x_val), y(y_val) {}
+
+  bool operator==(const Point2D& other) const {
+    return x == other.x && y == other.y;
+  }
+};
+
 struct PointHash {
   size_t operator()(const Point& p) const {
     return std::hash<float>()(p.x) ^ std::hash<float>()(p.y) ^
            std::hash<float>()(p.z);
+  }
+};
+
+struct Point2DHash {
+  size_t operator()(const Point2D& p) const {
+    return std::hash<float>()(p.x) ^ std::hash<float>()(p.y);
   }
 };
 

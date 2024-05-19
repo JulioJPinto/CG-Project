@@ -1,11 +1,5 @@
 #include "group.hpp"
 
-#include <array>
-#include <cmath>    // for M_PI
-#include <cstring>  // for memcpy
-#include <iostream>
-#include <string>
-
 #include "utils.hpp"
 
 Group::Group() {
@@ -45,7 +39,7 @@ void Group::scale(float x, float y, float z) {
 
 void Group::rotate(float angle, float x, float y, float z) {
   glm::mat4 matrix = glm::mat4(1.0f);
-  matrix = glm::rotate(matrix, angle, glm::vec3(x, y, z));
+  matrix = glm::rotate(matrix, glm::radians(angle), glm::vec3(x, y, z));
 
   this->transformations = this->transformations * matrix;
 }
@@ -70,7 +64,7 @@ void applyTimeTransformations(std::vector<TimeTransform> order,
   }
 }
 
-void Group::drawGroup() {
+void Group::drawGroup(bool lights) {
   glPushMatrix();
 
   applyTimeTransformations(this->order, this->rotations, this->translates);
@@ -86,11 +80,15 @@ void Group::drawGroup() {
   glMultMatrixf(matrixArray);
 
   for (Model& model : this->models) {
+    if (lights) {
+      setupMaterial(model.material);
+    }
+
     model.drawModel();
   }
 
   for (Group& sub : this->subgroups) {
-    sub.drawGroup();
+    sub.drawGroup(lights);
   }
 
   glPopMatrix();

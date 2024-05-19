@@ -24,6 +24,9 @@ float cameraAngleY = 0.0f;
 
 float zoom = 1.0f;
 int axis = 1;
+int wireframe = 1;
+bool isDragging = false;
+int lastMouseX, lastMouseY;
 
 int timebase;
 float frames;
@@ -48,6 +51,7 @@ void reshape(int w, int h) {
 
 void drawAxis(void) {
   if (axis) {
+    glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
     // x-axis (red)
     glColor3f(50.0f, 0.0f, 0.0f);
@@ -64,6 +68,7 @@ void drawAxis(void) {
 
     glColor3f(1.0f, 1.0f, 1.0f);
     glEnd();
+    glEnable(GL_LIGHTING);
   }
 }
 
@@ -92,7 +97,6 @@ void renderScene(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   // set camera
   glLoadIdentity();
-  // gluLookAt(0.0f, 0.0f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
   gluLookAt(c.camera.position.x, c.camera.position.y, c.camera.position.z,
             c.camera.lookAt.x, c.camera.lookAt.y, c.camera.lookAt.z,
             c.camera.up.x, c.camera.up.y, c.camera.up.z);
@@ -101,19 +105,46 @@ void renderScene(void) {
   glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
   glScalef(zoom, zoom, zoom);
 
-  // put drawing instructions here
   drawAxis();
 
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  bool lights = c.lights.size() != 0;
+  if (lights) {
+    drawLights(c.lights);
+  }
 
-  c.group.drawGroup();
-
-  // renderMenu();
+  c.group.drawGroup(lights);
 
   frameCounter();
 
   // End of frame
   glutSwapBuffers();
+}
+
+void mouse(int button, int state, int x, int y) {
+  if (button == GLUT_LEFT_BUTTON) {
+    if (state == GLUT_DOWN) {
+      isDragging = true;
+      lastMouseX = x;
+      lastMouseY = y;
+    } else if (state == GLUT_UP) {
+      isDragging = false;
+    }
+  }
+}
+
+void motion(int x, int y) {
+  if (isDragging) {
+    int dx = x - lastMouseX;
+    int dy = y - lastMouseY;
+
+    cameraAngleY += dx * 0.1f;
+    cameraAngle += dy * 0.1f;
+
+    lastMouseX = x;
+    lastMouseY = y;
+
+    glutPostRedisplay();
+  }
 }
 
 void processSpecialKeys(int key, int xx, int yy) {
@@ -157,6 +188,14 @@ void processNormalKeys(unsigned char key, int x, int y) {
     case 'i':
       zoom += value;
       break;
+    case 'c':
+      if (wireframe) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        wireframe = 0;
+      } else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        wireframe = 1;
+      }
     default:
       break;
   }
@@ -166,9 +205,11 @@ void setupConfig(char* arg) {
   filename.assign(arg);
 
   if (filename.substr(filename.size() - 4) == ".xml") {
+    printf("XML\n");
     c = parseConfig(filename);
   } else {
-    c = parseConfig("../scenes/default.xml");
+    std::cout << "Invalid file format\n";
+    exit(1);
   }
 }
 
@@ -189,9 +230,9 @@ int main(int argc, char** argv) {
   glutCreateWindow("CG@DI");
 
   // setupMenu();
-
   glewInit();
   glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
 
   // put callback registry here
   glutIdleFunc(renderScene);
@@ -200,11 +241,14 @@ int main(int argc, char** argv) {
 
   glutSpecialFunc(processSpecialKeys);
   glutKeyboardFunc(processNormalKeys);
+  glutMouseFunc(mouse);
+  glutMotionFunc(motion);
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
-  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  glEnable(GL_RESCALE_NORMAL);
+  setupLights(c.lights);
 
   // enter GLUT�s main cycle
   glutMainLoop();

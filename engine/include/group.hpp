@@ -33,7 +33,7 @@ class Group {
 
   void rotate(float angle, float x, float y, float z);
 
-  void drawGroup();
+  void drawGroup(bool lights);
 };
 
 #endif  // GROUP_HPP

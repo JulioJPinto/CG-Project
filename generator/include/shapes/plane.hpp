@@ -5,6 +5,7 @@
 
 #include "utils.hpp"
 
-bool generatePlane(float length, int divisions, const char* filepath);
+bool generatePlane(float length, int divisions, const char* filepath,
+                   bool advanced);
 
 #endif  // SOLAR_SYSTEM_PLANE_HPP

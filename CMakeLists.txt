@@ -6,6 +6,17 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Specify build type if not set
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+endif()
+
+# Set debug-specific flags
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_CXX_FLAGS_DEBUG "-g")
+    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "-g")
+endif()
+
 # Dependencies
 include(FetchContent)
 
@@ -77,4 +88,5 @@ target_link_libraries(cg-engine PUBLIC
     GLU
     CustomImgui
     glm
+    fmt
 )

@@ -8,8 +8,8 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="models/plane_2_3.3d" /> 
-			<model file="models/sphere_1_10_10.3d" /> 
+			<model file="models/simple/plane_2_3.3d" /> 
+			<model file="models/simple/sphere_1_10_10.3d" /> 
 
  		</models>
  	</group>

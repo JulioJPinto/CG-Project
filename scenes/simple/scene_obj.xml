@@ -1,0 +1,14 @@
+<world> 
+    <window width="512" height="512" /> 
+    <camera> 
+        <position x="1" y="1" z="1" /> 
+        <lookAt x="0" y="0" z="0" /> <!-- gluLookAt center-->
+        <up x="0" y="1" z="0" /> <!-- gluLookAt up-->
+        <projection fov="40" near="0.1" far="1000" /> <!--gluPerspective-->
+    </camera>
+    <group> 
+          <models> 
+            <model file="models/simple/bunny.obj" /> 
+         </models>
+     </group>
+</world>

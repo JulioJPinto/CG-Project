@@ -6,6 +6,6 @@
 #include "cylinder.hpp"
 
 bool generateCylinder(float radius, float height, int slices,
-                      const char* filepath);
+                      const char* filepath, bool advanced);
 
 #endif  // CYLINDER_HPP

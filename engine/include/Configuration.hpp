@@ -14,8 +14,15 @@ class Configuration {
   Window window;
   Camera camera;
   Group group;
+  std::vector<Light> lights;
+
   Configuration() = default;
   Configuration(const Window &window, const Camera &camera, const Group &group);
+  Configuration(const Window &window, const Camera &camera, const Group &group,
+                const std::vector<Light> &lights);
+
+  bool addLight(const Light &light);
+  bool removeLight(int index);
   // std::string toString();
 };
 

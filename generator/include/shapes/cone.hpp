@@ -9,6 +9,6 @@
 #include "utils.hpp"
 
 bool generateCone(float radius, float height, int slices, int stacks,
-                  const char* filepath);
+                  const char* filepath, bool advanced);
 
 #endif  // CONE_HPP
