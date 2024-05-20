@@ -80,7 +80,7 @@ void Group::drawGroup(bool lights) {
   glMultMatrixf(matrixArray);
 
   for (Model& model : this->models) {
-    if(lights) {
+    if (lights) {
       setupMaterial(model.material);
     }
 

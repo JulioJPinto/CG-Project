@@ -108,9 +108,9 @@ void renderScene(void) {
   drawAxis();
 
   bool lights = c.lights.size() != 0;
-  if(lights) {
+  if (lights) {
     drawLights(c.lights);
-  }  
+  }
 
   c.group.drawGroup(lights);
 
