@@ -14,92 +14,120 @@ coneTriangles(const float radius, const float height, const size_t slices,
   std::vector<Point> normals;
   std::vector<Point2D> textures;
 
-  const auto alfa = 2 * M_PI / slices;
-  const auto stackHeight = height / stacks;
+  float sliceAngle = (float) (2 * M_PI) / slices; //angulo interno de cada slice
+    float stackSize = (float) height / stacks; //diferença de y entre cada stack
+    float rAux = (float) radius / stacks; //diferença do valor do raio entre stacks
 
-  const auto base_middle = Point{0, 0, 0};
+    //base
+    for(float a = 0; a < (2 * M_PI); a += sliceAngle){ //divide a base pelo numero de slices
+        //centro da base(origem)
+        float x1 = 0;
+        float y1 = 0;
+        float z1 = 0;
 
-  for (int slice = 0; slice < slices; ++slice) {
-    for (int stack = 0; stack < stacks; ++stack) {
-      const float cRadius = radius - stack * radius / stacks;
-      const float nRadius = radius - (stack + 1) * radius / stacks;
+        //pontos contidos na circunferência da base
+        float x3 = (float) radius * sin(a);
+        float y3 = 0;
+        float z3 = (float)radius * cos(a);
 
-      const Point bottom_left =
-          Point(cRadius * sin(slice * alfa), stack * stackHeight,
-                cRadius * cos(slice * alfa));
-      const Point bottom_right =
-          Point(cRadius * sin((slice + 1) * alfa), stack * stackHeight,
-                cRadius * cos((slice + 1) * alfa));
-      const Point top_left =
-          Point(nRadius * sin(slice * alfa), (stack + 1) * stackHeight,
-                nRadius * cos(slice * alfa));
-      const Point top_right =
-          Point(nRadius * sin((slice + 1) * alfa), (stack + 1) * stackHeight,
-                nRadius * cos((slice + 1) * alfa));
+        float x2 = (float) radius * sin(a + sliceAngle);
+        float y2 = 0;
+        float z2 =(float) radius * cos(a + sliceAngle);
 
-      points.push_back(top_left);
-      points.push_back(bottom_left);
-      points.push_back(bottom_right);
+        Point normal = {0, -1, 0};
 
-      points.push_back(top_left);
-      points.push_back(bottom_right);
-      points.push_back(top_right);
+        points.push_back({x3, y3, z3});
+        points.push_back({x1, y1, z1});
+        points.push_back({x2, y2, z2});
 
-      double dis1 = sqrt(pow(top_left.x,2)+pow(top_left.y-height,2)+pow(top_left.y,2));
-      double D1 = dis1 / cos(atan(radius/height));
+        normals.push_back(normal);
+        normals.push_back(normal);
+        normals.push_back(normal);
 
-      Point n1 = Point(top_left.x, top_left.y - (height - D1), top_left.z).normalize();
+        Point2D texture = {0, 0};
+        textures.push_back(texture);
+        textures.push_back(texture);
+        textures.push_back(texture);
 
-      double dis2 = sqrt(pow(bottom_left.x,2)+pow(bottom_left.y-height,2)+pow(bottom_left.y,2));
-      double D2 = dis2 / cos(atan(radius/height));
-
-      Point n2 = Point(bottom_left.x, bottom_left.y - (height - D2), bottom_left.z).normalize();
-
-      double dis3 = sqrt(pow(bottom_right.x,2)+pow(bottom_right.y-height,2)+pow(bottom_right.y,2));
-      double D3 = dis3 / cos(atan(radius/height));
-
-      Point n3 = Point(bottom_right.x, bottom_right.y - (height - D3), bottom_right.z).normalize();
-
-      double dis4 = sqrt(pow(top_right.x,2)+pow(top_right.y-height,2)+pow(top_right.y,2));
-      double D4 = dis4 / cos(atan(radius/height));
-
-      Point n4 = Point(top_right.x, top_right.y - (height - D4), top_right.z).normalize();
-
-      normals.push_back(n1);
-      normals.push_back(n2);
-      normals.push_back(n3);
-
-      normals.push_back(n1);
-      normals.push_back(n3);
-      normals.push_back(n4);
-
-      textures.push_back(Point2D(0.0f, 0.0f));
-      textures.push_back(Point2D(0.0f, 1.0f));
-      textures.push_back(Point2D(1.0f, 1.0f));
-
-      textures.push_back(Point2D(0.0f, 0.0f));
-      textures.push_back(Point2D(1.0f, 1.0f));
-      textures.push_back(Point2D(1.0f, 0.0f));
     }
 
-    const Point base_bottom_left =
-        Point(radius * sin(slice * alfa), 0, radius * cos(slice * alfa));
-    const Point base_bottom_right = Point(radius * sin((slice + 1) * alfa), 0,
-                                          radius * cos((slice + 1) * alfa));
 
-    points.push_back(base_middle);
-    points.push_back(base_bottom_right);
-    points.push_back(base_bottom_left);
+    for(int i = 0; i<stacks; i++){ //divide a altura pelo numero de stacks
+        for(float a = 0; a < (2 * M_PI); a += sliceAngle){ //divide cada stack pelo numero de slices
+            float yBaixo = i * stackSize; //y da margem inferior da stack
+            float yCima = (i + 1) * stackSize; //y da margem inferior da stack
 
-    Point n(0, -1, 0);
-    for (int i = 0; i < 3; i++) {
-      normals.push_back(n);
+            float rBaixo = (float) radius - (i * rAux); //raio da margem inferior da stack
+            float rCima = (float) radius - ((i + 1) * rAux); //raio da margem inferior da stack
+
+            
+            float coneAngleBaixo = atan(rBaixo/(height-yBaixo));
+            //float coneAngleCima = atan(rCima/(height-yCima));
+
+            float x2 = rBaixo * sin(a);
+            float y2 = yBaixo;
+            float z2 = rBaixo * cos(a);
+            Point normal2 = Point(sin(coneAngleBaixo) * sin(a), sin(coneAngleBaixo), sin(coneAngleBaixo) * cos(a));
+            normal2.normalize();
+
+            float x5 = rBaixo * sin(a + sliceAngle);
+            float y5 = yBaixo;
+            float z5 = rBaixo * cos(a + sliceAngle);
+            Point normal5 = Point (sin(coneAngleBaixo) * sin(a + sliceAngle), sin(coneAngleBaixo), sin(coneAngleBaixo) * cos(a + sliceAngle));
+            normal5.normalize();
+
+            float x4 = rBaixo * sin(a + sliceAngle);
+            float y4 = yBaixo;
+            float z4 = rBaixo * cos(a + sliceAngle);
+            Point normal4 = Point(normal5.x, normal5.y, normal5.z);
+            normal4.normalize();
+
+            float x1 = rCima * sin(a);
+            float y1 = yCima;
+            float z1 = rCima * cos(a);
+            Point normal1 = Point(normal2.x, normal2.y, normal2.z);
+            normal1.normalize();
+          
+
+
+            float x3 = rCima * sin(a);
+            float y3 = yCima;
+            float z3 = rCima * cos(a);
+            Point normal3 = Point(normal2.x, normal2.y, normal2.z);
+            normal3.normalize();
+
+            float x6 = rCima * sin(a + sliceAngle);
+            float y6 = yCima;
+            float z6 = rCima * cos(a + sliceAngle);
+            Point normal6 = Point(normal5.x, normal5.y, normal5.z);
+            normal6.normalize();
+
+            points.push_back({x1, y1, z1});
+            points.push_back({x2, y2, z2});
+            points.push_back({x5, y5, z5});
+            
+            points.push_back({x3, y3, z3});
+            points.push_back({x4, y4, z4});
+            points.push_back({x6, y6, z6});
+
+            normals.push_back(normal1);
+            normals.push_back(normal2);
+            normals.push_back(normal5);
+            normals.push_back(normal3);
+            normals.push_back(normal4);
+            normals.push_back(normal6);
+
+            Point2D texture1 = {0, 0};
+
+            textures.push_back(texture1);
+            textures.push_back(texture1);
+            textures.push_back(texture1);
+            textures.push_back(texture1);
+            textures.push_back(texture1);
+            textures.push_back(texture1);
+
+        }
     }
-
-    textures.push_back(Point2D(0.5f, 0.5f));
-    textures.push_back(Point2D(0.5f, 0.5f));
-    textures.push_back(Point2D(0.5f, 0.5f));
-  }
 
   return std::make_pair(std::make_pair(points, normals), textures);
 }
