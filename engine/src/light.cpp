@@ -47,6 +47,7 @@ void setupMaterial(Material m) {
 
 void setupLights(std::vector<Light> lights) {
   if (lights.size() != 0) {
+    glEnable(GL_RESCALE_NORMAL);
     float amb[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);

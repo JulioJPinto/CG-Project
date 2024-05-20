@@ -68,7 +68,9 @@ void drawAxis(void) {
 
     glColor3f(1.0f, 1.0f, 1.0f);
     glEnd();
-    glEnable(GL_LIGHTING);
+    if(c.lights.size() != 0) {
+      glEnable(GL_LIGHTING);
+    }
   }
 }
 
@@ -247,13 +249,10 @@ int main(int argc, char** argv) {
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
-  glEnable(GL_RESCALE_NORMAL);
   setupLights(c.lights);
 
   // enter GLUT�s main cycle
   glutMainLoop();
-
-  // shutDownMenu();
 
   return 1;
 }
