@@ -39,7 +39,7 @@ void Group::scale(float x, float y, float z) {
 
 void Group::rotate(float angle, float x, float y, float z) {
   glm::mat4 matrix = glm::mat4(1.0f);
-  matrix = glm::rotate(matrix, angle, glm::vec3(x, y, z));
+  matrix = glm::rotate(matrix, glm::radians(angle), glm::vec3(x, y, z));
 
   this->transformations = this->transformations * matrix;
 }

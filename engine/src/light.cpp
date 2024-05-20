@@ -43,7 +43,6 @@ void setupMaterial(Material m) {
   glMaterialfv(GL_FRONT, GL_SPECULAR, glm::value_ptr(m.specular));
   glMaterialfv(GL_FRONT, GL_EMISSION, glm::value_ptr(m.emission));
   glMaterialf(GL_FRONT, GL_SHININESS, m.shininess);
-  std::cout << "Shininess: " << m.shininess << std::endl;
 }
 
 void setupLights(std::vector<Light> lights) {
