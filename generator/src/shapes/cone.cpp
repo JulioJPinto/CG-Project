@@ -45,11 +45,33 @@ coneTriangles(const float radius, const float height, const size_t slices,
       points.push_back(bottom_right);
       points.push_back(top_right);
 
-      Point n = (radius * sin(slice * alfa), radius * cos(slice * alfa),
-                 radius * sin(slice * alfa));
-      for (int i = 0; i < 6; i++) {
-        normals.push_back(n);
-      }
+      double dis1 = sqrt(pow(top_left.x,2)+pow(top_left.y-height,2)+pow(top_left.y,2));
+      double D1 = dis1 / cos(atan(radius/height));
+
+      Point n1 = Point(top_left.x, top_left.y - (height - D1), top_left.z).normalize();
+
+      double dis2 = sqrt(pow(bottom_left.x,2)+pow(bottom_left.y-height,2)+pow(bottom_left.y,2));
+      double D2 = dis2 / cos(atan(radius/height));
+
+      Point n2 = Point(bottom_left.x, bottom_left.y - (height - D2), bottom_left.z).normalize();
+
+      double dis3 = sqrt(pow(bottom_right.x,2)+pow(bottom_right.y-height,2)+pow(bottom_right.y,2));
+      double D3 = dis3 / cos(atan(radius/height));
+
+      Point n3 = Point(bottom_right.x, bottom_right.y - (height - D3), bottom_right.z).normalize();
+
+      double dis4 = sqrt(pow(top_right.x,2)+pow(top_right.y-height,2)+pow(top_right.y,2));
+      double D4 = dis4 / cos(atan(radius/height));
+
+      Point n4 = Point(top_right.x, top_right.y - (height - D4), top_right.z).normalize();
+
+      normals.push_back(n1);
+      normals.push_back(n2);
+      normals.push_back(n3);
+
+      normals.push_back(n1);
+      normals.push_back(n3);
+      normals.push_back(n4);
 
       textures.push_back(Point2D(0.0f, 0.0f));
       textures.push_back(Point2D(0.0f, 1.0f));
