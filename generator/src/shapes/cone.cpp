@@ -65,47 +65,44 @@ coneTriangles(const float radius, const float height, const size_t slices,
       float yBaixo = i * stackSize;  // y da margem inferior da stack
       float yCima = (i + 1) * stackSize;  // y da margem inferior da stack
 
-      float rBaixo =
-          (float)radius - (i * rAux);  // raio da margem inferior da stack
-      float rCima =
-          (float)radius - ((i + 1) * rAux);  // raio da margem inferior da stack
-      printf("a: %f rbaixo: %f\n", a, rBaixo);
-      float x2 = rBaixo * sin(a);
-      printf("x2: %f\n", x2);
-      float y2 = yBaixo;
-      float z2 = rBaixo * cos(a);
-      Point normal2;
-      if (filled == 0) {  // se for a primeira stack, calcula a normal para os
-                          // pontos em comum com a base
-        normal2.x = std::sin(a);
-        normal2.y = (float)rBaixo / height;
-        normal2.z = std::cos(a);
-        normal2.normalize();
-        sliceNormals[count][0] = normal2.x;
-        sliceNormals[count][1] = normal2.y;
-        sliceNormals[count][2] = normal2.z;
-      } else {
-        normal2.x = sliceNormals[count][0];
-        normal2.y = sliceNormals[count][1];
-        normal2.z = sliceNormals[count][2];
-      }
-      count++;
+            float rBaixo = (float) radius - (i * rAux); //raio da margem inferior da stack
+            float rCima = (float) radius - ((i + 1) * rAux); //raio da margem inferior da stack
+            printf("a: %f rbaixo: %f\n", a, rBaixo);
+            float x2 = rBaixo * sin(a);
+            printf("x2: %f\n", x2);
+            float y2 = yBaixo;
+            float z2 = rBaixo * cos(a);
+            Point normal2;
+            if (filled == 0) { // se for a primeira stack, calcula a normal para os pontos em comum com a base
+                normal2.x = std::sin(a);
+                normal2.y = (float)rBaixo / height;
+                normal2.z = std::cos(a);
+                normal2 = normal2.normalize();
+                printf("normal2: %f %f %f\n", normal2.x, normal2.y, normal2.z);
+                sliceNormals[count][0] = normal2.x;
+                sliceNormals[count][1] = normal2.y;
+                sliceNormals[count][2] = normal2.z;
+            } else {
+                normal2.x = sliceNormals[count][0];
+                normal2.y = sliceNormals[count][1];
+                normal2.z = sliceNormals[count][2];
+            }
+            count++;
 
-      float x5 = rBaixo * sin(a + sliceAngle);
-      float y5 = yBaixo;
-      float z5 = rBaixo * cos(a + sliceAngle);
-
-      Point normal5;
-      if (filled == 0) {  // se for a primeira stack, calcula a normal para os
-                          // pontos em comum com a base
-        normal5.x = sin(a + sliceAngle);
-        normal5.y = (float)rBaixo / height;
-        normal5.z = cos(a + sliceAngle);
-        normal5.normalize();
-
-        sliceNormals[count][0] = normal5.x;
-        sliceNormals[count][1] = normal5.y;
-        sliceNormals[count][2] = normal5.z;
+            float x5 = rBaixo * sin(a + sliceAngle);
+            float y5 = yBaixo;
+            float z5 = rBaixo * cos(a + sliceAngle);
+            
+            Point normal5;
+            if(filled == 0){//se for a primeira stack, calcula a normal para os pontos em comum com a base
+                normal5.x = sin(a + sliceAngle);
+                normal5.y = (float) rBaixo / height;
+                normal5.z = cos(a + sliceAngle);
+                normal5 = normal5.normalize();
+                printf("normal5: %f %f %f\n", normal5.x, normal5.y, normal5.z);
+                sliceNormals[count][0] = normal5.x;
+                sliceNormals[count][1] = normal5.y;
+                sliceNormals[count][2] = normal5.z;
 
       } else {
         normal5.x = sliceNormals[count][0];
