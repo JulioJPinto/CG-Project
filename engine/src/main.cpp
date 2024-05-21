@@ -215,6 +215,15 @@ void setupConfig(char* arg) {
   }
 }
 
+void setupModels(Group& group) {
+  for (Model& model : group.models) {
+    model.initModel();
+  }
+  for (Group& g : group.subgroups) {
+    setupModels(g);
+  }
+}
+
 int main(int argc, char** argv) {
   if (argc == 1) {
     std::cout << "Invalid Arguments\n";
@@ -250,6 +259,7 @@ int main(int argc, char** argv) {
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
   setupLights(c.lights);
+  setupModels(c.group);
 
   // enter GLUT�s main cycle
   glutMainLoop();

@@ -14,6 +14,7 @@ extern "C" {
 #include <iostream>
 #include <set>
 #include <vector>
+#include <stb_image/stb_image.h>
 
 #include "light.hpp"
 #include "utils.hpp"
@@ -36,16 +37,21 @@ class Model {
   Model();
   Model(std::string filename, std::vector<Vertex> points);
 
-  void setupModel();
+  void initModel();
   void drawModel();
+
 
   std::vector<Vertex> getPoints();
 
  private:
   GLuint _vbo, _ibo, _normals, _textures;
   std::vector<Vertex> _points;
+  std::string _texture_filepath;
   Model(std::string filename, std::vector<Vertex> vbo,
         std::vector<unsigned int> ibo, int id, std::vector<Vertex> points);
+  bool loadTexture();
+  void setupModel();
+
 };
 
 #endif  // MODEL_HPP

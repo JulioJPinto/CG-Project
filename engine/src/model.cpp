@@ -8,6 +8,7 @@ extern "C" {
 #endif
 }
 
+#define STB_IMAGE_IMPLEMENTATION
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -99,6 +100,36 @@ Model::Model(std::string filename, std::vector<Vertex> points) {
   counter++;
 }
 
+void Model::initModel() {
+  if (!this->initialized) {
+    this->initialized = true;
+    setupModel();
+    bool tex = loadTexture();
+    if (!tex) {
+      std::cout << "Didn't manage to read filepath: " << this->_texture_filepath << std::endl;
+    }
+  }
+}
+
+bool Model::loadTexture() {
+  // Load image data
+  int width, height, num_channels;
+  unsigned char* image_data = stbi_load(this->_texture_filepath.data(), &width, &height, &num_channels, 0);
+  unsigned int texture_id;
+
+  // Create texture buffer and upload data to gpu
+  glGenTextures(1, &texture_id);
+  glBindTexture(GL_TEXTURE_2D, texture_id);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+  glGenerateMipmap(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, 0);    
+
+  // Free image data after uploading it
+  stbi_image_free(image_data);
+  return true;
+}
+
+
 void Model::setupModel() {
   std::vector<float> points = positionsFloats(this->vbo);
   std::vector<float> normals = normalFloats(this->vbo);
@@ -129,10 +160,7 @@ void Model::setupModel() {
 }
 
 void Model::drawModel() {
-  if (!this->initialized) {
-    this->initialized = true;
-    setupModel();
-  }
+  initModel();
 
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glVertexPointer(3, GL_FLOAT, 0, 0);
