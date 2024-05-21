@@ -16,6 +16,8 @@ float bernstein(int i, float t);
 
 Point bezierPatch(const std::vector<Point>& controlPoints, float u, float v);
 
+float bernsteinDerivative(int i, float t);
+
 Point calculateNormal(const Point& p1, const Point& p2, const Point& p3);
 
 #endif  // PATCHES_HPP

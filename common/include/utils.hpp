@@ -27,12 +27,12 @@ typedef struct Point {
     return x == other.x && y == other.y && z == other.z;
   }
 
-  auto normalize() {
+  Point normalize() {
     float norm = sqrt(x * x + y * y + z * z);
     return Point(x / norm, y / norm, z / norm);
   }
 
-  auto cross(const Point& other) {
+  Point cross(const Point& other) {
     return Point(y * other.z - z * other.y, z * other.x - x * other.z,
                  x * other.y - y * other.x);
   }
@@ -47,6 +47,10 @@ struct Point2D {
 
   bool operator==(const Point2D& other) const {
     return x == other.x && y == other.y;
+  }
+
+  auto cross(const Point2D& other) {
+    return x * other.y - y * other.x;
   }
 };
 
