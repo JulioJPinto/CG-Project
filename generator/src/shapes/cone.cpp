@@ -77,7 +77,8 @@ coneTriangles(const float radius, const float height, const size_t slices,
                 normal2.x = std::sin(a);
                 normal2.y = (float)rBaixo / height;
                 normal2.z = std::cos(a);
-                normal2.normalize();
+                normal2 = normal2.normalize();
+                printf("normal2: %f %f %f\n", normal2.x, normal2.y, normal2.z);
                 sliceNormals[count][0] = normal2.x;
                 sliceNormals[count][1] = normal2.y;
                 sliceNormals[count][2] = normal2.z;
@@ -97,8 +98,8 @@ coneTriangles(const float radius, const float height, const size_t slices,
                 normal5.x = sin(a + sliceAngle);
                 normal5.y = (float) rBaixo / height;
                 normal5.z = cos(a + sliceAngle);
-                normal5.normalize();
-
+                normal5 = normal5.normalize();
+                printf("normal5: %f %f %f\n", normal5.x, normal5.y, normal5.z);
                 sliceNormals[count][0] = normal5.x;
                 sliceNormals[count][1] = normal5.y;
                 sliceNormals[count][2] = normal5.z;
