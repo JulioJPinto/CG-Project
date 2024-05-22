@@ -207,16 +207,15 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
       std::cerr << "Error reading model file: " << file << std::endl;
       return;
     }
+    rapidxml::xml_node<>* texture = modelNode->first_node("texture");
+
+    if (texture) {
+      model.texture_filepath = texture->first_attribute("file")->value();
+    } else {
+      model.texture_filepath = "";
+    }
+
     rapidxml::xml_node<>* color = modelNode->first_node("color");
-    /*
-      <color>
-        <diffuse R="200" G="200" B="200" />
-        <ambient R="50" G="50" B="50" />
-        <specular R="0" G="0" B="0" />
-        <emissive R="0" G="0" B="0" />
-        <shininess value="0" />
-      </color>
-    */
     // Set the vector for diffuse, ambient, specular and emissive based on the
     // above example
     glm::vec4 diffuse_vec = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);

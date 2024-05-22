@@ -68,7 +68,7 @@ void drawAxis(void) {
 
     glColor3f(1.0f, 1.0f, 1.0f);
     glEnd();
-    if(c.lights.size() != 0) {
+    if (c.lights.size() != 0) {
       glEnable(GL_LIGHTING);
     }
   }
@@ -244,6 +244,7 @@ int main(int argc, char** argv) {
   glewInit();
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
   // put callback registry here
   glutIdleFunc(renderScene);
@@ -258,6 +259,7 @@ int main(int argc, char** argv) {
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
+  glEnable(GL_TEXTURE_2D);
   setupLights(c.lights);
   setupModels(c.group);
 

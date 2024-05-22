@@ -10,11 +10,12 @@ extern "C" {
 #endif
 }
 
+#include <stb_image/stb_image.h>
+
 #include <algorithm>
 #include <iostream>
 #include <set>
 #include <vector>
-#include <stb_image/stb_image.h>
 
 #include "light.hpp"
 #include "utils.hpp"
@@ -27,7 +28,7 @@ std::vector<unsigned int> generateIBO(const std::vector<Vertex>& points,
 
 class Model {
  public:
-  std::string filename;
+  std::string filename, texture_filepath;
   std::vector<Vertex> vbo;
   std::vector<unsigned int> ibo;
   int id;
@@ -39,19 +40,16 @@ class Model {
 
   void initModel();
   void drawModel();
-
+  bool loadTexture();
+  void setupModel();
 
   std::vector<Vertex> getPoints();
 
  private:
-  GLuint _vbo, _ibo, _normals, _textures;
+  GLuint _vbo, _ibo, _normals, _textures, _texture_id;
   std::vector<Vertex> _points;
-  std::string _texture_filepath;
   Model(std::string filename, std::vector<Vertex> vbo,
         std::vector<unsigned int> ibo, int id, std::vector<Vertex> points);
-  bool loadTexture();
-  void setupModel();
-
 };
 
 #endif  // MODEL_HPP

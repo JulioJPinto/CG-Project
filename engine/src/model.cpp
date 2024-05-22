@@ -104,9 +104,12 @@ void Model::initModel() {
   if (!this->initialized) {
     this->initialized = true;
     setupModel();
-    bool tex = loadTexture();
-    if (!tex) {
-      std::cout << "Didn't manage to read filepath: " << this->_texture_filepath << std::endl;
+
+    if (this->texture_filepath != "") {
+      bool tex = loadTexture();
+      if (!tex) {
+        std::cerr << "Error loading texture\n";
+      }
     }
   }
 }
@@ -114,21 +117,53 @@ void Model::initModel() {
 bool Model::loadTexture() {
   // Load image data
   int width, height, num_channels;
-  unsigned char* image_data = stbi_load(this->_texture_filepath.data(), &width, &height, &num_channels, 0);
-  unsigned int texture_id;
+  unsigned char* image_data = stbi_load(this->texture_filepath.data(), &width,
+                                        &height, &num_channels, 0);
 
-  // Create texture buffer and upload data to gpu
-  glGenTextures(1, &texture_id);
-  glBindTexture(GL_TEXTURE_2D, texture_id);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+  if (!image_data) {
+    std::cerr << "Failed to load texture: " << this->texture_filepath
+              << std::endl;
+    return false;
+  }
+
+  glGenTextures(1, &this->_texture_id);
+  glBindTexture(GL_TEXTURE_2D, this->_texture_id);
+
+  // Set texture parameters
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                  GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  // Determine the correct format
+  GLenum format;
+  if (num_channels == 1)
+    format = GL_RED;
+  else if (num_channels == 3)
+    format = GL_RGB;
+  else if (num_channels == 4)
+    format = GL_RGBA;
+  else {
+    std::cerr << "Unsupported number of channels: " << num_channels
+              << std::endl;
+    stbi_image_free(image_data);
+    return false;
+  }
+
+  // Upload data to GPU
+  glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format,
+               GL_UNSIGNED_BYTE, image_data);
   glGenerateMipmap(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D, 0);    
+
+  // Unbind the texture
+  glBindTexture(GL_TEXTURE_2D, 0);
 
   // Free image data after uploading it
   stbi_image_free(image_data);
+
   return true;
 }
-
 
 void Model::setupModel() {
   std::vector<float> points = positionsFloats(this->vbo);
@@ -162,15 +197,22 @@ void Model::setupModel() {
 void Model::drawModel() {
   initModel();
 
+  glBindTexture(GL_TEXTURE_2D, this->_texture_id);
+
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glVertexPointer(3, GL_FLOAT, 0, 0);
 
   glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
   glNormalPointer(GL_FLOAT, 0, 0);
 
+  glBindBuffer(GL_ARRAY_BUFFER, this->_textures);
+  glTexCoordPointer(2, GL_FLOAT, 0, 0);
+
   glColor3f(1.0, 1.0, 1.0);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);
+
+  glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 std::vector<Vertex> Model::getPoints() { return this->_points; }
