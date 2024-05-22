@@ -19,9 +19,7 @@ coneTriangles(const float radius, const float height, const size_t slices,
   float stackSize = (float)height / stacks;  // diferença de y entre cada stack
   float rAux =
       (float)radius / stacks;  // diferença do valor do raio entre stacks
-  printf("stackSize: %f\n", stackSize);
-  printf("rAux: %f\n", rAux);
-  printf("sliceAngle: %f\n", sliceAngle);
+
 
   // base
   for (float a = 0; a < (2 * M_PI);
@@ -69,9 +67,7 @@ coneTriangles(const float radius, const float height, const size_t slices,
           (float)radius - (i * rAux);  // raio da margem inferior da stack
       float rCima =
           (float)radius - ((i + 1) * rAux);  // raio da margem inferior da stack
-      printf("a: %f rbaixo: %f\n", a, rBaixo);
       float x2 = rBaixo * sin(a);
-      printf("x2: %f\n", x2);
       float y2 = yBaixo;
       float z2 = rBaixo * cos(a);
       Point normal2;
@@ -81,7 +77,6 @@ coneTriangles(const float radius, const float height, const size_t slices,
         normal2.y = (float)rBaixo / height;
         normal2.z = std::cos(a);
         normal2 = normal2.normalize();
-        printf("normal2: %f %f %f\n", normal2.x, normal2.y, normal2.z);
         sliceNormals[count][0] = normal2.x;
         sliceNormals[count][1] = normal2.y;
         sliceNormals[count][2] = normal2.z;
@@ -103,7 +98,6 @@ coneTriangles(const float radius, const float height, const size_t slices,
         normal5.y = (float)rBaixo / height;
         normal5.z = cos(a + sliceAngle);
         normal5 = normal5.normalize();
-        printf("normal5: %f %f %f\n", normal5.x, normal5.y, normal5.z);
         sliceNormals[count][0] = normal5.x;
         sliceNormals[count][1] = normal5.y;
         sliceNormals[count][2] = normal5.z;
@@ -114,6 +108,22 @@ coneTriangles(const float radius, const float height, const size_t slices,
         normal5.z = sliceNormals[count][2];
       }
       count++;
+
+       if (i == stacks - 1) {  // se for a ultima stack, calcula a normal para
+                                // os pontos em comum com o topo
+          Point normalTop;
+          normalTop.x = (sin(a) + sin(a + sliceAngle)) / 2;
+          normalTop.y = 0;
+          normalTop.z = (cos(a) + cos(a + sliceAngle)) / 2;
+          normalTop = normalTop.normalize();
+          sliceNormals[count - 2][0] = normalTop.x;
+          sliceNormals[count - 2][1] = normalTop.y;
+          sliceNormals[count - 2][2] = normalTop.z;
+
+          sliceNormals[count - 1][0] = normalTop.x;
+          sliceNormals[count - 1][1] = normalTop.y;
+          sliceNormals[count - 1][2] = normalTop.z;
+        }
 
       float x4 = rBaixo * sin(a + sliceAngle);
       float y4 = yBaixo;
@@ -146,6 +156,8 @@ coneTriangles(const float radius, const float height, const size_t slices,
       normal6.x = sliceNormals[count - 1][0];
       normal6.y = sliceNormals[count - 1][1];
       normal6.z = sliceNormals[count - 1][2];
+
+     
 
       points.push_back(Point(x1, y1, z1));
       points.push_back(Point(x2, y2, z2));
