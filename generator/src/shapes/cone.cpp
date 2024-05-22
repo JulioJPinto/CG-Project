@@ -120,9 +120,6 @@ coneTriangles(const float radius, const float height, const size_t slices,
           sliceNormals[count - 2][1] = normalTop.y;
           sliceNormals[count - 2][2] = normalTop.z;
 
-          sliceNormals[count - 1][0] = normalTop.x;
-          sliceNormals[count - 1][1] = normalTop.y;
-          sliceNormals[count - 1][2] = normalTop.z;
         }
 
       float x4 = rBaixo * sin(a + sliceAngle);
@@ -156,6 +153,18 @@ coneTriangles(const float radius, const float height, const size_t slices,
       normal6.x = sliceNormals[count - 1][0];
       normal6.y = sliceNormals[count - 1][1];
       normal6.z = sliceNormals[count - 1][2];
+
+      if(i == stacks - 1){
+                Point normalTop;
+                normalTop.x = (float)((sin(a) + sin(a + sliceAngle)) / 2.0);
+                normalTop.y = 0;
+                normalTop.z = (float)((cos(a) + cos(a + sliceAngle)) / 2.0);
+                normalTop = normalTop.normalize();
+
+                normal6.x = normalTop.x;
+                normal6.y = normalTop.y;
+                normal6.z = normalTop.z;
+            }
 
      
 

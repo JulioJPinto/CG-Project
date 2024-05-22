@@ -12,7 +12,7 @@
 	</lights>
     <group> 
           <models> 
-            <model file="models/advanced/cone_1_2_4_3.3d" />     
+            <model file="models/simple/ferrari.obj" />     
          </models>
      </group>
 </world>

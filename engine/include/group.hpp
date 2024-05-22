@@ -16,6 +16,7 @@ class Group {
   std::vector<Model> models;
   std::vector<Group> subgroups;
   glm::mat4 transformations = glm::mat4(1.0f);
+  
 
   std::vector<Rotations> rotations;
   std::vector<Translations> translates;
