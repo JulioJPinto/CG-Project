@@ -138,17 +138,23 @@ bool Model::loadTexture() {
 
   // Determine the correct format
   GLenum format;
-  if (num_channels == 1)
-    format = GL_RED;
-  else if (num_channels == 3)
-    format = GL_RGB;
-  else if (num_channels == 4)
-    format = GL_RGBA;
-  else {
-    std::cerr << "Unsupported number of channels: " << num_channels
-              << std::endl;
-    stbi_image_free(image_data);
-    return false;
+  switch (num_channels) {
+    case 1:
+      format = GL_RED;
+      break;
+    case 3:
+      format = GL_RGB;
+      break;
+    case 4:
+      format = GL_RGBA;
+      break;
+    default: {
+      // Free image data before returning
+      stbi_image_free(image_data);
+      std::cerr << "Unsupported number of channels: " << num_channels
+                << std::endl;
+      return false;
+    }
   }
 
   // Upload data to GPU
