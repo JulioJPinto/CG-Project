@@ -8,32 +8,34 @@
 #include "model.hpp"
 #include "utils.hpp"
 
-enum TimeTransform { ROTATION, TRANSLATE };
 
-class Rotations {
+enum Transformations { SCALE, ROTATION, TRANSLATE, TIMEROTATION, TIMETRANSLATE };
+
+
+class TimeRotations {
  public:
   float time;
   float x;
   float y;
   float z;
 
-  Rotations();
-  Rotations(float time, float x, float y, float z);
+  TimeRotations();
+  TimeRotations(float time, float x, float y, float z);
 
-  void applyRotation(float elapsed_time);
+  void applyTimeRotation(float elapsed_time);
 };
 
-class Translations {
+class TimeTranslations {
  public:
   float time;
   bool align;
   std::vector<Point> curvePoints;
   Point y_axis;
 
-  Translations();
-  Translations(float time, bool align, std::vector<Point> curve);
+  TimeTranslations();
+  TimeTranslations(float time, bool align, std::vector<Point> curve);
 
-  void applyTranslations(float elapsed_time);
+  void applyTimeTranslations(float elapsed_time);
 
   void renderCatmullRomCurve();
 
@@ -41,5 +43,47 @@ class Translations {
 
   std::array<float, 16> rotationMatrix(Point x, Point y, Point z);
 };
+
+class Scale {
+ public:
+  float x;
+  float y;
+  float z;
+
+  Scale();
+  Scale(float x, float y, float z);
+
+  void applyScale();
+};
+
+class Translate {
+ public:
+  float x;
+  float y;
+  float z;
+
+  Translate();
+  Translate(float x, float y, float z);
+
+  void applyTranslation();
+};
+
+class Rotation {
+ public:
+  float angle;
+  float x;
+  float y;
+  float z;
+
+  Rotation();
+  Rotation(float angle, float x, float y, float z);
+
+  void applyRotation();
+};
+
+  glm::mat4 Scalematrix(float x, float y, float z);
+  glm::mat4 Rotationmatrix(float angle, float x, float y, float z);
+  glm::mat4 Translatematrix(float x, float y, float z);
+
 
 #endif  // CURVES_HPP

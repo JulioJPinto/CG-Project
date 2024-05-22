@@ -15,18 +15,18 @@ class Group {
  public:
   std::vector<Model> models;
   std::vector<Group> subgroups;
-  glm::mat4 transformations = glm::mat4(1.0f);
-  
+  std::vector<glm::mat4> static_transformations;
 
-  std::vector<Rotations> rotations;
-  std::vector<Translations> translates;
-  std::vector<TimeTransform> order;
+
+  std::vector<TimeRotations> rotations;
+  std::vector<TimeTranslations> translates;
+  std::vector<Transformations> order;
 
   Group();
   Group(std::vector<Model> models, std::vector<Group> subgroups,
-        glm::mat4 transformations, std::vector<Rotations> rotations,
-        std::vector<Translations> translates,
-        std::vector<TimeTransform> order);  // Updated constructor
+        std::vector<glm::mat4> static_transformations, std::vector<TimeRotations> rotations,
+        std::vector<TimeTranslations> translates,
+        std::vector<Transformations> order);  // Updated constructor
 
   void translate(float x, float y, float z);
 
