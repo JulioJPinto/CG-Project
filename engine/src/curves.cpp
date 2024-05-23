@@ -63,21 +63,21 @@ std::pair<Point, Point> catmollRomPosition(std::vector<Point> curve,
   };
 }
 
-Rotations::Rotations() {
+TimeRotations::TimeRotations() {
   this->time = 0;
   this->x = 0;
   this->y = 0;
   this->z = 0;
 }
 
-Rotations::Rotations(float time, float x, float y, float z) {
+TimeRotations::TimeRotations(float time, float x, float y, float z) {
   this->time = time;
   this->x = x;
   this->y = y;
   this->z = z;
 }
 
-void Rotations::applyRotation(float elapsed_time) {
+void TimeRotations::applyTimeRotation(float elapsed_time) {
   if (this->time == 0) {
     return;
   }
@@ -85,20 +85,20 @@ void Rotations::applyRotation(float elapsed_time) {
   glRotatef(angle, this->x, this->y, this->z);
 }
 
-Translations::Translations() {
+TimeTranslations::TimeTranslations() {
   this->time = 0;
   this->align = false;
   this->y_axis = Point(0, 1, 0);
 }
 
-Translations::Translations(float time, bool align, std::vector<Point> curve) {
+TimeTranslations::TimeTranslations(float time, bool align, std::vector<Point> curve) {
   this->time = time;
   this->align = align;
   this->curvePoints = curve;
   this->y_axis = Point(0, 1, 0);
 }
 
-std::pair<Point, Point> Translations::getLocation(float elapsed_time) {
+std::pair<Point, Point> TimeTranslations::getLocation(float elapsed_time) {
   int point_count = this->curvePoints.size();
   float gt = elapsed_time / this->time;
   float t = gt * point_count;
@@ -107,7 +107,7 @@ std::pair<Point, Point> Translations::getLocation(float elapsed_time) {
   return catmollRomPosition(this->curvePoints, t);
 }
 
-std::array<float, 16> Translations::rotationMatrix(Point x, Point y, Point z) {
+std::array<float, 16> TimeTranslations::rotationMatrix(Point x, Point y, Point z) {
   return std::array<float, 16>{{
       x.x,
       x.y,
@@ -128,7 +128,8 @@ std::array<float, 16> Translations::rotationMatrix(Point x, Point y, Point z) {
   }};
 }
 
-void Translations::applyTranslations(float elapsed_time) {
+
+void TimeTranslations::applyTimeTranslations(float elapsed_time) {
   if (this->time == 0) {
     return;
   }
@@ -152,7 +153,7 @@ void Translations::applyTranslations(float elapsed_time) {
   }
 }
 
-void Translations::renderCatmullRomCurve() {
+void TimeTranslations::renderCatmullRomCurve() {
   // draw curve using line segments with GL_LINE_LOOP
   float gt = 0.0;
   const float NUM_STEPS = 100;
@@ -166,3 +167,69 @@ void Translations::renderCatmullRomCurve() {
   }
   glEnd();
 }
+
+Scale::Scale() {
+  this->x = 1;
+  this->y = 1;
+  this->z = 1;
+}
+
+Scale::Scale(float x, float y, float z) {
+  this->x = x;
+  this->y = y;
+  this->z = z;
+}
+
+glm::mat4 Scalematrix(float x, float y, float z){
+  glm::mat4 matrix = glm::mat4(1.0f);
+  matrix = glm::scale(matrix, glm::vec3(x, y, z));
+  return matrix;
+}
+
+void Scale::applyScale() { glScalef(this->x, this->y, this->z); }
+
+Translate::Translate() {
+  this->x = 0;
+  this->y = 0;
+  this->z = 0;
+}
+
+Translate::Translate(float x, float y, float z) {
+  this->x = x;
+  this->y = y;
+  this->z = z;
+}
+
+glm::mat4 Translatematrix(float x, float y, float z){
+  glm::mat4 matrix = glm::mat4(1.0f);
+  matrix = glm::translate(matrix, glm::vec3(x, y, z));
+  return matrix;
+}
+
+void Translate::applyTranslation() { glTranslatef(this->x, this->y, this->z); }
+
+Rotation::Rotation() {
+  this->angle = 0;
+  this->x = 0;
+  this->y = 0;
+  this->z = 0;
+}
+
+Rotation::Rotation(float angle, float x, float y, float z) {
+  this->angle = angle;
+  this->x = x;
+  this->y = y;
+  this->z = z;
+}
+
+glm::mat4 Rotationmatrix(float angle, float x, float y, float z){
+  glm::mat4 matrix = glm::mat4(1.0f);
+  matrix = glm::rotate(matrix, glm::radians(angle), glm::vec3(x, y, z));
+  return matrix;
+}
+
+void Rotation::applyRotation() {
+  float rad = this->angle * M_PI / 180;
+  glRotatef(rad, this->x, this->y, this->z);
+}
+

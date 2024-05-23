@@ -1,0 +1,25 @@
+<world> 
+    <window width="512" height="512" /> 
+    <camera> 
+        <position x="3" y="3" z="3" /> 
+        <lookAt x="0" y="0" z="0" /> <!-- gluLookAt center-->
+        <up x="0" y="1" z="0" /> <!-- gluLookAt up-->
+        <projection fov="60" near="1" far="1000" /> <!--gluPerspective-->
+    </camera>
+    <group> 
+        <transform>
+                
+				<translate time = "10" align="true"> <!-- O campo align diz se o objecto deve ser orientado na curva -->
+					<point x = "0" y = "0" z = "4" />
+					<point x = "4" y = "0" z = "0" />
+					<point x = "0" y = "0" z = "-4" />
+					<point x = "-4" y = "10" z = "0" />
+				</translate>
+				<rotate angle="-90" x="1" y="0" z="0" />
+				<scale x="0.5" y="0.5" z="0.5" />
+		</transform>
+          <models> 
+            <model file="models/advanced/box.3d" />     
+         </models>
+     </group>
+</world>

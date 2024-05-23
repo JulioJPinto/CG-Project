@@ -14,12 +14,12 @@ extern "C" {
 
 enum LightType { DIRECTIONAL, POINT, SPOT };
 
-typedef struct {
+struct Light {
   LightType type;
   glm::vec4 position;
   glm::vec4 direction;
   float cutoff;
-} Light;
+};
 
 Light createDirectionLight(glm::vec4 direction);
 
@@ -31,13 +31,13 @@ void setupLights(std::vector<Light> lights);
 
 void drawLights(std::vector<Light> lights);
 
-typedef struct {
+struct Material{
   glm::vec4 ambient;
   glm::vec4 diffuse;
   glm::vec4 specular;
   glm::vec4 emission;
   float shininess;
-} Material;
+};
 
 Material createMaterial(glm::vec4 ambient, glm::vec4 diffuse,
                         glm::vec4 specular, glm::vec4 emission,
