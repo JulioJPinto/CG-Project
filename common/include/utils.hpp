@@ -49,9 +49,7 @@ struct Point2D {
     return x == other.x && y == other.y;
   }
 
-  auto cross(const Point2D& other) {
-    return x * other.y - y * other.x;
-  }
+  auto cross(const Point2D& other) { return x * other.y - y * other.x; }
 };
 
 struct PointHash {

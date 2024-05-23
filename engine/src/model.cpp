@@ -8,6 +8,7 @@ extern "C" {
 #endif
 }
 
+#define STB_IMAGE_IMPLEMENTATION
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -99,6 +100,57 @@ Model::Model(std::string filename, std::vector<Vertex> points) {
   counter++;
 }
 
+void Model::initModel() {
+  if (!this->initialized) {
+    this->initialized = true;
+    setupModel();
+
+    if (this->texture_filepath != "") {
+      bool tex = loadTexture();
+      if (!tex) {
+        std::cerr << "Error loading texture\n";
+      }
+    }
+  }
+}
+
+bool Model::loadTexture() {
+  // Load image data
+  int width, height, num_channels;
+  unsigned char* image_data = stbi_load(this->texture_filepath.data(), &width,
+                                        &height, &num_channels, STBI_rgb);
+
+  if (!image_data) {
+    std::cerr << "Failed to load texture: " << this->texture_filepath
+              << std::endl;
+    return false;
+  }
+
+  glGenTextures(1, &this->_texture_id);
+  glBindTexture(GL_TEXTURE_2D, this->_texture_id);
+
+  // Set texture parameters
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                  GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+  // Upload data to GPU
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+               GL_UNSIGNED_BYTE, image_data);
+  glGenerateMipmap(GL_TEXTURE_2D);
+
+  // Unbind the texture
+  glBindTexture(GL_TEXTURE_2D, 0);
+
+  // Free image data after uploading it
+  stbi_image_free(image_data);
+
+  return true;
+}
+
 void Model::setupModel() {
   std::vector<float> points = positionsFloats(this->vbo);
   std::vector<float> normals = normalFloats(this->vbo);
@@ -129,10 +181,9 @@ void Model::setupModel() {
 }
 
 void Model::drawModel() {
-  if (!this->initialized) {
-    this->initialized = true;
-    setupModel();
-  }
+  initModel();
+
+  glBindTexture(GL_TEXTURE_2D, this->_texture_id);
 
   glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
   glVertexPointer(3, GL_FLOAT, 0, 0);
@@ -140,9 +191,14 @@ void Model::drawModel() {
   glBindBuffer(GL_ARRAY_BUFFER, this->_normals);
   glNormalPointer(GL_FLOAT, 0, 0);
 
+  glBindBuffer(GL_ARRAY_BUFFER, this->_textures);
+  glTexCoordPointer(2, GL_FLOAT, 0, 0);
+
   glColor3f(1.0, 1.0, 1.0);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo);
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);
+
+  glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 std::vector<Vertex> Model::getPoints() { return this->_points; }

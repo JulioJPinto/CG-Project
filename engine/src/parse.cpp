@@ -146,23 +146,27 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
       float x = std::stof(node->first_attribute("x")->value());
       float y = std::stof(node->first_attribute("y")->value());
       float z = std::stof(node->first_attribute("z")->value());
-      group.scale(x, y, z);
+      glm::mat4 matrix = Scalematrix(x, y, z);
+      group.order.push_back(SCALE);
+      group.static_transformations.push_back(matrix);
     } else if (nodeName == "rotate") {
       if (node->first_attribute("time")) {
         float time = std::stof(node->first_attribute("time")->value());
         float x = std::stof(node->first_attribute("x")->value());
         float y = std::stof(node->first_attribute("y")->value());
         float z = std::stof(node->first_attribute("z")->value());
-        Rotations r = Rotations(float(time), float(x), float(y), float(z));
+        TimeRotations r = TimeRotations(float(time), float(x), float(y), float(z));
         group.rotations.push_back(r);
-        group.order.push_back(ROTATION);
+        group.order.push_back(TIMEROTATION);
 
       } else {
         float angle = std::stof(node->first_attribute("angle")->value());
         float x = std::stof(node->first_attribute("x")->value());
         float y = std::stof(node->first_attribute("y")->value());
         float z = std::stof(node->first_attribute("z")->value());
-        group.rotate(angle, x, y, z);
+        glm::mat4 matrix = Rotationmatrix(angle, x, y, z);
+        group.order.push_back(ROTATION);
+        group.static_transformations.push_back(matrix);
       }
 
     } else if (nodeName == "translate") {
@@ -183,15 +187,18 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
           curvePoints.push_back(Point(x, y, z));
           node->remove_node(point);
         }
-        Translations t = Translations(float(time), align, curvePoints);
+        TimeTranslations t = TimeTranslations(float(time), align, curvePoints);
         group.translates.push_back(t);
-        group.order.push_back(TRANSLATE);
+        group.order.push_back(TIMETRANSLATE);
 
       } else {
         float x = std::stof(node->first_attribute("x")->value());
         float y = std::stof(node->first_attribute("y")->value());
         float z = std::stof(node->first_attribute("z")->value());
-        group.translate(x, y, z);
+        glm::mat4 matrix = Translatematrix(x, y, z);
+        group.order.push_back(TRANSLATE);
+        group.static_transformations.push_back(matrix);
+
       }
     }
   }
@@ -207,18 +214,16 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
       std::cerr << "Error reading model file: " << file << std::endl;
       return;
     }
+    rapidxml::xml_node<>* texture = modelNode->first_node("texture");
+
+    if (texture) {
+      model.texture_filepath = texture->first_attribute("file")->value();
+    } else {
+      model.texture_filepath = "";
+    }
+
     rapidxml::xml_node<>* color = modelNode->first_node("color");
-    /*
-      <color>
-        <diffuse R="200" G="200" B="200" />
-        <ambient R="50" G="50" B="50" />
-        <specular R="0" G="0" B="0" />
-        <emissive R="0" G="0" B="0" />
-        <shininess value="0" />
-      </color>
-    */
-    // Set the vector for diffuse, ambient, specular and emissive based on the
-    // above example
+
     glm::vec4 diffuse_vec = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
     glm::vec4 ambient_vec = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
     glm::vec4 specular_vec = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
