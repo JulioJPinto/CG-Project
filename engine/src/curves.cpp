@@ -168,17 +168,6 @@ void TimeTranslations::renderCatmullRomCurve() {
   glEnd();
 }
 
-Scale::Scale() {
-  this->x = 1;
-  this->y = 1;
-  this->z = 1;
-}
-
-Scale::Scale(float x, float y, float z) {
-  this->x = x;
-  this->y = y;
-  this->z = z;
-}
 
 glm::mat4 Scalematrix(float x, float y, float z){
   glm::mat4 matrix = glm::mat4(1.0f);
@@ -186,19 +175,6 @@ glm::mat4 Scalematrix(float x, float y, float z){
   return matrix;
 }
 
-void Scale::applyScale() { glScalef(this->x, this->y, this->z); }
-
-Translate::Translate() {
-  this->x = 0;
-  this->y = 0;
-  this->z = 0;
-}
-
-Translate::Translate(float x, float y, float z) {
-  this->x = x;
-  this->y = y;
-  this->z = z;
-}
 
 glm::mat4 Translatematrix(float x, float y, float z){
   glm::mat4 matrix = glm::mat4(1.0f);
@@ -206,21 +182,6 @@ glm::mat4 Translatematrix(float x, float y, float z){
   return matrix;
 }
 
-void Translate::applyTranslation() { glTranslatef(this->x, this->y, this->z); }
-
-Rotation::Rotation() {
-  this->angle = 0;
-  this->x = 0;
-  this->y = 0;
-  this->z = 0;
-}
-
-Rotation::Rotation(float angle, float x, float y, float z) {
-  this->angle = angle;
-  this->x = x;
-  this->y = y;
-  this->z = z;
-}
 
 glm::mat4 Rotationmatrix(float angle, float x, float y, float z){
   glm::mat4 matrix = glm::mat4(1.0f);
@@ -228,8 +189,4 @@ glm::mat4 Rotationmatrix(float angle, float x, float y, float z){
   return matrix;
 }
 
-void Rotation::applyRotation() {
-  float rad = this->angle * M_PI / 180;
-  glRotatef(rad, this->x, this->y, this->z);
-}
 

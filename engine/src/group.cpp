@@ -33,7 +33,7 @@ void applyTimeTransformations(std::vector<Transformations> order,
   int t = 0;
   int r = 0;
   int s = 0;
-  bool previous_static = false;
+
   for (Transformations type : order) {
     switch (type) {
       case TIMEROTATION:
@@ -44,19 +44,8 @@ void applyTimeTransformations(std::vector<Transformations> order,
         translates[t].applyTimeTranslations(elapsed_time);
         t++;
         break;
-      case SCALE:
+      case STATIC:
         glMultMatrixf(&static_transformations[s][0][0]);
-        previous_static = true;
-        s++;
-        break;
-      case ROTATION:
-        glMultMatrixf(&static_transformations[s][0][0]);
-        previous_static = true;
-        s++;
-        break;
-      case TRANSLATE:
-        glMultMatrixf(&static_transformations[s][0][0]);
-        previous_static = true;
         s++;
         break;
     }

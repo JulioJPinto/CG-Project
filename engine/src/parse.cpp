@@ -138,6 +138,8 @@ Group parseGroup(rapidxml::xml_node<>* groupNode) {
 
 // Parse transform node
 void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
+  bool previous_static = false;
+  int last_static_index = -1;
   // Iterate over all transformation nodes
   for (rapidxml::xml_node<>* node = transformNode->first_node(); node;
        node = node->next_sibling()) {
@@ -147,8 +149,15 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
       float y = std::stof(node->first_attribute("y")->value());
       float z = std::stof(node->first_attribute("z")->value());
       glm::mat4 matrix = Scalematrix(x, y, z);
-      group.order.push_back(SCALE);
-      group.static_transformations.push_back(matrix);
+      if (previous_static) {
+        group.static_transformations[last_static_index] = group.static_transformations[last_static_index] * matrix;
+      } else {
+        group.order.push_back(STATIC);
+        group.static_transformations.push_back(matrix);
+        previous_static = true;
+        last_static_index++;
+      }
+
     } else if (nodeName == "rotate") {
       if (node->first_attribute("time")) {
         float time = std::stof(node->first_attribute("time")->value());
@@ -158,6 +167,7 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
         TimeRotations r = TimeRotations(float(time), float(x), float(y), float(z));
         group.rotations.push_back(r);
         group.order.push_back(TIMEROTATION);
+        previous_static = false;
 
       } else {
         float angle = std::stof(node->first_attribute("angle")->value());
@@ -165,8 +175,14 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
         float y = std::stof(node->first_attribute("y")->value());
         float z = std::stof(node->first_attribute("z")->value());
         glm::mat4 matrix = Rotationmatrix(angle, x, y, z);
-        group.order.push_back(ROTATION);
-        group.static_transformations.push_back(matrix);
+        if (previous_static) {
+          group.static_transformations[last_static_index] = group.static_transformations[last_static_index] * matrix;
+        } else {
+          group.order.push_back(STATIC);
+          group.static_transformations.push_back(matrix);
+          previous_static = true;
+          last_static_index++;
+        }
       }
 
     } else if (nodeName == "translate") {
@@ -190,15 +206,21 @@ void parseTransform(rapidxml::xml_node<>* transformNode, Group& group) {
         TimeTranslations t = TimeTranslations(float(time), align, curvePoints);
         group.translates.push_back(t);
         group.order.push_back(TIMETRANSLATE);
+        previous_static = false;
 
       } else {
         float x = std::stof(node->first_attribute("x")->value());
         float y = std::stof(node->first_attribute("y")->value());
         float z = std::stof(node->first_attribute("z")->value());
         glm::mat4 matrix = Translatematrix(x, y, z);
-        group.order.push_back(TRANSLATE);
-        group.static_transformations.push_back(matrix);
-
+        if (previous_static) {
+          group.static_transformations[last_static_index] = group.static_transformations[last_static_index] * matrix;
+        } else {
+          group.order.push_back(STATIC);
+          group.static_transformations.push_back(matrix);
+          previous_static = true;
+          last_static_index++;
+        }
       }
     }
   }
