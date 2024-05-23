@@ -118,7 +118,7 @@ bool Model::loadTexture() {
   // Load image data
   int width, height, num_channels;
   unsigned char* image_data = stbi_load(this->texture_filepath.data(), &width,
-                                        &height, &num_channels, 0);
+                                        &height, &num_channels, 3);
 
   if (!image_data) {
     std::cerr << "Failed to load texture: " << this->texture_filepath

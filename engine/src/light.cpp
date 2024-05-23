@@ -64,7 +64,7 @@ void setupLights(std::vector<Light> lights) {
 
 void drawLights(std::vector<Light> lights) {
   for (int i = 0; i < lights.size() && lights.size() < 8; i++) {
-    Light light = lights[i];
+    const Light& light = lights[i];
 
     switch (light.type) {
       case DIRECTIONAL: {

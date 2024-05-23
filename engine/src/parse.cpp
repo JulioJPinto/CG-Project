@@ -223,8 +223,7 @@ void parseModels(rapidxml::xml_node<>* modelsNode, Group& group) {
     }
 
     rapidxml::xml_node<>* color = modelNode->first_node("color");
-    // Set the vector for diffuse, ambient, specular and emissive based on the
-    // above example
+
     glm::vec4 diffuse_vec = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
     glm::vec4 ambient_vec = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
     glm::vec4 specular_vec = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);

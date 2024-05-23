@@ -183,7 +183,6 @@ Scale::Scale(float x, float y, float z) {
 glm::mat4 Scalematrix(float x, float y, float z){
   glm::mat4 matrix = glm::mat4(1.0f);
   matrix = glm::scale(matrix, glm::vec3(x, y, z));
-  printf("Scale: %f %f %f %f\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n", matrix[0][0], matrix[0][1], matrix[0][2], matrix[0][3], matrix[1][0], matrix[1][1], matrix[1][2], matrix[1][3], matrix[2][0], matrix[2][1], matrix[2][2], matrix[2][3], matrix[3][0], matrix[3][1], matrix[3][2], matrix[3][3]);
   return matrix;
 }
 
@@ -204,7 +203,6 @@ Translate::Translate(float x, float y, float z) {
 glm::mat4 Translatematrix(float x, float y, float z){
   glm::mat4 matrix = glm::mat4(1.0f);
   matrix = glm::translate(matrix, glm::vec3(x, y, z));
-  printf("Translate: %f %f %f %f\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n", matrix[0][0], matrix[0][1], matrix[0][2], matrix[0][3], matrix[1][0], matrix[1][1], matrix[1][2], matrix[1][3], matrix[2][0], matrix[2][1], matrix[2][2], matrix[2][3], matrix[3][0], matrix[3][1], matrix[3][2], matrix[3][3]);
   return matrix;
 }
 
@@ -227,7 +225,6 @@ Rotation::Rotation(float angle, float x, float y, float z) {
 glm::mat4 Rotationmatrix(float angle, float x, float y, float z){
   glm::mat4 matrix = glm::mat4(1.0f);
   matrix = glm::rotate(matrix, glm::radians(angle), glm::vec3(x, y, z));
-  printf("Rotation: %f %f %f %f\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n", matrix[0][0], matrix[0][1], matrix[0][2], matrix[0][3], matrix[1][0], matrix[1][1], matrix[1][2], matrix[1][3], matrix[2][0], matrix[2][1], matrix[2][2], matrix[2][3], matrix[3][0], matrix[3][1], matrix[3][2], matrix[3][3]);
   return matrix;
 }
 
