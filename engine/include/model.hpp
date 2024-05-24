@@ -20,6 +20,7 @@ extern "C" {
 #include "light.hpp"
 #include "utils.hpp"
 #include "vertex.hpp"
+#include "frustsum.hpp"
 
 std::vector<Vertex> generateVBO(const std::vector<Vertex>& points);
 
@@ -33,15 +34,17 @@ class Model {
   std::vector<unsigned int> ibo;
   int id;
   bool initialized = false;
+  BoundingSphere bounding_sphere;
   Material material;
 
   Model();
   Model(std::string filename, std::vector<Vertex> points);
 
   void initModel();
-  void drawModel();
-  bool loadTexture();
+  void drawModel(const Frustsum& f);
   void setupModel();
+  bool loadTexture();
+  bool isInsideFrustsum(const Frustsum& frustsum) const;
 
   std::vector<Vertex> getPoints();
 

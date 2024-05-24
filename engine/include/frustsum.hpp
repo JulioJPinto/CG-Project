@@ -5,7 +5,6 @@
 
 #include <glm/glm.hpp>
 
-#include "model.hpp"
 #include "Camera.hpp"
 
 
@@ -37,11 +36,22 @@ struct Frustsum {
     Frustsum(const Frustsum& other) = default;
     Frustsum(const Plane& nearFace, const Plane& farFace, const Plane& rightFace, const Plane& leftFace, const Plane& topFace, const Plane& bottomFace)
         : nearFace(nearFace), farFace(farFace), rightFace(rightFace), leftFace(leftFace), topFace(topFace), bottomFace(bottomFace) {}
+    Frustsum(const Camera& cam);
 
-    Frustsum createFrustumFromCamera(const Camera& cam);
-
-    bool isInsideFrustsum(const Model& model);
 };
 
+
+struct BoundingSphere {
+
+    glm::vec3 center;
+    float radius;
+
+    BoundingSphere() = default;
+    BoundingSphere(const BoundingSphere& other) = default;
+    BoundingSphere(const glm::vec3& center, float radius) : center(center), radius(radius) {}
+
+    bool isInsideFrustsum(const Frustsum& frustsum) const;
+
+};
 
 #endif // FRUSTSUM_CPP

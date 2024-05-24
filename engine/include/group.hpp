@@ -34,7 +34,8 @@ class Group {
 
   void rotate(float angle, float x, float y, float z);
 
-  void drawGroup(bool lights);
+  void drawGroup(bool lights, const Frustsum& frustsum);
+
 };
 
 #endif  // GROUP_HPP

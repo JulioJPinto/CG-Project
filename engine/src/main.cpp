@@ -107,6 +107,8 @@ void renderScene(void) {
   glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
   glScalef(zoom, zoom, zoom);
 
+  Frustsum frustsum = Frustsum(c.camera);
+
   drawAxis();
 
   bool lights = c.lights.size() != 0;
@@ -114,7 +116,7 @@ void renderScene(void) {
     drawLights(c.lights);
   }
 
-  c.group.drawGroup(lights);
+  c.group.drawGroup(lights, frustsum);
 
   frameCounter();
 

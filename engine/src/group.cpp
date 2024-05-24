@@ -52,7 +52,7 @@ void applyTimeTransformations(std::vector<Transformations> order,
   }
 }
 
-void Group::drawGroup(bool lights) {
+void Group::drawGroup(bool lights, const Frustsum& frustsum) {
   glPushMatrix();
 
   applyTimeTransformations(this->order, this->static_transformations, this->rotations, this->translates);
@@ -63,11 +63,11 @@ void Group::drawGroup(bool lights) {
       setupMaterial(model.material);
     }
 
-    model.drawModel();
+    model.drawModel(frustsum);
   }
 
   for (Group& sub : this->subgroups) {
-    sub.drawGroup(lights);
+    sub.drawGroup(lights, frustsum);
   }
 
   glPopMatrix();

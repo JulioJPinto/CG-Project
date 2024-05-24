@@ -11,7 +11,6 @@ extern "C" {
 #define STB_IMAGE_IMPLEMENTATION
 #define _USE_MATH_DEFINES
 #include <math.h>
-
 #include <unordered_map>
 
 #include "model.hpp"
@@ -182,7 +181,12 @@ void Model::setupModel() {
                this->ibo.data(), GL_STATIC_DRAW);
 }
 
-void Model::drawModel() {
+void Model::drawModel(const Frustsum& f) {
+  if(!this->isInsideFrustsum(f)) {
+    std::cout << "Model not inside frustsum " << this->filename << std::endl;
+    return;
+  }
+
   initModel();
 
   glBindTexture(GL_TEXTURE_2D, this->_texture_id);
@@ -201,6 +205,10 @@ void Model::drawModel() {
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);
 
   glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+bool Model::isInsideFrustsum(const Frustsum& frustsum) const {
+  return this->bounding_sphere.isInsideFrustsum(frustsum);
 }
 
 std::vector<Vertex> Model::getPoints() { return this->_points; }
