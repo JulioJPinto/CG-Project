@@ -22,7 +22,7 @@ class TimeRotations {
   TimeRotations();
   TimeRotations(float time, float x, float y, float z);
 
-  void applyTimeRotation(float elapsed_time);
+  glm::mat4 applyTimeRotation(float elapsed_time);
 };
 
 class TimeTranslations {
@@ -35,7 +35,7 @@ class TimeTranslations {
   TimeTranslations();
   TimeTranslations(float time, bool align, std::vector<Point> curve);
 
-  void applyTimeTranslations(float elapsed_time);
+  glm::mat4 applyTimeTranslations(float elapsed_time);
 
   void renderCatmullRomCurve();
 

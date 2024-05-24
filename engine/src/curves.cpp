@@ -77,12 +77,12 @@ TimeRotations::TimeRotations(float time, float x, float y, float z) {
   this->z = z;
 }
 
-void TimeRotations::applyTimeRotation(float elapsed_time) {
+glm::mat4 TimeRotations::applyTimeRotation(float elapsed_time) {
   if (this->time == 0) {
-    return;
+    return glm::mat4(1.0f);
   }
   float angle = 360 * (elapsed_time / this->time);
-  glRotatef(angle, this->x, this->y, this->z);
+  return glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(this->x, this->y, this->z));
 }
 
 TimeTranslations::TimeTranslations() {
@@ -129,12 +129,12 @@ std::array<float, 16> TimeTranslations::rotationMatrix(Point x, Point y, Point z
 }
 
 
-void TimeTranslations::applyTimeTranslations(float elapsed_time) {
+glm::mat4 TimeTranslations::applyTimeTranslations(float elapsed_time) {
   if (this->time == 0) {
-    return;
+    return glm::mat4(1.0f);
   }
 
-  // this->renderCatmullRomCurve();
+  this->renderCatmullRomCurve();
 
   float time = elapsed_time / this->time;
 
@@ -143,14 +143,21 @@ void TimeTranslations::applyTimeTranslations(float elapsed_time) {
   Point pos = position_dir.first;
   Point dir = position_dir.second;
 
-  glTranslatef(pos.x, pos.y, pos.z);
+
+  glm::mat4 matrix = glm::mat4(1.0f);
+  matrix = glm::translate(matrix, glm::vec3(pos.x, pos.y, pos.z));
 
   if (this->align) {
     Point x = dir.normalize();
     Point z = Point(x).cross(this->y_axis).normalize();
     Point y = Point(z).cross(x).normalize();
-    glMultMatrixf(rotationMatrix(x, y, z).data());
+    std::array<float, 16> matrixR = this->rotationMatrix(x, y, z);
+    glm::mat4 rotation_matrix = glm::make_mat4(matrixR.data());
+
+    matrix *= rotation_matrix;
   }
+
+  return matrix;
 }
 
 void TimeTranslations::renderCatmullRomCurve() {

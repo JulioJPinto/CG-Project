@@ -55,14 +55,33 @@ Frustsum::Frustsum(const Camera& cam) {
 
 }
 
+BoundingSphere::BoundingSphere(std::vector<Point> points) {
+    glm::vec3 max = {-INFINITY, -INFINITY, -INFINITY};
+
+    for (const Point& point : points) {
+
+        if (point.x > max.x) max.x = point.x;
+        if (point.y > max.y) max.y = point.y;
+        if (point.z > max.z) max.z = point.z;
+    }
+
+    center = glm::vec3(0.0f);
+    radius = glm::distance(center, max);
+
+}
+
+// BoundingSphere::applyTransformations() {
+
+// }
+
 bool BoundingSphere::isInsideFrustsum(const Frustsum& frustsum) const {
-    return true;
-    // return frustsum.nearFace.distanceToPoint(center) > -radius &&
-    //        frustsum.farFace.distanceToPoint(center) > -radius &&
-    //        frustsum.rightFace.distanceToPoint(center) > -radius &&
-    //        frustsum.leftFace.distanceToPoint(center) > -radius &&
-    //        frustsum.topFace.distanceToPoint(center) > -radius &&
-    //        frustsum.bottomFace.distanceToPoint(center) > -radius;
+
+    return frustsum.nearFace.distanceToPoint(center) > -radius &&
+           frustsum.farFace.distanceToPoint(center) > -radius &&
+           frustsum.rightFace.distanceToPoint(center) > -radius &&
+           frustsum.leftFace.distanceToPoint(center) > -radius &&
+           frustsum.topFace.distanceToPoint(center) > -radius &&
+           frustsum.bottomFace.distanceToPoint(center) > -radius;
 }
     
 

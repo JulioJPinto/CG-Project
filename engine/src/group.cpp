@@ -25,7 +25,7 @@ Group::Group(std::vector<Model> models, std::vector<Group> subgroups,
 }
 
 
-void applyTimeTransformations(std::vector<Transformations> order,
+glm::mat4 applyTransformations(std::vector<Transformations> order,
                               std::vector<glm::mat4> static_transformations,
                               std::vector<TimeRotations> rotations,
                               std::vector<TimeTranslations> translates) {
@@ -34,28 +34,33 @@ void applyTimeTransformations(std::vector<Transformations> order,
   int r = 0;
   int s = 0;
 
+  glm::mat4 matrix = glm::mat4(1.0f);
+
   for (Transformations type : order) {
     switch (type) {
       case TIMEROTATION:
-        rotations[r].applyTimeRotation(elapsed_time);
+        matrix *= rotations[r].applyTimeRotation(elapsed_time);
         r++;
         break;
       case TIMETRANSLATE:
-        translates[t].applyTimeTranslations(elapsed_time);
+        matrix *= translates[t].applyTimeTranslations(elapsed_time);
         t++;
         break;
       case STATIC:
-        glMultMatrixf(&static_transformations[s][0][0]);
+        matrix *= static_transformations[s];
         s++;
         break;
     }
   }
+
+  glMultMatrixf(&matrix[0][0]);
+  return matrix;
 }
 
 void Group::drawGroup(bool lights, const Frustsum& frustsum) {
   glPushMatrix();
 
-  applyTimeTransformations(this->order, this->static_transformations, this->rotations, this->translates);
+  glm::mat4 matrix = applyTransformations(this->order, this->static_transformations, this->rotations, this->translates);
 
 
   for (Model& model : this->models) {
@@ -63,7 +68,9 @@ void Group::drawGroup(bool lights, const Frustsum& frustsum) {
       setupMaterial(model.material);
     }
 
+    model.bounding_sphere.center = glm::vec3(matrix * glm::vec4(model.bounding_sphere.center, 1.0f));
     model.drawModel(frustsum);
+    
   }
 
   for (Group& sub : this->subgroups) {
