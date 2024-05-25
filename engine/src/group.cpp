@@ -68,9 +68,9 @@ void Group::drawGroup(bool lights, const Frustsum& frustsum) {
       setupMaterial(model.material);
     }
 
-    model.bounding_sphere.center = glm::vec3(matrix * glm::vec4(model.bounding_sphere.center, 1.0f));
-    model.drawModel(frustsum);
-    
+    if(model.bounding_sphere.isInsideFrustsum(frustsum, matrix)) {
+      model.drawModel();
+    }
   }
 
   for (Group& sub : this->subgroups) {

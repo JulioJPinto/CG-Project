@@ -2,26 +2,26 @@
 #define CAMERA_HPP
 
 #include <string>
-
+#include <glm/glm.hpp>
 #include "Camera.hpp"
 #include "utils.hpp"
 
 class Camera {
  public:
-  Point position;
-  Point lookAt;
-  Point up;
+  glm::vec3 position;
+  glm::vec3 lookAt;
+  glm::vec3 up;
+  glm::vec3 right;
+  glm::vec3 real_up;
   int fov;
   float near;
   float far;
 
   Camera();
-  Camera(Point position, Point lookAt, Point up, int fov, float near,
+  Camera(glm::vec3 position, glm::vec3 lookAt, glm::vec3 up, int fov, float near,
          float far);
 
   Camera(const Camera& other);
-
-  void changeVectors(Point position, Point lookAt, Point up);
 
   //   std::string toString();
 };

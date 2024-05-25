@@ -107,7 +107,8 @@ void renderScene(void) {
   glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
   glScalef(zoom, zoom, zoom);
 
-  Frustsum frustsum = Frustsum(c.camera);
+  Window currentW = Window(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+  Frustsum frustsum = Frustsum(c.camera, currentW);
 
   drawAxis();
 

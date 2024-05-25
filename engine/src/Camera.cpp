@@ -4,29 +4,29 @@
 #include <string>
 
 Camera::Camera() {
-  this->position = Point();
-  this->lookAt = Point();
-  this->up = Point();
+  this->position = glm::vec3();
+  this->lookAt = glm::vec3();
+  this->up = glm::vec3();
   this->fov = 0;
   this->near = 0;
   this->far = 0;
 }
 
-Camera::Camera(Point position, Point lookAt, Point up, int fov, float near,
+Camera::Camera(glm::vec3 position, glm::vec3 lookAt, glm::vec3 up, int fov, float near,
                float far) {
   this->position = position;
   this->lookAt = lookAt;
   this->up = up;
+
+  glm::vec3 direction = glm::normalize(position - lookAt);
+  this->right = glm::normalize(glm::cross(up, direction));
+  this->real_up = glm::normalize(glm::cross(direction, right));
+
   this->fov = fov;
   this->near = near;
   this->far = far;
 }
 
-void Camera::changeVectors(Point position, Point lookAt, Point up) {
-  this->position = position;
-  this->lookAt = lookAt;
-  this->up = up;
-}
 
 Camera::Camera(const Camera& other) {
   // Copy member variables from 'other' to the current object

@@ -2,9 +2,9 @@
 #define FRUSTSUM_CPP
 
 #include <math.h>
-
+#include <iostream>
 #include <glm/glm.hpp>
-
+#include "Window.hpp"
 #include "Camera.hpp"
 
 
@@ -19,6 +19,11 @@ struct Plane {
 
     float distanceToPoint(const glm::vec3& point) const {
         return glm::dot(normal, point) + distance;
+    }
+
+    void printPlane() {
+        std::cout << "Distance: " << distance << std::endl;
+        std::cout << "Normal: " << normal.x << " " << normal.y << " " << normal.z << std::endl;
     }
 
 
@@ -36,7 +41,22 @@ struct Frustsum {
     Frustsum(const Frustsum& other) = default;
     Frustsum(const Plane& nearFace, const Plane& farFace, const Plane& rightFace, const Plane& leftFace, const Plane& topFace, const Plane& bottomFace)
         : nearFace(nearFace), farFace(farFace), rightFace(rightFace), leftFace(leftFace), topFace(topFace), bottomFace(bottomFace) {}
-    Frustsum(const Camera& cam);
+    Frustsum(const Camera& cam, const Window& window);
+
+    void printFrustsum() {
+        std::cout << "Near" << std::endl;
+        nearFace.printPlane();
+        std::cout << "Far" << std::endl;
+        farFace.printPlane();
+        std::cout << "right" << std::endl;
+        rightFace.printPlane();
+        std::cout << "left" << std::endl;
+        leftFace.printPlane();
+        std::cout << "top" << std::endl;
+        topFace.printPlane();
+        std::cout << "bottom" << std::endl;
+        bottomFace.printPlane();
+    }
 
 };
 
@@ -49,10 +69,9 @@ struct BoundingSphere {
     BoundingSphere() = default;
     BoundingSphere(const BoundingSphere& other) = default;
     BoundingSphere(const glm::vec3& center, float radius) : center(center), radius(radius) {}
-    BoundingSphere(std::vector<Point> points);
+    BoundingSphere(std::vector<Vertex> points);
 
-    void applyTransformations();
-    bool isInsideFrustsum(const Frustsum& frustsum) const;
+    bool isInsideFrustsum(const Frustsum& frustsum, glm::mat4 transformations) const;
 
 };
 
