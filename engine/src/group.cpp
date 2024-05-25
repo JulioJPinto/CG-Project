@@ -69,6 +69,7 @@ void Group::drawGroup(bool lights, const Frustsum& frustsum) {
     }
 
     if(model.bounding_sphere.isInsideFrustsum(frustsum, matrix)) {
+      std::cout << model.filename << std::endl;
       model.drawModel();
     }
   }

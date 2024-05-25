@@ -25,43 +25,56 @@
 }
 */
 
+Plane::Plane(const glm::vec3& normal, glm::vec3 point) {
+    this->normal = glm::normalize(normal);
+    this->point = point;
+    float d = -normal.x * point.x - normal.y * point.y - normal.z * point.z;   
+
+    this->abcd = glm::vec4(this->normal, d);
+}
+
 
 Frustsum::Frustsum(const Camera& cam, const Window& window) {
-    float aspect = (float)window.width / (float)window.height;
+    float aspect = static_cast<float>(window.width) / static_cast<float>(window.height);
 
     glm::vec3 front = glm::normalize(cam.lookAt - cam.position);
 
-    const float halfVSide = cam.far * tanf(cam.fov * 0.5f);
+    // Ensure FOV is treated as a floating-point number
+    float fovRadians = glm::radians(static_cast<float>(cam.fov));
+
+    const float halfVSide = cam.far * tanf(fovRadians * 0.5f);
     const float halfHSide = halfVSide * aspect;
     const glm::vec3 frontMultFar = cam.far * front;
 
+    // Near and far planes
     glm::vec3 nearNormal = front;
-    float nearDistance = glm::dot(nearNormal, cam.position + cam.near * front);
+    glm::vec3 nearPoint = cam.position + cam.near * front;
 
     glm::vec3 farNormal = -front;
-    float farDistance = glm::dot(farNormal, cam.position + frontMultFar);
+    glm::vec3 farPoint = cam.position + frontMultFar;
 
-    glm::vec3 rightNormal = glm::normalize(glm::cross(frontMultFar - cam.right * halfHSide, cam.real_up));
-    float rightDistance = glm::dot(rightNormal, cam.position);
+    // Right and left planes
+    glm::vec3 rightNormal = glm::normalize(glm::cross(frontMultFar - cam.right * halfHSide, cam.up));
+    glm::vec3 rightPoint = cam.position;
 
     glm::vec3 leftNormal = glm::normalize(glm::cross(cam.up, frontMultFar + cam.right * halfHSide));
-    float leftDistance = glm::dot(leftNormal, cam.position);
+    glm::vec3 leftPoint = cam.position;
 
+    // Top and bottom planes
     glm::vec3 topNormal = glm::normalize(glm::cross(cam.right, frontMultFar - cam.up * halfVSide));
-    float topDistance = glm::dot(topNormal, cam.position);
+    glm::vec3 topPoint = cam.position;
+    
+    glm::vec3 bottomNormal = glm::normalize(glm::cross(frontMultFar + cam.up * halfVSide, cam.right));
+    glm::vec3 bottomPoint = cam.position;
 
-    glm::vec3 bottomNormal = glm::normalize(glm::cross(frontMultFar + cam.real_up * halfVSide, cam.right));
-    float bottomDistance = glm::dot(bottomNormal, cam.position);
-
-    nearFace = { nearNormal, nearDistance };
-    farFace = { farNormal, farDistance };
-    rightFace = { rightNormal, rightDistance };
-    leftFace = { leftNormal, leftDistance };
-    topFace = { topNormal, topDistance };
-    bottomFace = { bottomNormal, bottomDistance };
-
-    this->printFrustsum();
+    nearFace = { nearNormal, nearPoint };
+    farFace = { farNormal, farPoint };
+    rightFace = { rightNormal, rightPoint };
+    leftFace = { leftNormal, leftPoint };
+    topFace = { topNormal, topPoint };
+    bottomFace = { bottomNormal, bottomPoint };
 }
+
 
 
 BoundingSphere::BoundingSphere(std::vector<Vertex> points) {
@@ -91,7 +104,6 @@ bool BoundingSphere::isInsideFrustsum(const Frustsum& frustsum, glm::mat4 transf
 
     glm::vec3 center = glm::vec3(transformations * glm::vec4(this->center, 1.0f));
     float radius = this->radius * glm::length(glm::vec3(transformations[0])) / 2;
-
 
     return frustsum.nearFace.distanceToPoint(center) > -radius &&
            frustsum.farFace.distanceToPoint(center) > -radius &&

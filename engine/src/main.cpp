@@ -116,7 +116,7 @@ void renderScene(void) {
   if (lights) {
     drawLights(c.lights);
   }
-
+  
   c.group.drawGroup(lights, frustsum);
 
   frameCounter();
@@ -210,7 +210,6 @@ void setupConfig(char* arg) {
   filename.assign(arg);
 
   if (filename.substr(filename.size() - 4) == ".xml") {
-    printf("XML\n");
     c = parseConfig(filename);
   } else {
     std::cout << "Invalid file format\n";
