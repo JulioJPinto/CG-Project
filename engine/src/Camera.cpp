@@ -37,3 +37,47 @@ Camera::Camera(const Camera& other) {
   this->near = other.near;
   this->far = other.far;
 }
+
+void Camera::backwardMovement() {
+  glm::vec3 direction = glm::normalize(lookAt - position);
+  position += direction;
+  lookAt += direction;
+}
+
+void Camera::forwardMovement() {
+  glm::vec3 direction = glm::normalize(lookAt - position);
+  position -= direction;
+  lookAt -= direction;
+}
+
+void Camera::leftMovement() {
+  glm::vec3 direction = glm::normalize(lookAt - position);
+  glm::vec3 right = glm::normalize(glm::cross(up, direction));
+  position -= right;
+  lookAt -= right;
+}
+
+void Camera::rightMovement() {
+  glm::vec3 direction = glm::normalize(lookAt - position);
+  glm::vec3 right = glm::normalize(glm::cross(up, direction));
+  position += right;
+  lookAt += right;
+}
+
+void Camera::upMovement() {
+  glm::vec3 direction = glm::normalize(lookAt - position);
+  glm::vec3 right = glm::normalize(glm::cross(up, direction));
+  glm::vec3 up = glm::normalize(glm::cross(direction, right));
+  position += up;
+  lookAt += up;
+}
+
+void Camera::downMovement() {
+  glm::vec3 direction = glm::normalize(lookAt - position);
+  glm::vec3 right = glm::normalize(glm::cross(up, direction));
+  glm::vec3 up = glm::normalize(glm::cross(direction, right));
+  position -= up;
+  lookAt -= up;
+}
+
+
