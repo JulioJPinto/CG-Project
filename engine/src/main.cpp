@@ -121,7 +121,7 @@ void renderScene(void) {
   
   c.group.drawGroup(lights, frustsum, normals);
 
-  frameCounter();
+  // frameCounter();
 
   if(imgui) {
     // Start the Dear ImGui frame
