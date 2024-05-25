@@ -38,17 +38,17 @@ Configuration parseConfig(std::string filename) {
   rapidxml::xml_node<>* camera = root->first_node("camera");
 
   rapidxml::xml_node<>* position_n = camera->first_node("position");
-  Point position = Point(std::stof(position_n->first_attribute("x")->value()),
+  glm::vec3 position = glm::vec3(std::stof(position_n->first_attribute("x")->value()),
                          std::stof(position_n->first_attribute("y")->value()),
                          std::stof(position_n->first_attribute("z")->value()));
 
   rapidxml::xml_node<>* lookAt_n = camera->first_node("lookAt");
-  Point lookAt = Point(std::stof(lookAt_n->first_attribute("x")->value()),
+  glm::vec3 lookAt = glm::vec3(std::stof(lookAt_n->first_attribute("x")->value()),
                        std::stof(lookAt_n->first_attribute("y")->value()),
                        std::stof(lookAt_n->first_attribute("z")->value()));
 
   rapidxml::xml_node<>* up_n = camera->first_node("up");
-  Point up = Point(std::stof(up_n->first_attribute("x")->value()),
+  glm::vec3 up = glm::vec3(std::stof(up_n->first_attribute("x")->value()),
                    std::stof(up_n->first_attribute("y")->value()),
                    std::stof(up_n->first_attribute("z")->value()));
 

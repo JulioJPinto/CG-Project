@@ -94,6 +94,7 @@ Model::Model(std::string filename, std::vector<Vertex> points) {
   this->id = counter;
   this->vbo = generateVBO(points);
   this->ibo = generateIBO(points, this->vbo);
+  this->bounding_sphere = BoundingSphere(points);
   this->initialized = false;
   this->_points = points;
   counter++;
@@ -181,12 +182,7 @@ void Model::setupModel() {
                this->ibo.data(), GL_STATIC_DRAW);
 }
 
-void Model::drawModel(const Frustsum& f) {
-  if(!this->isInsideFrustsum(f)) {
-    std::cout << "Model not inside frustsum " << this->filename << std::endl;
-    return;
-  }
-
+void Model::drawModel() {
   initModel();
 
   glBindTexture(GL_TEXTURE_2D, this->_texture_id);
@@ -205,10 +201,6 @@ void Model::drawModel(const Frustsum& f) {
   glDrawElements(GL_TRIANGLES, this->ibo.size(), GL_UNSIGNED_INT, 0);
 
   glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-bool Model::isInsideFrustsum(const Frustsum& frustsum) const {
-  return this->bounding_sphere.isInsideFrustsum(frustsum);
 }
 
 std::vector<Vertex> Model::getPoints() { return this->_points; }

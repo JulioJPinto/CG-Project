@@ -41,10 +41,9 @@ class Model {
   Model(std::string filename, std::vector<Vertex> points);
 
   void initModel();
-  void drawModel(const Frustsum& f);
+  void drawModel();
   void setupModel();
   bool loadTexture();
-  bool isInsideFrustsum(const Frustsum& frustsum) const;
 
   std::vector<Vertex> getPoints();
 
