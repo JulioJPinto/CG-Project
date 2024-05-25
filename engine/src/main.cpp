@@ -32,6 +32,7 @@ int timebase;
 float frames;
 
 Configuration c;
+Camera camera;
 
 void reshape(int w, int h) {
   float aspect_ratio = (float)w / (float)h;
@@ -99,16 +100,12 @@ void renderScene(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   // set camera
   glLoadIdentity();
-  gluLookAt(c.camera.position.x, c.camera.position.y, c.camera.position.z,
-            c.camera.lookAt.x, c.camera.lookAt.y, c.camera.lookAt.z,
-            c.camera.up.x, c.camera.up.y, c.camera.up.z);
-
-  glRotatef(cameraAngleY, 0.0f, 1.0f, 0.0f);
-  glRotatef(cameraAngle, 1.0f, 0.0f, 1.0f);
-  glScalef(zoom, zoom, zoom);
+  gluLookAt(camera.position.x, camera.position.y, camera.position.z,
+            camera.lookAt.x, camera.lookAt.y, camera.lookAt.z,
+            camera.up.x, camera.up.y, camera.up.z);
 
   Window currentW = Window(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-  Frustsum frustsum = Frustsum(c.camera, currentW);
+  Frustsum frustsum = Frustsum(camera, currentW);
 
   drawAxis();
 
@@ -155,16 +152,16 @@ void motion(int x, int y) {
 void processSpecialKeys(int key, int xx, int yy) {
   switch (key) {
     case GLUT_KEY_LEFT:
-      cameraAngle -= 1.0f;
+      camera.leftMovement();
       break;
     case GLUT_KEY_RIGHT:
-      cameraAngle += 1.0f;
+      camera.rightMovement();
       break;
     case GLUT_KEY_UP:
-      cameraAngleY += 1.0f;
+      camera.forwardMovement();
       break;
     case GLUT_KEY_DOWN:
-      cameraAngleY -= 1.0f;
+      camera.backwardMovement();
       break;
     default:
       break;
@@ -183,16 +180,20 @@ void processNormalKeys(unsigned char key, int x, int y) {
       }
       break;
     case 'r':
-      cameraAngle = 0;
-      cameraAngleY = 0;
-      zoom = 1.0f;
+      camera = c.camera;
       break;
-    case 'o':
-      zoom -= value;
+    case 'w':
+      camera.upMovement();
       break;
-    case 'i':
-      zoom += value;
+    case 's':
+      camera.downMovement();
       break;
+    case 't':
+      if(camera.type == ORBITAL) {
+        camera.type = FPS;
+      } else {
+        camera.type = ORBITAL;
+      }
     case 'c':
       if (wireframe) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -215,6 +216,9 @@ void setupConfig(char* arg) {
     std::cout << "Invalid file format\n";
     exit(1);
   }
+
+  camera = c.camera;
+
 }
 
 void setupModels(Group& group) {
