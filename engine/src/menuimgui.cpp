@@ -1,33 +1,43 @@
 #include "menuimgui.hpp"
 
-void setupMenu() {
-  // Setup Dear ImGui context
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  ImGuiIO& io = ImGui::GetIO();
-  (void)io;
-  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+void setupMenu()
+{
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
 
-  ImGui_ImplGLUT_Init();
-  ImGui_ImplOpenGL3_Init();
-  ImGui_ImplGLUT_InstallFuncs();
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplGLUT_Init();
+    ImGui_ImplOpenGL3_Init();
 }
 
-void shutDownMenu() {
-  ImGui_ImplOpenGL3_Shutdown();
-  ImGui_ImplGLUT_Shutdown();
-  ImGui::DestroyContext();
+void shutDownMenu()
+{
+    
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGLUT_Shutdown();
+    ImGui::DestroyContext();
 }
+
+bool w = false;
 
 void renderMenu() {
-  ImGui_ImplOpenGL3_NewFrame();
-  ImGui_ImplGLUT_NewFrame();
-  ImGui::NewFrame();
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGLUT_NewFrame();
+    ImGui::NewFrame();
 
-  ImGui::Begin("Menu");
-  ImGui::Text("Hello, world!");
-  ImGui::End();
+    ImGuiIO& io = ImGui::GetIO();
+    {
+      ImGui::Begin("Infos", NULL, ImGuiWindowFlags_AlwaysAutoResize);
 
-  ImGui::Render();
-  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+      ImGui::Text("FPS: %f", io.Framerate);
+
+      ImGui::End();
+    }
+    ImGui::Render();
+    glViewport(0, 0, (GLsizei) io.DisplaySize.x, (GLsizei) io.DisplaySize.y);
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

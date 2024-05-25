@@ -25,6 +25,8 @@ float cameraAngleY = 0.0f;
 float zoom = 1.0f;
 int axis = 1;
 int wireframe = 1;
+bool imgui = true;
+
 bool isDragging = false;
 int lastMouseX, lastMouseY;
 
@@ -47,6 +49,8 @@ void reshape(int w, int h) {
 
   // Reset the modelview matrix
   glMatrixMode(GL_MODELVIEW);
+
+  ImGui_ImplGLUT_ReshapeFunc(w, h);
   glLoadIdentity();
 }
 
@@ -118,8 +122,13 @@ void renderScene(void) {
 
   frameCounter();
 
+  if(imgui) {
+    // Start the Dear ImGui frame
+    renderMenu();
+  }
   // End of frame
   glutSwapBuffers();
+
 }
 
 void mouse(int button, int state, int x, int y) {
@@ -166,6 +175,7 @@ void processSpecialKeys(int key, int xx, int yy) {
     default:
       break;
   }
+  ImGui_ImplGLUT_KeyboardFunc(key, xx, yy);
   glutPostRedisplay();
 }
 
@@ -202,9 +212,14 @@ void processNormalKeys(unsigned char key, int x, int y) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         wireframe = 1;
       }
+    case 'i':
+      imgui = !imgui;
+      break;
     default:
       break;
   }
+  ImGui_ImplGLUT_KeyboardFunc(key, x, y);
+  glutPostRedisplay();
 }
 
 void setupConfig(char* arg) {
@@ -230,6 +245,12 @@ void setupModels(Group& group) {
   }
 }
 
+void IdleCallback()
+{
+    glutPostRedisplay();
+}
+
+
 int main(int argc, char** argv) {
   if (argc == 1) {
     std::cout << "Invalid Arguments\n";
@@ -246,14 +267,15 @@ int main(int argc, char** argv) {
   glutInitWindowSize(c.window.width, c.window.height);
   glutCreateWindow("CG@DI");
 
-  // setupMenu();
+  // put GLEW�s init here
   glewInit();
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+  setupMenu();
 
   // put callback registry here
-  glutIdleFunc(renderScene);
+  glutIdleFunc(IdleCallback);
   glutDisplayFunc(renderScene);
   glutReshapeFunc(reshape);
 
@@ -269,8 +291,12 @@ int main(int argc, char** argv) {
   setupLights(c.lights);
   setupModels(c.group);
 
+
+
   // enter GLUT�s main cycle
   glutMainLoop();
+  shutDownMenu();
+
 
   return 1;
 }

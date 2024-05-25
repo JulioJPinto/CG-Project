@@ -15,9 +15,9 @@ extern "C" {
 #include <set>
 #include <vector>
 
+#include "imgui.h"
 #include "backends/imgui_impl_glut.h"
 #include "backends/imgui_impl_opengl3.h"
-#include "imgui.h"
 
 void setupMenu();
 
