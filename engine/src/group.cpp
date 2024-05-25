@@ -57,7 +57,7 @@ glm::mat4 applyTransformations(std::vector<Transformations> order,
   return matrix;
 }
 
-void Group::drawGroup(bool lights, const Frustsum& frustsum) {
+void Group::drawGroup(bool lights, const Frustsum& frustsum, bool normals) {
   glPushMatrix();
 
   glm::mat4 matrix = applyTransformations(this->order, this->static_transformations, this->rotations, this->translates);
@@ -70,11 +70,12 @@ void Group::drawGroup(bool lights, const Frustsum& frustsum) {
 
     if(model.bounding_sphere.isInsideFrustsum(frustsum, matrix)) {
       model.drawModel();
+      if(normals) model.drawNormals();
     }
   }
 
   for (Group& sub : this->subgroups) {
-    sub.drawGroup(lights, frustsum);
+    sub.drawGroup(lights, frustsum, normals);
   }
 
   glPopMatrix();

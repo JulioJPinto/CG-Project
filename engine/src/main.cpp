@@ -26,6 +26,7 @@ float zoom = 1.0f;
 int axis = 1;
 int wireframe = 1;
 bool imgui = true;
+bool normals = false;
 
 bool isDragging = false;
 int lastMouseX, lastMouseY;
@@ -118,7 +119,7 @@ void renderScene(void) {
     drawLights(c.lights);
   }
   
-  c.group.drawGroup(lights, frustsum);
+  c.group.drawGroup(lights, frustsum, normals);
 
   frameCounter();
 
@@ -214,6 +215,9 @@ void processNormalKeys(unsigned char key, int x, int y) {
       }
     case 'i':
       imgui = !imgui;
+      break;
+    case 'n':
+      normals = !normals;
       break;
     default:
       break;

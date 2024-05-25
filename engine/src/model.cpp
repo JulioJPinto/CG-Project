@@ -203,4 +203,14 @@ void Model::drawModel() {
   glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+void Model::drawNormals() {
+  glBegin(GL_LINES);
+  for (const Vertex& point : this->vbo) {
+    glVertex3f(point.position.x, point.position.y, point.position.z);
+    glVertex3f(point.position.x + point.normal.x, point.position.y + point.normal.y,
+               point.position.z + point.normal.z);
+  }
+  glEnd();
+  
+}
 std::vector<Vertex> Model::getPoints() { return this->_points; }

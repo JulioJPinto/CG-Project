@@ -44,6 +44,7 @@ class Model {
   void drawModel();
   void setupModel();
   bool loadTexture();
+  void drawNormals();
 
   std::vector<Vertex> getPoints();
 
