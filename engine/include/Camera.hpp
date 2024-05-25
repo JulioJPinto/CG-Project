@@ -50,4 +50,8 @@ class Camera {
   //   std::string toString();
 };
 
+glm::vec3 spherical2Cartesian(float theta, float phi, float r);
+
+glm::vec3 cartesian2Spherical(glm::vec3 cartesian);
+
 #endif  // CAMERA_HPP

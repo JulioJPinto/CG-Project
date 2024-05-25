@@ -30,6 +30,20 @@ Camera::Camera(glm::vec3 position, glm::vec3 lookAt, glm::vec3 up, int fov, floa
   this->type = FPS;
 }
 
+glm::vec3 spherical2Cartesian(float theta, float phi, float r) {
+  float x = r * sin(theta) * cos(phi);
+  float y = r * sin(theta) * sin(phi);
+  float z = r * cos(theta);
+  return glm::vec3(x, y, z);
+}
+
+glm::vec3 cartesian2Spherical(glm::vec3 cartesian) {
+  float r = glm::length(cartesian);
+  float theta = acos(cartesian.z / r);
+  float phi = atan(cartesian.y / cartesian.x);
+  return glm::vec3(theta, phi, r);
+}
+
 
 Camera::Camera(const Camera& other) {
   // Copy member variables from 'other' to the current object
