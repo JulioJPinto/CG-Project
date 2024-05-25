@@ -33,6 +33,20 @@ class Camera {
   void forwardMovement();
   void backwardMovement();
 
+  private:
+    void backwardMovementFPS();
+    void backwardMovementOrbital();
+    void forwardMovementFPS();
+    void forwardMovementOrbital();
+    void leftMovementFPS();
+    void leftMovementOrbital();
+    void rightMovementFPS();
+    void rightMovementOrbital();
+    void upMovementFPS();
+    void upMovementOrbital();
+    void downMovementFPS();
+    void downMovementOrbital();
+
   //   std::string toString();
 };
 

@@ -180,16 +180,20 @@ void processNormalKeys(unsigned char key, int x, int y) {
       }
       break;
     case 'r':
-      cameraAngle = 0;
-      cameraAngleY = 0;
-      zoom = 1.0f;
+      camera = c.camera;
       break;
-    case 'o':
-      zoom -= value;
+    case 'w':
+      camera.upMovement();
       break;
-    case 'i':
-      zoom += value;
+    case 's':
+      camera.downMovement();
       break;
+    case 't':
+      if(camera.type == ORBITAL) {
+        camera.type = FPS;
+      } else {
+        camera.type = ORBITAL;
+      }
     case 'c':
       if (wireframe) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
