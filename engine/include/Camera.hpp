@@ -15,6 +15,7 @@ class Camera {
   glm::vec3 up;
   glm::vec3 right;
   glm::vec3 real_up;
+  glm::vec3 forward;
   int fov;
   float near;
   float far;
@@ -25,20 +26,7 @@ class Camera {
 
   Camera(const Camera& other);
 
-  void leftMovement();
-  void rightMovement();
-  void forwardMovement();
-  void backwardMovement();
-  void spinUp();
-  void spinDown();
-  void spinLeft();
-  void spinRight();
-
   //   std::string toString();
 };
-
-glm::vec3 spherical2Cartesian(float theta, float phi, float r);
-
-glm::vec3 cartesian2Spherical(glm::vec3 cartesian);
 
 #endif  // CAMERA_HPP

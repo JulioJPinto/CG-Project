@@ -11,17 +11,19 @@ extern "C" {
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <chrono>
 
 #include "Configuration.hpp"
 #include "curves.hpp"
 #include "menuimgui.hpp"
 #include "parse.hpp"
+#include "input.hpp"
+#include "controller.hpp"
 
 std::string filename;
 
 bool axis = true;
 bool wireframe = false;
-bool imgui = false;
 bool normals = false;
 bool culling = true;
 
@@ -77,26 +79,6 @@ void drawAxis(void) {
   }
 }
 
-void frameCounter() {
-  static int frame = 0;
-  static float time = 0;
-  static float fps = 0;
-
-  frame++;
-  time = glutGet(GLUT_ELAPSED_TIME);
-  if (time - timebase > 1000) {
-    fps = frame * 1000.0 / (time - timebase);
-    timebase = time;
-    frame = 0;
-  }
-
-  static int i = 0;
-  i++;
-  if (i % 100 == 0) {
-    std::cout << "FPS: " << std::to_string(fps) << std::endl;
-  }
-}
-
 void resetCamera() {
   camera = c.camera;
 }
@@ -142,13 +124,32 @@ void fillMode() {
   }
 }
 
+inline float compute_delta_time() {
+    static auto begin = std::chrono::high_resolution_clock::now();
+    const auto end = std::chrono::high_resolution_clock::now();
+    const auto delta_millis =
+        std::chrono::duration_cast<std::chrono::milliseconds>(end - begin)
+            .count();
+    begin = end;
+    return delta_millis / 1000.f;
+}
+
+void update() {
+  Input::process_input();
+  static CameraController cameraController(camera);
+  float delta_time = compute_delta_time();
+  cameraController.update(delta_time);
+}
+
 void renderScene(void) {
+  update();
   // clear buffers
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   // set camera
   glLoadIdentity();
+  glm::vec3 lookat = camera.position + camera.forward;
   gluLookAt(camera.position.x, camera.position.y, camera.position.z,
-            camera.lookAt.x, camera.lookAt.y, camera.lookAt.z,
+            lookat.x , lookat.y, lookat.z,
             camera.up.x, camera.up.y, camera.up.z);
 
   Window currentW = Window(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
@@ -156,7 +157,7 @@ void renderScene(void) {
 
   fillMode();
   drawAxis();
-  
+
   bool lights = c.lights.size() != 0;
   if (lights) {
     drawLights(c.lights);
@@ -164,73 +165,13 @@ void renderScene(void) {
   
   c.group.drawGroup(lights, frustsum, normals);
 
-  // frameCounter();
+  // Start the Dear ImGui frame
+  renderMenu();
 
-  if(imgui) {
-    // Start the Dear ImGui frame
-    renderMenu();
-  }
   // End of frame
   glutSwapBuffers();
-
-}
-
-void processSpecialKeys(int key, int xx, int yy) {
-  switch (key) {
-    case GLUT_KEY_LEFT:
-      camera.leftMovement();
-      break;
-    case GLUT_KEY_RIGHT:
-      camera.rightMovement();
-      break;
-    case GLUT_KEY_UP:
-      camera.forwardMovement();
-      break;
-    case GLUT_KEY_DOWN:
-      camera.backwardMovement();
-      break;
-    //glut f1 for reset
-    case GLUT_KEY_F1:
-      camera = c.camera;
-      break;
-    case GLUT_KEY_F2:
-      axis = !axis;
-      break;
-    case GLUT_KEY_F3:
-      wireframe = !wireframe;
-      break;
-    case GLUT_KEY_F4:
-      imgui = !imgui;
-      break;
-    case GLUT_KEY_F5:
-      normals = !normals;
-      break;
-    default:
-      break;
-  }
-  ImGui_ImplGLUT_KeyboardFunc(key, xx, yy);
   glutPostRedisplay();
-}
 
-void processNormalKeys(unsigned char key, int x, int y) {
-  switch (key) {
-    case 'w':
-      camera.spinUp();
-      break;
-    case 's':
-      camera.spinDown();
-      break;
-    case 'a':
-      camera.spinLeft();
-      break;
-    case 'd':
-      camera.spinRight();
-      break;
-    default:
-      break;
-  }
-  ImGui_ImplGLUT_KeyboardFunc(key, x, y);
-  glutPostRedisplay();
 }
 
 void setupConfig(char* arg) {
@@ -256,10 +197,6 @@ void setupModels(Group& group) {
   }
 }
 
-void IdleCallback()
-{
-    glutPostRedisplay();
-}
 
 
 int main(int argc, char** argv) {
@@ -286,14 +223,17 @@ int main(int argc, char** argv) {
   setupMenu();
 
   // put callback registry here
-  glutIdleFunc(IdleCallback);
   glutDisplayFunc(renderScene);
   glutReshapeFunc(reshape);
 
-  glutSpecialFunc(processSpecialKeys);
-  glutKeyboardFunc(processNormalKeys);
-  // glutMouseFunc(mouse);
-  // glutMotionFunc(motion);
+  glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
+  glutKeyboardFunc(&Input::on_key_down);
+  glutKeyboardUpFunc(&Input::on_key_up);
+  glutSpecialFunc(&Input::on_special_key_down);
+  glutSpecialUpFunc(&Input::on_special_key_up);
+  glutMouseFunc(&Input::on_mouse_button);
+  glutMotionFunc(&Input::on_mouse_motion);
+  glutPassiveMotionFunc(&Input::on_mouse_motion);
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);
