@@ -118,7 +118,7 @@ bool Model::loadTexture() {
   // Load image data
   int width, height, num_channels;
   unsigned char* image_data = stbi_load(this->texture_filepath.data(), &width,
-                                        &height, &num_channels, STBI_rgb);
+                                        &height, &num_channels, STBI_rgb_alpha);
 
   if (!image_data) {
     std::cerr << "Failed to load texture: " << this->texture_filepath
@@ -140,7 +140,7 @@ bool Model::loadTexture() {
 
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
   // Upload data to GPU
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
                GL_UNSIGNED_BYTE, image_data);
   glGenerateMipmap(GL_TEXTURE_2D);
 

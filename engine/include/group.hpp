@@ -34,7 +34,7 @@ class Group {
 
   void rotate(float angle, float x, float y, float z);
 
-  void drawGroup(bool lights, const Frustsum& frustsum, bool normals, float elapsed_time);
+  void drawGroup(bool lights, const Frustsum& frustsum, bool normals, float elapsed_time, int& nr_models);
 
 };
 
