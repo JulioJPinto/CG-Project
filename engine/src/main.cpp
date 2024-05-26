@@ -180,7 +180,8 @@ void setupConfig(char* arg) {
     c = parseConfig(filename);
   } else if (filename.substr(filename.size() - 3) == ".3d") {
     c = parseConfig3D(filename);   
-  
+  } else  if (filename.substr(filename.size() - 4) == ".obj") {
+    c = parseConfigObj(filename);
   } else {
     std::cout << "Invalid file format\n";
     exit(1);
