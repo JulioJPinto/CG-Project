@@ -20,25 +20,41 @@ calculateCylinder(const float radius, const float height, const int slices) {
 
   float r = 0;
 
+  Point2D t_top_center = Point2D(7.f / 16.f, 3.f / 16.f);
+  Point2D t_bot_center = Point2D(13.f / 16.f, 3.f / 16.f);
+  Point2D t_side = Point2D(0.f, 3.f / 8.f);
+  float t_side_height = 5.f / 8.f;
+  float t_radius = 3.f / 16.f;
+
+  float curr_alpha = 0;
+  float next_alpha = 0;
+
   for (int i = 0; i < slices; i++) {
+    next_alpha = alpha * (i+1);
+
     // base
     float px = radius * sin(r);
     float pz = radius * cos(r);
     points.push_back(Point(px, -half, pz));
     points.push_back(Point(0, -half, 0));
+
+    textures.push_back(Point2D(t_bot_center.x + t_radius * sin(r), t_bot_center.y + t_radius * cos(r)));
+    textures.push_back(t_bot_center);
+
+
     r += alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
     points.push_back(Point(px, -half, pz));
+
+    textures.push_back(Point2D(t_bot_center.x + t_radius * sin(r), t_bot_center.y + t_radius * cos(r)));
 
     Point n1(0.0f, -1.0f, 0.0f);
     for (int j = 0; j < 3; j++) {
       normals.push_back(n1);  // Push normals to normals vector
     }
 
-    textures.push_back(Point2D(0.5f, 0.5f));
-    textures.push_back(Point2D(0.5f, 0.5f));
-    textures.push_back(Point2D(0.5f, 0.5f));
+    
 
     // face
     points.push_back(Point(px, -half, pz));
@@ -89,19 +105,22 @@ calculateCylinder(const float radius, const float height, const int slices) {
     pz = radius * cos(r);
     points.push_back(Point(px, half, pz));
     points.push_back(Point(0, half, 0));
+
+    textures.push_back(Point2D(t_top_center.x + t_radius * sin(curr_alpha), t_top_center.y + t_radius * cos(curr_alpha)));
+    textures.push_back(t_top_center);
     r -= alpha;
     px = radius * sin(r);
     pz = radius * cos(r);
     points.push_back(Point(px, half, pz));
+
+    textures.push_back(Point2D(t_top_center.x + t_radius * sin(next_alpha), t_top_center.y + t_radius * cos(next_alpha)));
 
     Point n4(0.0f, 1.0f, 0.0f);
     for (int j = 0; j < 3; j++) {
       normals.push_back(n4);  // Push normals to normals vector
     }
 
-    textures.push_back(Point2D(0.5f, 0.5f));
-    textures.push_back(Point2D(0.5f, 0.5f));
-    textures.push_back(Point2D(0.5f, 0.5f));
+    curr_alpha = next_alpha;
   }
 
   return std::make_pair(std::make_pair(points, normals), textures);
