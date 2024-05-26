@@ -134,7 +134,7 @@ glm::mat4 TimeTranslations::applyTimeTranslations(float elapsed_time) {
     return glm::mat4(1.0f);
   }
 
-  this->renderCatmullRomCurve();
+  // this->renderCatmullRomCurve();
 
   float time = elapsed_time / this->time;
 

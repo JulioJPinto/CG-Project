@@ -62,7 +62,6 @@ void Group::drawGroup(bool lights, const Frustsum& frustsum, bool normals) {
 
   glm::mat4 matrix = applyTransformations(this->order, this->static_transformations, this->rotations, this->translates);
 
-
   for (Model& model : this->models) {
     if (lights) {
       setupMaterial(model.material);

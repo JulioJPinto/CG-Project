@@ -34,7 +34,11 @@ Plane::Plane(const glm::vec3& normal, glm::vec3 point) {
 }
 
 
-Frustsum::Frustsum(const Camera& cam, const Window& window) {
+Frustsum::Frustsum(const Camera& cam, const Window& window,const bool& on) {
+    this->on = on;
+    if(!on) {
+        return;
+    }
     float aspect = static_cast<float>(window.width) / static_cast<float>(window.height);
 
     glm::vec3 front = glm::normalize(cam.lookAt - cam.position);
@@ -122,6 +126,10 @@ BoundingSphere::BoundingSphere(std::vector<Vertex> points) {
 
 
 bool BoundingSphere::isInsideFrustsum(const Frustsum& frustsum, glm::mat4 transformations) const {
+
+    if(!frustsum.on) {
+        return true;
+    }
 
     glm::vec3 center = glm::vec3(transformations * glm::vec4(this->center, 1.0f));
     float radius = this->radius * glm::length(glm::vec3(transformations[0])) / 2;

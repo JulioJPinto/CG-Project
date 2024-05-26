@@ -23,6 +23,7 @@ bool axis = true;
 bool wireframe = false;
 bool imgui = false;
 bool normals = false;
+bool culling = true;
 
 bool isDragging = false;
 int lastMouseX, lastMouseY;
@@ -112,14 +113,20 @@ void renderMenu() {
       ImGui::Text("FPS: %f", io.Framerate);
       ImGui::Text("Camera Position: (%f, %f, %f)", camera.position.x, camera.position.y, camera.position.z);
       ImGui::Text("Camera LookAt: (%f, %f, %f)", camera.lookAt.x, camera.lookAt.y, camera.lookAt.z);
+
+      ImGui::End();
+    }
+    {
+      ImGui::Begin("Options", NULL, ImGuiWindowFlags_AlwaysAutoResize);  
+
       ImGui::Checkbox("Axis", &axis);
       ImGui::Checkbox("Wireframe", &wireframe);
       ImGui::Checkbox("Normals", &normals);
+      ImGui::Checkbox("Frustsum", &culling);
       ImGui::Button("Reset", ImVec2(50, 20));
       if (ImGui::IsItemClicked()) {
         resetCamera();
       }
-
       ImGui::End();
     }
     ImGui::Render();
@@ -145,12 +152,11 @@ void renderScene(void) {
             camera.up.x, camera.up.y, camera.up.z);
 
   Window currentW = Window(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-  Frustsum frustsum = Frustsum(camera, currentW);
+  Frustsum frustsum = Frustsum(camera, currentW, culling);
 
   fillMode();
   drawAxis();
   
-
   bool lights = c.lights.size() != 0;
   if (lights) {
     drawLights(c.lights);
@@ -295,8 +301,6 @@ int main(int argc, char** argv) {
   glEnable(GL_TEXTURE_2D);
   setupLights(c.lights);
   setupModels(c.group);
-
-
 
   // enter GLUT�s main cycle
   glutMainLoop();

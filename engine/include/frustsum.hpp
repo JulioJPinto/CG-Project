@@ -39,12 +39,13 @@ struct Frustsum {
     Plane leftFace;
     Plane topFace;
     Plane bottomFace;
+    bool on = true;
 
     Frustsum() = default;
     Frustsum(const Frustsum& other) = default;
     Frustsum(const Plane& nearFace, const Plane& farFace, const Plane& rightFace, const Plane& leftFace, const Plane& topFace, const Plane& bottomFace)
         : nearFace(nearFace), farFace(farFace), rightFace(rightFace), leftFace(leftFace), topFace(topFace), bottomFace(bottomFace) {}
-    Frustsum(const Camera& cam, const Window& window);
+    Frustsum(const Camera& cam, const Window& window,const bool& on);
 
     void printFrustsum() {
         std::cout << "Near" << std::endl;
