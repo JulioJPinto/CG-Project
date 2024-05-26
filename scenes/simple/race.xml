@@ -22,8 +22,10 @@
                 <translate x="0" y="2" z="0" />
             </transform>
             <models> 
-                <model file="models/simple/ferrari.obj" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
-            </models>
+				<model file="models/simple/ferrari.obj" > <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
+					<texture file = "textures/ferrari.png" />
+				</model>
+			</models>
             
          </group>
          <group>

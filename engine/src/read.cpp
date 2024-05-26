@@ -65,8 +65,8 @@ Model readOBJfile(const char* filepath) {
         nx = normals[normal_index].x;
         ny = normals[normal_index].y;
         nz = normals[normal_index].z;
-        tx = 0;
-        ty = 1;
+        tx = textures[texture_index].x;
+        ty = textures[texture_index].y;
 
         if (texture_index == -1) {
           printf("Texture index is -1\n");
