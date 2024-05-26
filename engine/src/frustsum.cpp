@@ -22,8 +22,9 @@ Frustsum::Frustsum(const Camera& cam, float ratio, bool on) {
     glm::vec3 front = glm::normalize(cam.lookAt - cam.position);
     float fovRadians = glm::radians(static_cast<float>(cam.fov));
 
-    float halfVSide = cam.far * tanf(fovRadians * 0.5f);
-    float halfHSide = halfVSide * aspect;
+    float halfHSide = cam.far * tanf(fovRadians * 0.5f);
+    float halfVSide = halfHSide * aspect;
+    
     glm::vec3 frontMultFar = cam.far * front;
 
     // Near and far planes
