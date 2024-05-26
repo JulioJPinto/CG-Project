@@ -9,6 +9,8 @@
 
 Configuration parseConfig(std::string filename);
 
+Configuration parseConfig3D(std::string filename);
+
 Group parseGroup(rapidxml::xml_node<>* groupNode);
 
 void parseTransform(rapidxml::xml_node<>* transformNode, Group& group);

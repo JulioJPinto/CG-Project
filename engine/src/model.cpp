@@ -209,7 +209,6 @@ void Model::drawNormals() {
   glColor3f(1.0, 0.0, 0.0);
   for (const Vertex& point : this->vbo) {
     glBegin(GL_LINES);
-
     glVertex3f(point.position.x, point.position.y, point.position.z);
     glVertex3f(point.position.x + point.normal.x, point.position.y + point.normal.y,
                point.position.z + point.normal.z);

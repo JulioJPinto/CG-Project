@@ -3,28 +3,6 @@
 #include "vertex.hpp"
 #include "frustsum.hpp"
 
-/*
-{
-    Frustum     frustum;
-    const float halfVSide = zFar * tanf(fovY * .5f);
-    const float halfHSide = halfVSide * aspect;
-    const glm::vec3 frontMultFar = zFar * front;
-
-    frustum.nearFace = { position + near * front, front };
-    frustum.farFace = { position + frontMultFar, -front };
-    frustum.rightFace = { position,
-                            glm::cross(frontMultFar - cam.Right * halfHSide, cam.Up) };
-    frustum.leftFace = { position,
-                            glm::cross(cam.Up,frontMultFar + cam.Right * halfHSide) };
-    frustum.topFace = { position,
-                            glm::cross(cam.Right, frontMultFar - cam.Up * halfVSide) };
-    frustum.bottomFace = { position,
-                            glm::cross(frontMultFar + cam.Up * halfVSide, cam.Right) };
-
-    return frustum;
-}
-*/
-
 Plane::Plane(const glm::vec3& normal, glm::vec3 point) {
     this->normal = glm::normalize(normal);
     this->point = point;
@@ -34,21 +12,19 @@ Plane::Plane(const glm::vec3& normal, glm::vec3 point) {
 }
 
 
-Frustsum::Frustsum(const Camera& cam, const Window& window,const bool& on) {
+Frustsum::Frustsum(const Camera& cam, float ratio, bool on) {
     this->on = on;
-    if(!on) {
+    if (!on) {
         return;
     }
-    float aspect = static_cast<float>(window.width) / static_cast<float>(window.height);
 
+    float aspect = ratio;
     glm::vec3 front = glm::normalize(cam.lookAt - cam.position);
-
-    // Ensure FOV is treated as a floating-point number
     float fovRadians = glm::radians(static_cast<float>(cam.fov));
 
-    const float halfVSide = cam.far * tanf(fovRadians * 0.5f);
-    const float halfHSide = halfVSide * aspect;
-    const glm::vec3 frontMultFar = cam.far * front;
+    float halfVSide = cam.far * tanf(fovRadians * 0.5f);
+    float halfHSide = halfVSide * aspect;
+    glm::vec3 frontMultFar = cam.far * front;
 
     // Near and far planes
     glm::vec3 nearNormal = front;
@@ -67,7 +43,7 @@ Frustsum::Frustsum(const Camera& cam, const Window& window,const bool& on) {
     // Top and bottom planes
     glm::vec3 topNormal = glm::normalize(glm::cross(cam.right, frontMultFar - cam.up * halfVSide));
     glm::vec3 topPoint = cam.position;
-    
+
     glm::vec3 bottomNormal = glm::normalize(glm::cross(frontMultFar + cam.up * halfVSide, cam.right));
     glm::vec3 bottomPoint = cam.position;
 

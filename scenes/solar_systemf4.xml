@@ -1011,7 +1011,6 @@
             <group name="Sinope">
                 <models>
                     <model file="models/advanced/sphere_low_res.3d">
-                        <texture file="textures/8k_earth.jpg" />
                         <color>
                             <diffuse R="200" G="200" B="200" />
                             <ambient R="50" G="50" B="50" />
@@ -1071,7 +1070,6 @@
             <group name="Lysithea">
                 <models>
                     <model file="models/advanced/sphere_low_res.3d">
-                        <texture file="textures/8k_earth.jpg" />
                         <color>
                             <diffuse R="200" G="200" B="200" />
                             <ambient R="50" G="50" B="50" />
@@ -1426,7 +1424,6 @@
             <group name="Metis">
                 <models>
                     <model file="models/advanced/sphere_low_res.3d">
-                        <texture file="textures/8k_earth.jpg" />
                         <color>
                             <diffuse R="200" G="200" B="200" />
                             <ambient R="50" G="50" B="50" />
@@ -10942,7 +10939,7 @@
             <group name="Charon">
                 <models>
                     <model file="models/advanced/sphere_low_res.3d">
-                        <texture file="textures/moonmap1.jpg" />
+                        <texture file="textures/moonmap1k.jpg" />
                         <color>
                             <diffuse R="200" G="200" B="200" />
                             <ambient R="50" G="50" B="50" />
@@ -11062,7 +11059,6 @@
             <group name="Hydra">
                 <models>
                     <model file="models/advanced/sphere_low_res.3d">
-                        <texture file="textures/8k_earth.jpg" />
                         <color>
                             <diffuse R="200" G="200" B="200" />
                             <ambient R="50" G="50" B="50" />

@@ -21,14 +21,12 @@ extern "C" {
 #include "controller.hpp"
 
 std::string filename;
+bool simple = false;
 
 bool axis = true;
 bool wireframe = false;
 bool normals = false;
-bool culling = true;
-
-bool isDragging = false;
-int lastMouseX, lastMouseY;
+bool culling = false;
 
 int timebase;
 float frames;
@@ -92,9 +90,11 @@ void renderMenu() {
     {
       ImGui::Begin("Infos", NULL, ImGuiWindowFlags_AlwaysAutoResize);
 
-      ImGui::Text("FPS: %f", io.Framerate);
+      ImGui::Text("FPS: %.1f (%.3f  ms/frame)", io.Framerate, 1000.f / io.Framerate);
       ImGui::Text("Camera Position: (%f, %f, %f)", camera.position.x, camera.position.y, camera.position.z);
       ImGui::Text("Camera LookAt: (%f, %f, %f)", camera.lookAt.x, camera.lookAt.y, camera.lookAt.z);
+      ImGui::Text("Fov: %d Ratio: %.1f Near: %f Far: %f", c.camera.fov, static_cast<float>(glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT)), c.camera.near, c.camera.far);
+      ImGui::Text("XML File: %s", filename.c_str());
 
       ImGui::End();
     }
@@ -152,8 +152,7 @@ void renderScene(void) {
             lookat.x , lookat.y, lookat.z,
             camera.up.x, camera.up.y, camera.up.z);
 
-  Window currentW = Window(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-  Frustsum frustsum = Frustsum(camera, currentW, culling);
+  Frustsum frustsum = Frustsum(camera, glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), culling);
 
   fillMode();
   drawAxis();
@@ -179,6 +178,9 @@ void setupConfig(char* arg) {
 
   if (filename.substr(filename.size() - 4) == ".xml") {
     c = parseConfig(filename);
+  } else if (filename.substr(filename.size() - 3) == ".3d") {
+    c = parseConfig3D(filename);   
+  
   } else {
     std::cout << "Invalid file format\n";
     exit(1);
@@ -197,6 +199,14 @@ void setupModels(Group& group) {
   }
 }
 
+void mode(int agrc, char** agrv) {
+  for (int i = 2; i < agrc; i++) {
+    if (strcmp(agrv[i], "-s") == 0) {
+      simple = true;
+    }
+  }
+
+}
 
 
 int main(int argc, char** argv) {

@@ -4,6 +4,20 @@
 
 #include "read.hpp"
 
+Configuration parseConfig3D(std::string filename) {
+  Configuration c = parseConfig("scenes/advanced/default.xml");
+  Group& g = c.group;
+  g.models.clear();
+  g.subgroups.clear();
+  Model model = readFile(filename.data());
+  if (model.id == -1) {
+    std::cerr << "Error reading model file: " << filename << std::endl;
+    return c;
+  }
+  g.models.push_back(model);
+  return c;
+}
+
 Configuration parseConfig(std::string filename) {
   // open file in read mode
   std::ifstream file(filename);

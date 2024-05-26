@@ -6,13 +6,9 @@
         <up x="0" y="1" z="0" /> <!-- gluLookAt up-->
         <projection fov="60" near="1" far="1000" /> <!--gluPerspective-->
     </camera>
-    <lights> 
-		<light type="point" posx="2" posy="2" posz="-2" />
-		<light type="point" posx="-2" posy="2" posz="2" />
-	</lights>
     <group> 
           <models> 
-            <model file="models/simple/ferrari.obj" />     
+            <model file="models/advanced/box.3d" />     
          </models>
      </group>
 </world>
