@@ -29,7 +29,7 @@ private:
     // FIXME: Change ref to something else
     Camera& m_camera;
     float m_speed = normal_speed;
-    float m_sensitivity = 0.2f;
+    float m_sensitivity = 1.f;
 };
 
 glm::vec3 spherical2Cartesian(float theta, float phi, float r);

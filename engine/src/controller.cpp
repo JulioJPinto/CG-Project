@@ -43,6 +43,33 @@ void CameraController::update(float delta_time) {
         m_camera.position -= right * m_speed * delta_time;
     }
 
+    //Update camera direction with Keyboard
+    if (Input::is_down(Keyboard::Up)) {
+        glm::vec3 spherical_forward = cartesian_to_spherical(m_camera.forward);
+        spherical_forward.z += delta_time * m_sensitivity;
+        m_camera.forward = spherical_to_cartesian(spherical_forward);
+    }
+
+    if (Input::is_down(Keyboard::Down)) {
+        glm::vec3 spherical_forward = cartesian_to_spherical(m_camera.forward);
+        spherical_forward.z -= delta_time * m_sensitivity;
+        m_camera.forward = spherical_to_cartesian(spherical_forward);
+    }
+
+    if (Input::is_down(Keyboard::Right)) {
+        glm::vec3 spherical_forward = cartesian_to_spherical(m_camera.forward);
+        spherical_forward.y += delta_time * m_sensitivity;
+        m_camera.forward = spherical_to_cartesian(spherical_forward);
+    }
+
+    if (Input::is_down(Keyboard::Left)) {
+        glm::vec3 spherical_forward = cartesian_to_spherical(m_camera.forward);
+        spherical_forward.y -= delta_time * m_sensitivity;
+        m_camera.forward = spherical_to_cartesian(spherical_forward);
+    }
+
+
+
     // Update camera direction
     if (Input::is_down(Mouse::Right)) {
         glm::vec3 spherical_forward = cartesian_to_spherical(m_camera.forward);
