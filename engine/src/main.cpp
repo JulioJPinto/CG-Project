@@ -12,6 +12,7 @@ extern "C" {
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <chrono>
+#include <unordered_map>
 
 #include "Configuration.hpp"
 #include "curves.hpp"
@@ -29,12 +30,24 @@ bool normals = false;
 bool culling = false;
 bool lighting = false;
 float speed_factor = 1.0f;
+bool models_menus = false;
+
+int total_models = 0;
+int nr_models = 0;
 
 int timebase;
 float frames;
 
 Configuration c;
 Camera camera;
+
+struct ModelInfo {
+  int vertex_number;
+  int triangle_number;
+};
+
+std::unordered_map<std::string, ModelInfo> models_info;
+
 
 void reshape(int w, int h) {
   float aspect_ratio = (float)w / (float)h;
@@ -99,7 +112,11 @@ void setupConfig(char* arg) {
 
 void setupModels(Group& group) {
   for (Model& model : group.models) {
+    total_models++;
     model.initModel();
+
+    ModelInfo info = {model.vbo.size(), model.ibo.size() / 3};
+    models_info[model.filename] = info;
   }
   for (Group& g : group.subgroups) {
     setupModels(g);
@@ -127,12 +144,13 @@ void renderMenu() {
       ImGui::Begin("Infos", NULL, ImGuiWindowFlags_AlwaysAutoResize);
 
       ImGui::Text("FPS: %.1f (%.3f  ms/frame)", io.Framerate, 1000.f / io.Framerate);
-      ImGui::Text("Camera Position: (%f, %f, %f)", camera.position.x, camera.position.y, camera.position.z);
-      ImGui::Text("Camera LookAt: (%f, %f, %f)", camera.lookAt.x, camera.lookAt.y, camera.lookAt.z);
-      ImGui::Text("Fov: %d Ratio: %.1f Near: %f Far: %f", c.camera.fov, static_cast<float>(glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT)), c.camera.near, c.camera.far);
+      ImGui::Text("Camera Position: (%.3f, %.3f, %.3f)", camera.position.x, camera.position.y, camera.position.z);
+      ImGui::Text("Fov: %d Ratio: %.1f Near: %.3f Far: %.3f", c.camera.fov, static_cast<float>(glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT)), c.camera.near, c.camera.far);
       ImGui::Text("XML File: %s", filename.c_str());
-
+      ImGui::Text("Models: %d (Total %d)", nr_models, total_models);
+      ImGui::Checkbox("Models Info", &models_menus);
       ImGui::End();
+
     }
     {
       ImGui::Begin("Options", NULL, ImGuiWindowFlags_AlwaysAutoResize);  
@@ -156,6 +174,16 @@ void renderMenu() {
       ImGui::Button("Hot Reload", ImVec2(100, 20));
       if (ImGui::IsItemClicked()) {
         hotReload();
+      }
+      ImGui::End();
+    }
+    if(models_menus){
+      ImGui::Begin("Models", NULL, ImGuiWindowFlags_AlwaysAutoResize);
+      for (auto& model : models_info) {
+        ImGui::Text("Model: %s", model.first.c_str());
+        ImGui::Text("Vertices: %d Triangles: %d", model.second.vertex_number, model.second.triangle_number);
+        //separator here
+        ImGui::Separator();
       }
       ImGui::End();
     }
@@ -209,7 +237,8 @@ void renderScene(void) {
     drawLights(c.lights);
   }
 
-  c.group.drawGroup(lighting, frustsum, normals, speed_factor);
+  nr_models = 0;
+  c.group.drawGroup(lighting, frustsum, normals, speed_factor, nr_models);
 
   // Start the Dear ImGui frame
   renderMenu();
