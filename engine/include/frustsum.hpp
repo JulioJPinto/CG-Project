@@ -12,7 +12,6 @@ struct Plane {
     
     glm::vec3 point = { 0.f, 0.f, 0.f };
     glm::vec3 normal = { 0.f, 1.f, 0.f };
-    glm::vec4 abcd = { 0.f, 0.f, 0.f, 0.f };
 
     Plane() = default;
     Plane(const Plane& other) = default;
@@ -20,7 +19,7 @@ struct Plane {
 
     // rethink distance to point
     float distanceToPoint(const glm::vec3& point) const {
-        return abcd.x * point.x + abcd.y * point.y + abcd.z * point.z + abcd.w;
+        return glm::dot(normal, point - this->point);
     }
     
 

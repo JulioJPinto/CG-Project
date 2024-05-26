@@ -6,9 +6,6 @@
 Plane::Plane(const glm::vec3& normal, glm::vec3 point) {
     this->normal = glm::normalize(normal);
     this->point = point;
-    float d = -normal.x * point.x - normal.y * point.y - normal.z * point.z;   
-
-    this->abcd = glm::vec4(this->normal, d);
 }
 
 
