@@ -27,7 +27,7 @@ Light createPointLight(glm::vec4 position);
 
 Light createSpotLight(glm::vec4 position, glm::vec4 direction, float cutoff);
 
-void setupLights(std::vector<Light> lights);
+bool setupLights(std::vector<Light> lights);
 
 void drawLights(std::vector<Light> lights);
 

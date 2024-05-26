@@ -79,10 +79,10 @@ torusAllPoints(float majorRadius, float minorRadius, int sides, int rings) {
       normals.push_back(n3);
 
       // Texture coordinates
-      float u1 = static_cast<float>(i) / static_cast<float>(rings);
-      float u2 = static_cast<float>(i + 1) / static_cast<float>(rings);
-      float v1 = static_cast<float>(j) / static_cast<float>(sides);
-      float v2 = static_cast<float>(j + 1) / static_cast<float>(sides);
+      float u1 = static_cast<float>(j) / static_cast<float>(sides);
+      float u2 = static_cast<float>(j + 1) / static_cast<float>(sides);
+      float v1 = static_cast<float>(i) / static_cast<float>(rings);
+      float v2 = static_cast<float>(i + 1) / static_cast<float>(rings);
 
       textures.push_back(Point2D(u1, v1));
       textures.push_back(Point2D(u2, v1));

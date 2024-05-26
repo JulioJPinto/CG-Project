@@ -6,9 +6,15 @@
         <up x="0" y="1" z="0" /> <!-- gluLookAt up-->
         <projection fov="60" near="1" far="1000" /> <!--gluPerspective-->
     </camera>
+
+    <lights> 
+		<light type="directional" dirx="1" diry="0.7" dirz="0.5"/>
+	</lights>
     <group> 
-          <models> 
-            <model file="models/advanced/box.3d" />     
+          <models>
+            <model file="models/advanced/ring.3d" >            
+                <texture file="textures/uranusringcolour.jpg" />
+            </model> 
          </models>
      </group>
 </world>

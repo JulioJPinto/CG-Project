@@ -27,6 +27,7 @@ bool axis = true;
 bool wireframe = false;
 bool normals = false;
 bool culling = false;
+bool lighting = false;
 
 int timebase;
 float frames;
@@ -105,6 +106,7 @@ void renderMenu() {
       ImGui::Checkbox("Wireframe", &wireframe);
       ImGui::Checkbox("Normals", &normals);
       ImGui::Checkbox("Frustsum", &culling);
+      ImGui::Checkbox("Lighting", &lighting);
       ImGui::Button("Reset", ImVec2(50, 20));
       if (ImGui::IsItemClicked()) {
         resetCamera();
@@ -157,12 +159,11 @@ void renderScene(void) {
   fillMode();
   drawAxis();
 
-  bool lights = c.lights.size() != 0;
-  if (lights) {
+  if (lighting) {
     drawLights(c.lights);
   }
   
-  c.group.drawGroup(lights, frustsum, normals);
+  c.group.drawGroup(lighting, frustsum, normals);
 
   // Start the Dear ImGui frame
   renderMenu();
@@ -250,7 +251,7 @@ int main(int argc, char** argv) {
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
   glEnable(GL_TEXTURE_2D);
-  setupLights(c.lights);
+  lighting = setupLights(c.lights);
   setupModels(c.group);
 
   // enter GLUT�s main cycle

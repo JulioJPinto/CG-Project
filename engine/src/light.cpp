@@ -45,7 +45,7 @@ void setupMaterial(Material m) {
   glMaterialf(GL_FRONT, GL_SHININESS, m.shininess);
 }
 
-void setupLights(std::vector<Light> lights) {
+bool setupLights(std::vector<Light> lights) {
   if (lights.size() != 0) {
     glEnable(GL_RESCALE_NORMAL);
     float amb[4] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -59,7 +59,10 @@ void setupLights(std::vector<Light> lights) {
       glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, white);
       glLightfv(GL_LIGHT0 + i, GL_SPECULAR, white);
     }
+    return true;
   }
+
+  return false;
 }
 
 void drawLights(std::vector<Light> lights) {
