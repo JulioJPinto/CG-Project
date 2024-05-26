@@ -12,8 +12,8 @@
 	</lights>
     <group> 
           <models>
-            <model file="models/advanced/ring.3d" >            
-                <texture file="textures/uranusringcolour.jpg" />
+            <model file="models/advanced/cylinder.3d" >  
+                <texture file = "textures/Oil_Drum.jpg" />          
             </model> 
          </models>
      </group>
