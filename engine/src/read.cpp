@@ -85,12 +85,7 @@ Model readOBJfile(const char* filepath) {
       }
     }
   }
-  printf("texturas: %d\n", textures.size());
-  printf("normais: %d\n", normals.size());
-  printf("pontos: %d\n", points.size());
-  printf("vertices: %d\n", vertices.size());
-  printf("tex.x: %f\n", textures[70725].x);
-  printf("tex.x: %f\n", textures[0].x);
+
   file.close();
 
   Model model(filepath, vertices);

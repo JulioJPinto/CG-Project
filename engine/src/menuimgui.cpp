@@ -12,6 +12,7 @@ void setupMenu()
     // Setup Platform/Renderer backends
     ImGui_ImplGLUT_Init();
     ImGui_ImplOpenGL3_Init();
+    ImGui_ImplGLUT_InstallFuncs();
 }
 
 void shutDownMenu()
@@ -22,22 +23,5 @@ void shutDownMenu()
     ImGui::DestroyContext();
 }
 
-bool w = false;
 
-void renderMenu() {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGLUT_NewFrame();
-    ImGui::NewFrame();
 
-    ImGuiIO& io = ImGui::GetIO();
-    {
-      ImGui::Begin("Infos", NULL, ImGuiWindowFlags_AlwaysAutoResize);
-
-      ImGui::Text("FPS: %f", io.Framerate);
-
-      ImGui::End();
-    }
-    ImGui::Render();
-    glViewport(0, 0, (GLsizei) io.DisplaySize.x, (GLsizei) io.DisplaySize.y);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-}

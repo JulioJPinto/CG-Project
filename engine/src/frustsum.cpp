@@ -78,27 +78,48 @@ Frustsum::Frustsum(const Camera& cam, const Window& window) {
 
 
 BoundingSphere::BoundingSphere(std::vector<Vertex> points) {
+    // Initialize min and max points
+    glm::vec3 min = {INFINITY, INFINITY, INFINITY};
     glm::vec3 max = {-INFINITY, -INFINITY, -INFINITY};
 
+    // Sum to calculate the center
+    glm::vec3 sum = {0.0f, 0.0f, 0.0f};
+
     for (const Vertex& point : points) {
+        // Update min and max
+        if (point.position.x < min.x) {
+            min.x = point.position.x;
+        }
+        if (point.position.y < min.y) {
+            min.y = point.position.y;
+        }
+        if (point.position.z < min.z) {
+            min.z = point.position.z;
+        }
 
         if (point.position.x > max.x) {
             max.x = point.position.x;
         }
-
         if (point.position.y > max.y) {
             max.y = point.position.y;
         }
-
         if (point.position.z > max.z) {
             max.z = point.position.z;
         }
+
+        glm::vec3 pointPosition = {point.position.x, point.position.y, point.position.z};
+        // Sum up the positions
+        sum += pointPosition;
     }
 
-    center = glm::vec3(0.0f);
-    radius = glm::distance(center, max);
+    // Calculate the center as the average of all points
+    center = sum / static_cast<float>(points.size());
+    std::cout << "Center: " << center.x << ", " << center.y << ", " << center.z << std::endl;
 
+    // Calculate the radius as the distance from the center to the farthest point (max)
+    radius = glm::distance(center, max);
 }
+
 
 bool BoundingSphere::isInsideFrustsum(const Frustsum& frustsum, glm::mat4 transformations) const {
 

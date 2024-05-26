@@ -3,10 +3,10 @@
 
 #include <string>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "Camera.hpp"
 #include "utils.hpp"
 
-enum CameraType { ORBITAL, FPS };
 
 class Camera {
  public:
@@ -18,7 +18,6 @@ class Camera {
   int fov;
   float near;
   float far;
-  CameraType type;
 
   Camera();
   Camera(glm::vec3 position, glm::vec3 lookAt, glm::vec3 up, int fov, float near,
@@ -28,24 +27,12 @@ class Camera {
 
   void leftMovement();
   void rightMovement();
-  void upMovement();
-  void downMovement();
   void forwardMovement();
   void backwardMovement();
-
-  private:
-    void backwardMovementFPS();
-    void backwardMovementOrbital();
-    void forwardMovementFPS();
-    void forwardMovementOrbital();
-    void leftMovementFPS();
-    void leftMovementOrbital();
-    void rightMovementFPS();
-    void rightMovementOrbital();
-    void upMovementFPS();
-    void upMovementOrbital();
-    void downMovementFPS();
-    void downMovementOrbital();
+  void spinUp();
+  void spinDown();
+  void spinLeft();
+  void spinRight();
 
   //   std::string toString();
 };

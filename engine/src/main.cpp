@@ -19,13 +19,9 @@ extern "C" {
 
 std::string filename;
 
-float cameraAngle = 0.0f;
-float cameraAngleY = 0.0f;
-
-float zoom = 1.0f;
-int axis = 1;
-int wireframe = 1;
-bool imgui = true;
+bool axis = true;
+bool wireframe = false;
+bool imgui = false;
 bool normals = false;
 
 bool isDragging = false;
@@ -100,6 +96,45 @@ void frameCounter() {
   }
 }
 
+void resetCamera() {
+  camera = c.camera;
+}
+
+void renderMenu() {
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGLUT_NewFrame();
+    ImGui::NewFrame();
+
+    ImGuiIO& io = ImGui::GetIO();
+    {
+      ImGui::Begin("Infos", NULL, ImGuiWindowFlags_AlwaysAutoResize);
+
+      ImGui::Text("FPS: %f", io.Framerate);
+      ImGui::Text("Camera Position: (%f, %f, %f)", camera.position.x, camera.position.y, camera.position.z);
+      ImGui::Text("Camera LookAt: (%f, %f, %f)", camera.lookAt.x, camera.lookAt.y, camera.lookAt.z);
+      ImGui::Checkbox("Axis", &axis);
+      ImGui::Checkbox("Wireframe", &wireframe);
+      ImGui::Checkbox("Normals", &normals);
+      ImGui::Button("Reset", ImVec2(50, 20));
+      if (ImGui::IsItemClicked()) {
+        resetCamera();
+      }
+
+      ImGui::End();
+    }
+    ImGui::Render();
+    glViewport(0, 0, (GLsizei) io.DisplaySize.x, (GLsizei) io.DisplaySize.y);
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void fillMode() {
+  if (wireframe) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  } else {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  }
+}
+
 void renderScene(void) {
   // clear buffers
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -112,7 +147,9 @@ void renderScene(void) {
   Window currentW = Window(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
   Frustsum frustsum = Frustsum(camera, currentW);
 
+  fillMode();
   drawAxis();
+  
 
   bool lights = c.lights.size() != 0;
   if (lights) {
@@ -132,33 +169,6 @@ void renderScene(void) {
 
 }
 
-void mouse(int button, int state, int x, int y) {
-  if (button == GLUT_LEFT_BUTTON) {
-    if (state == GLUT_DOWN) {
-      isDragging = true;
-      lastMouseX = x;
-      lastMouseY = y;
-    } else if (state == GLUT_UP) {
-      isDragging = false;
-    }
-  }
-}
-
-void motion(int x, int y) {
-  if (isDragging) {
-    int dx = x - lastMouseX;
-    int dy = y - lastMouseY;
-
-    cameraAngleY += dx * 0.1f;
-    cameraAngle += dy * 0.1f;
-
-    lastMouseX = x;
-    lastMouseY = y;
-
-    glutPostRedisplay();
-  }
-}
-
 void processSpecialKeys(int key, int xx, int yy) {
   switch (key) {
     case GLUT_KEY_LEFT:
@@ -173,6 +183,22 @@ void processSpecialKeys(int key, int xx, int yy) {
     case GLUT_KEY_DOWN:
       camera.backwardMovement();
       break;
+    //glut f1 for reset
+    case GLUT_KEY_F1:
+      camera = c.camera;
+      break;
+    case GLUT_KEY_F2:
+      axis = !axis;
+      break;
+    case GLUT_KEY_F3:
+      wireframe = !wireframe;
+      break;
+    case GLUT_KEY_F4:
+      imgui = !imgui;
+      break;
+    case GLUT_KEY_F5:
+      normals = !normals;
+      break;
     default:
       break;
   }
@@ -181,43 +207,18 @@ void processSpecialKeys(int key, int xx, int yy) {
 }
 
 void processNormalKeys(unsigned char key, int x, int y) {
-  float value = zoom * 0.1;
   switch (key) {
-    case 'a':
-      if (axis) {
-        axis = 0;
-      } else {
-        axis = 1;
-      }
-      break;
-    case 'r':
-      camera = c.camera;
-      break;
     case 'w':
-      camera.upMovement();
+      camera.spinUp();
       break;
     case 's':
-      camera.downMovement();
+      camera.spinDown();
       break;
-    case 't':
-      if(camera.type == ORBITAL) {
-        camera.type = FPS;
-      } else {
-        camera.type = ORBITAL;
-      }
-    case 'c':
-      if (wireframe) {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        wireframe = 0;
-      } else {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        wireframe = 1;
-      }
-    case 'i':
-      imgui = !imgui;
+    case 'a':
+      camera.spinLeft();
       break;
-    case 'n':
-      normals = !normals;
+    case 'd':
+      camera.spinRight();
       break;
     default:
       break;
@@ -285,8 +286,8 @@ int main(int argc, char** argv) {
 
   glutSpecialFunc(processSpecialKeys);
   glutKeyboardFunc(processNormalKeys);
-  glutMouseFunc(mouse);
-  glutMotionFunc(motion);
+  // glutMouseFunc(mouse);
+  // glutMotionFunc(motion);
 
   // some OpenGL settings
   glEnable(GL_DEPTH_TEST);

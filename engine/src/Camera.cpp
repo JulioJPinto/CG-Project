@@ -10,7 +10,7 @@ Camera::Camera() {
   this->fov = 0;
   this->near = 0;
   this->far = 0;
-  this->type = FPS;
+
 }
 
 Camera::Camera(glm::vec3 position, glm::vec3 lookAt, glm::vec3 up, int fov, float near,
@@ -26,8 +26,6 @@ Camera::Camera(glm::vec3 position, glm::vec3 lookAt, glm::vec3 up, int fov, floa
   this->fov = fov;
   this->near = near;
   this->far = far;
-
-  this->type = FPS;
 }
 
 glm::vec3 spherical2Cartesian(float theta, float phi, float r) {
@@ -55,131 +53,69 @@ Camera::Camera(const Camera& other) {
   this->far = other.far;
 }
 
-void Camera::backwardMovementFPS() {
-  glm::vec3 direction = glm::normalize(lookAt - position);
-  position += direction;
-  lookAt += direction;
-}
-
-void Camera::backwardMovementOrbital() {
-  glm::vec3 direction = glm::normalize(lookAt - position);
-  position += direction;
-}
-
-void Camera::backwardMovement() {
-  if(type == FPS) {
-    backwardMovementFPS();
-  } else {
-    backwardMovementOrbital();
-  }
-}
-
-void Camera::forwardMovementFPS() {
-  glm::vec3 direction = glm::normalize(lookAt - position);
-  position -= direction;
-  lookAt -= direction;
-}
-
-void Camera::forwardMovementOrbital() {
-  glm::vec3 direction = glm::normalize(lookAt - position);
-  position -= direction;
-}
-
-void Camera::forwardMovement() {
-  if(type == FPS) {
-    forwardMovementFPS();
-  } else {
-    forwardMovementOrbital();
-  }
-}
-
-void Camera::leftMovementFPS() {
+void Camera::leftMovement() {
   glm::vec3 direction = glm::normalize(lookAt - position);
   glm::vec3 right = glm::normalize(glm::cross(up, direction));
   position -= right;
   lookAt -= right;
 }
 
-void Camera::leftMovementOrbital() {
-  glm::vec3 direction = glm::normalize(lookAt - position);
-  glm::vec3 right = glm::normalize(glm::cross(up, direction));
-  lookAt -= right;
-}
-
-void Camera::leftMovement() {
-  if(type == FPS) {
-    leftMovementFPS();
-  } else {
-    leftMovementOrbital();
-  }
-}
-
-void Camera::rightMovementFPS() {
+void Camera::rightMovement() {
   glm::vec3 direction = glm::normalize(lookAt - position);
   glm::vec3 right = glm::normalize(glm::cross(up, direction));
   position += right;
   lookAt += right;
 }
 
-void Camera::rightMovementOrbital() {
+void Camera::forwardMovement() {
+  glm::vec3 direction = glm::normalize(lookAt - position);
+  position += direction;
+  lookAt += direction;
+}
+
+void Camera::backwardMovement() {
+  glm::vec3 direction = glm::normalize(lookAt - position);
+  position -= direction;
+  lookAt -= direction;
+}
+
+//in the spin functions what should alter is the position, they spin around the lookat point
+void Camera::spinLeft() {
   glm::vec3 direction = glm::normalize(lookAt - position);
   glm::vec3 right = glm::normalize(glm::cross(up, direction));
-  lookAt += right;
+  glm::vec3 new_position = cartesian2Spherical(position);
+  new_position.y -= 0.1;
+  new_position = spherical2Cartesian(new_position.x, new_position.y, new_position.z);
+
+  position = new_position;
 }
 
-void Camera::rightMovement() {
-  if(type == FPS) {
-    rightMovementFPS();
-  } else {
-    rightMovementOrbital();
-  }
-}
-
-void Camera::upMovementFPS() {
+void Camera::spinRight() {
   glm::vec3 direction = glm::normalize(lookAt - position);
   glm::vec3 right = glm::normalize(glm::cross(up, direction));
-  glm::vec3 up = glm::normalize(glm::cross(direction, right));
-  position += up;
-  lookAt += up;
+  glm::vec3 new_position = cartesian2Spherical(position);
+  new_position.y += 0.1;
+  new_position = spherical2Cartesian(new_position.x, new_position.y, new_position.z);
+
+  position = new_position;
 }
 
-void Camera::upMovementOrbital() {
+void Camera::spinUp() {
   glm::vec3 direction = glm::normalize(lookAt - position);
   glm::vec3 right = glm::normalize(glm::cross(up, direction));
-  glm::vec3 up = glm::normalize(glm::cross(direction, right));
-  lookAt += up;
+  glm::vec3 new_position = cartesian2Spherical(position);
+  new_position.x += 0.1;
+  new_position = spherical2Cartesian(new_position.x, new_position.y, new_position.z);
+
+  position = new_position;
 }
 
-void Camera::upMovement() {
-  if(type == FPS) {
-    upMovementFPS();
-  } else {
-    upMovementOrbital();
-  }
-}
-
-void Camera::downMovementFPS() {
+void Camera::spinDown() {
   glm::vec3 direction = glm::normalize(lookAt - position);
   glm::vec3 right = glm::normalize(glm::cross(up, direction));
-  glm::vec3 up = glm::normalize(glm::cross(direction, right));
-  position -= up;
-  lookAt -= up;
+  glm::vec3 new_position = cartesian2Spherical(position);
+  new_position.x -= 0.1;
+  new_position = spherical2Cartesian(new_position.x, new_position.y, new_position.z);
+
+  position = new_position;
 }
-
-void Camera::downMovementOrbital() {
-  glm::vec3 direction = glm::normalize(lookAt - position);
-  glm::vec3 right = glm::normalize(glm::cross(up, direction));
-  glm::vec3 up = glm::normalize(glm::cross(direction, right));
-  lookAt -= up;
-}
-
-void Camera::downMovement() {
-  if(type == FPS) {
-    downMovementFPS();
-  } else {
-    downMovementOrbital();
-    
-  }
-}
-
-
