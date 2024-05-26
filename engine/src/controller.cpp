@@ -22,13 +22,19 @@ glm::vec3  cartesian_to_spherical(glm::vec3  vec) {
     return glm::vec3 {abs, std::atan2(x, z), std::acos(y / abs)};
 }
 
-void CameraController::update(float delta_time) {
+void CameraController::update(float delta_time, bool& imgui) {
     const glm::vec3 right =
         glm::normalize(glm::cross(m_camera.forward, m_camera.up));
 
     // Update speed
     m_speed = Input::is_down(Keyboard::LShift) ? sprint_speed : normal_speed;
 
+    if (Input::is_down(Keyboard::F1)) {
+        imgui = true;
+    }
+    if(Input::is_down(Keyboard::F2)) {
+        imgui = false;
+    }
     // Update camera position
     if (Input::is_down(Keyboard::W)) {
         m_camera.position += m_camera.forward * m_speed * delta_time;
@@ -67,8 +73,6 @@ void CameraController::update(float delta_time) {
         spherical_forward.y -= delta_time * m_sensitivity;
         m_camera.forward = spherical_to_cartesian(spherical_forward);
     }
-
-
 
     // Update camera direction
     if (Input::is_down(Mouse::Right)) {

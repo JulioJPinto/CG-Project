@@ -21,7 +21,7 @@ public:
     // Dtor
     ~CameraController() = default;
 
-    void update(float delta_time);
+    void update(float delta_time, bool& imgui);
 
 private:
     static constexpr float normal_speed = 5.f;

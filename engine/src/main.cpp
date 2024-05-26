@@ -31,6 +31,7 @@ bool culling = false;
 bool lighting = false;
 float speed_factor = 1.0f;
 bool models_menus = false;
+bool imgui = false;
 
 int total_models = 0;
 int nr_models = 0;
@@ -214,7 +215,7 @@ void update() {
   Input::process_input();
   static CameraController cameraController(camera);
   float delta_time = compute_delta_time();
-  cameraController.update(delta_time);
+  cameraController.update(delta_time, imgui);
 }
 
 void renderScene(void) {
@@ -241,7 +242,9 @@ void renderScene(void) {
   c.group.drawGroup(lighting, frustsum, normals, speed_factor, nr_models);
 
   // Start the Dear ImGui frame
-  renderMenu();
+  if(imgui) {
+    renderMenu();
+  }
 
   // End of frame
   glutSwapBuffers();
