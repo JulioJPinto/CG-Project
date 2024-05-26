@@ -61,22 +61,23 @@ sphereAllPoints(float radius, int slices, int stacks) {
       normals.push_back(p3.normalize());
       normals.push_back(p4.normalize());
 
-      float u1 = static_cast<float>(i) / static_cast<float>(slices);
-      float u2 = static_cast<float>(i + 1) / static_cast<float>(slices);
-      float v1 = static_cast<float>(j) / static_cast<float>(stacks);
-      float v2 = static_cast<float>(j + 1) / static_cast<float>(stacks);
+      // Texture coordinates
+            float u1 = phi1 / (2.0f * static_cast<float>(M_PI));
+            float u2 = phi2 / (2.0f * static_cast<float>(M_PI));
+            float v1 = theta1 / static_cast<float>(M_PI);
+            float v2 = theta2 / static_cast<float>(M_PI);
 
-      Point2D t1(u1, v1);
-      Point2D t2(u2, v1);
-      Point2D t3(u1, v2);
-      Point2D t4(u2, v2);
+            Point2D t1(u1, v1);
+            Point2D t2(u2, v1);
+            Point2D t3(u1, v2);
+            Point2D t4(u2, v2);
 
-      textures.push_back(t1);
-      textures.push_back(t4);
-      textures.push_back(t2);
-      textures.push_back(t1);
-      textures.push_back(t3);
-      textures.push_back(t4);
+            textures.push_back(t1);
+            textures.push_back(t4);
+            textures.push_back(t2);
+            textures.push_back(t1);
+            textures.push_back(t3);
+            textures.push_back(t4);
     }
   }
 
