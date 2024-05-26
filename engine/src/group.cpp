@@ -28,8 +28,9 @@ Group::Group(std::vector<Model> models, std::vector<Group> subgroups,
 glm::mat4 applyTransformations(std::vector<Transformations> order,
                               std::vector<glm::mat4> static_transformations,
                               std::vector<TimeRotations> rotations,
-                              std::vector<TimeTranslations> translates) {
-  float elapsed_time = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+                              std::vector<TimeTranslations> translates,
+                              float speed_factor) {
+  float elapsed_time = speed_factor * glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
   int t = 0;
   int r = 0;
   int s = 0;
@@ -57,10 +58,10 @@ glm::mat4 applyTransformations(std::vector<Transformations> order,
   return matrix;
 }
 
-void Group::drawGroup(bool lights, const Frustsum& frustsum, bool normals) {
+void Group::drawGroup(bool lights, const Frustsum& frustsum, bool normals, float speed_factor) {
   glPushMatrix();
 
-  glm::mat4 matrix = applyTransformations(this->order, this->static_transformations, this->rotations, this->translates);
+  glm::mat4 matrix = applyTransformations(this->order, this->static_transformations, this->rotations, this->translates, speed_factor);
 
   for (Model& model : this->models) {
     if (lights) {
@@ -74,7 +75,7 @@ void Group::drawGroup(bool lights, const Frustsum& frustsum, bool normals) {
   }
 
   for (Group& sub : this->subgroups) {
-    sub.drawGroup(lights, frustsum, normals);
+    sub.drawGroup(lights, frustsum, normals, speed_factor);
   }
 
   glPopMatrix();

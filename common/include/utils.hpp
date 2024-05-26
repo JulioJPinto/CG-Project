@@ -37,6 +37,7 @@ typedef struct Point {
                  x * other.y - y * other.x);
   }
 
+
 } Point;
 
 struct Point2D {

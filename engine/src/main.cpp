@@ -28,6 +28,7 @@ bool wireframe = false;
 bool normals = false;
 bool culling = false;
 bool lighting = false;
+float speed_factor = 1.0f;
 
 int timebase;
 float frames;
@@ -78,8 +79,42 @@ void drawAxis(void) {
   }
 }
 
+void setupConfig(char* arg) {
+  filename.assign(arg);
+
+  if (filename.substr(filename.size() - 4) == ".xml") {
+    c = parseConfig(filename);
+  } else if (filename.substr(filename.size() - 3) == ".3d") {
+    c = parseConfig3D(filename);   
+  } else  if (filename.substr(filename.size() - 4) == ".obj") {
+    c = parseConfigObj(filename);
+  } else {
+    std::cout << "Invalid file format\n";
+    exit(1);
+  }
+
+  camera = c.camera;
+
+}
+
+void setupModels(Group& group) {
+  for (Model& model : group.models) {
+    model.initModel();
+  }
+  for (Group& g : group.subgroups) {
+    setupModels(g);
+  }
+}
+
+void hotReload() {
+  setupConfig((char*) filename.c_str());
+  setupModels(c.group);
+  lighting = setupLights(c.lights);
+}
+
 void resetCamera() {
   camera = c.camera;
+  speed_factor = 1.0f;
 }
 
 void renderMenu() {
@@ -103,13 +138,24 @@ void renderMenu() {
       ImGui::Begin("Options", NULL, ImGuiWindowFlags_AlwaysAutoResize);  
 
       ImGui::Checkbox("Axis", &axis);
+      ImGui::SameLine();
       ImGui::Checkbox("Wireframe", &wireframe);
-      ImGui::Checkbox("Normals", &normals);
+      ImGui::SameLine();
       ImGui::Checkbox("Frustsum", &culling);
+      ImGui::Checkbox("Normals", &normals);
+      ImGui::SameLine();
       ImGui::Checkbox("Lighting", &lighting);
+      
+      
+      ImGui::SliderFloat("Speed Factor", &speed_factor, 0.0f, 2.0f);
       ImGui::Button("Reset", ImVec2(50, 20));
       if (ImGui::IsItemClicked()) {
         resetCamera();
+      }
+      ImGui::SameLine();
+      ImGui::Button("Hot Reload", ImVec2(100, 20));
+      if (ImGui::IsItemClicked()) {
+        hotReload();
       }
       ImGui::End();
     }
@@ -162,8 +208,8 @@ void renderScene(void) {
   if (lighting) {
     drawLights(c.lights);
   }
-  
-  c.group.drawGroup(lighting, frustsum, normals);
+
+  c.group.drawGroup(lighting, frustsum, normals, speed_factor);
 
   // Start the Dear ImGui frame
   renderMenu();
@@ -172,33 +218,6 @@ void renderScene(void) {
   glutSwapBuffers();
   glutPostRedisplay();
 
-}
-
-void setupConfig(char* arg) {
-  filename.assign(arg);
-
-  if (filename.substr(filename.size() - 4) == ".xml") {
-    c = parseConfig(filename);
-  } else if (filename.substr(filename.size() - 3) == ".3d") {
-    c = parseConfig3D(filename);   
-  } else  if (filename.substr(filename.size() - 4) == ".obj") {
-    c = parseConfigObj(filename);
-  } else {
-    std::cout << "Invalid file format\n";
-    exit(1);
-  }
-
-  camera = c.camera;
-
-}
-
-void setupModels(Group& group) {
-  for (Model& model : group.models) {
-    model.initModel();
-  }
-  for (Group& g : group.subgroups) {
-    setupModels(g);
-  }
 }
 
 void mode(int agrc, char** agrv) {
