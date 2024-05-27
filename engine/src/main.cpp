@@ -20,6 +20,7 @@ extern "C" {
 #include "parse.hpp"
 #include "input.hpp"
 #include "controller.hpp"
+#include "save.hpp"
 
 std::string filename;
 bool simple = false;
@@ -124,6 +125,10 @@ void setupModels(Group& group) {
   }
 }
 
+void saveCurrent() {
+  savetoFile(filename, camera);
+}
+
 void hotReload() {
   setupConfig((char*) filename.c_str());
   setupModels(c.group);
@@ -172,9 +177,14 @@ void renderMenu() {
         resetCamera();
       }
       ImGui::SameLine();
-      ImGui::Button("Hot Reload", ImVec2(100, 20));
+      ImGui::Button("Hot Reload", ImVec2(80, 20));
       if (ImGui::IsItemClicked()) {
         hotReload();
+      }
+      ImGui::SameLine();
+      ImGui::Button("Save", ImVec2(50, 20));
+      if (ImGui::IsItemClicked()) {
+        saveCurrent();
       }
       ImGui::End();
     }

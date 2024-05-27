@@ -64,7 +64,6 @@ Configuration parseConfig(std::string filename) {
 
   // camera information
   rapidxml::xml_node<>* camera = root->first_node("camera");
-
   rapidxml::xml_node<>* position_n = camera->first_node("position");
   glm::vec3 position = glm::vec3(std::stof(position_n->first_attribute("x")->value()),
                          std::stof(position_n->first_attribute("y")->value()),
