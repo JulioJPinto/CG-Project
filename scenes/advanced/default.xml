@@ -12,8 +12,8 @@
 	</lights>
     <group> 
           <models>
-            <model file="models/advanced/cylinder.3d" >  
-                <texture file = "textures/Oil_Drum.jpg" />          
+            <model file="models/simple/ferrari.obj" >  
+                <texture file = "textures/ferrari.png" />          
             </model> 
          </models>
      </group>

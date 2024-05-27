@@ -46,10 +46,10 @@ $ ./cg-generator <model> [args] <path>
 - [Report](https://github.com/JulioJPinto/CG-Project/blob/a9d251c0a458038bd26efecb48b57872c04f35f2/Relat%C3%B3rio%20CG%20-%20Fase%202.pdf)
 
 ### 3ª Fase
-- Commit
+- [Commit](https://github.com/JulioJPinto/CG-Project/commit/014e09ccb4ef570f0fb6fc8377616580dff0f607)
 - [Report](https://github.com/JulioJPinto/CG-Project/blob/main/Relat%C3%B3rio%20CG%20-%20Fase%203.pdf)
 
 ### 4ª Fase
-- Commit
-- Report
+- [Commit](https://github.com/JulioJPinto/CG-Project/)
+- [Report](https://github.com/JulioJPinto/CG-Project/blob/main/reports/Relat%C3%B3rio%20CG%20-%20Fase%204.pdf)
 
