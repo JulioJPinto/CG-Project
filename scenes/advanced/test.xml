@@ -1,15 +1,11 @@
 <world> 
-    <window width="512" height="512" />
+    <window width="1080" height="720" />
     <camera>  
 	    <position x="0" y="1.182951" z="-7" />
 	    <lookAt x="0" y="0" z="0" />
 	    <up x="0" y="1" z="0" />
-        <projection fov="60" near="1" far="1000" /> 
+        <projection fov="60" near="0.001" far="1000" /> 
     </camera>
-	
-	<lights> 
-		<light type="point" posx="0" posy="3" posz="-7" />
-	</lights>
     
     <group>
     	<group>
@@ -23,6 +19,9 @@
     			<models> 
     				<model file="models/advanced/plane_2_3.3d" > <!-- generator plane 2 3 plane_2_3.3d -->
     				<texture file = "textures/relva.jpg" />
+					<color>
+						<emissive R="255" G="255" B="255" />
+					</color>
     				</model>
     			</models>
     		</group>
@@ -34,6 +33,9 @@
     			<models> 
     				<model file="models/advanced/cone_1_2_4_3.3d" > <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
     					<texture file = "textures/cone.jpg" />
+						<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
     				</model>
     			</models>
     		</group>
@@ -45,6 +47,9 @@
     			<models> 
     				<model file="models/advanced/sphere_1_8_8.3d" > <!-- generator sphere 1 8 8 sphere_1_8_8.3d -->
     					<texture file = "textures/earth.jpg" />
+						<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
     				</model>
     			</models>
     		</group>
@@ -56,6 +61,9 @@
     			<models> 
     				<model file="models/advanced/bezier_10.3d" > <!-- generator patch teapot.patch 10 bezier_10.3d -->
     					<texture file = "textures/teapot.jpg" />
+						<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
     				</model>
     			</models>
     		</group>
@@ -67,6 +75,9 @@
     			<models> 
     				<model file="models/advanced/box_2_3.3d" > <!-- generator 2 3 box_2_3.3d -->
     					<texture file = "textures/box.jpg" />
+						<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
     				</model>
     			</models>
     		</group>
@@ -78,6 +89,9 @@
     			<models> 
     				<model file="models/advanced/cylinder.3d" > <!-- generator patch teapot.patch 10 bezier_10.3d -->
     					<texture file = "textures/Oil_Drum.jpg" />
+						<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
     				</model>
     			</models>
     		</group>
@@ -94,6 +108,9 @@
     			<models> 
     				<model file="models/advanced/plane.3d" > <!-- generator plane 2 3 plane_2_3.3d -->
     				<texture file = "textures/relva.jpg" />
+					<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
     				</model>
     			</models>
     		</group>
@@ -105,6 +122,9 @@
     			<models> 
     				<model file="models/advanced/comet.3d" > <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
     					<texture file = "textures/moonmap1k.jpg" />
+						<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
     				</model>
     			</models>
     		</group>
@@ -117,6 +137,9 @@
     			<models> 
     				<model file="models/advanced/torus.3d" > <!-- generator sphere 1 8 8 sphere_1_8_8.3d -->
     					<texture file = "textures/donut.png" />
+						<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
     				</model>
     			</models>
     		</group>
@@ -128,6 +151,9 @@
     			<models> 
     				<model file="models/simple/ferrari.obj" > <!-- generator patch teapot.patch 10 bezier_10.3d -->
     					<texture file = "textures/ferrari.png" />
+						<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
     				</model>
     			</models>
     		</group>
@@ -138,19 +164,21 @@
     			</transform>
     			<models> 
     				<model file="models/advanced/duck.3d" /> <!-- generator 2 3 box_2_3.3d -->
-    			</models>
+					<color>
+						<emissive R="255" G="255" B="255" />
+						</color>
+				</models>
     		</group>
             <group> 
     			<transform> 
                     <translate x = "0" y = "0" z = "4" />
-    				<scale x="0.08" y="0.08" z="0.08" />
-                    <rotate angle="90" x="0" y="1" z="0" />
+					<scale x = "0.8" y = "0.8" z = "0.8" /> 
     			</transform>
-    			<models> 
-    				<model file="models/simple/track.obj" > <!-- generator patch teapot.patch 10 bezier_10.3d -->
-    					<texture file = "textures/track.jpg" />
-    				</model>
-    			</models>
+    			<models>
+            		<model file="models/pdf.obj" >  
+                		<texture file="textures/PDFTEX.png" />
+            		</model>
+        		</models>
     		</group>
         
      	</group>
