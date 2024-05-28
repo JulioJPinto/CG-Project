@@ -19,7 +19,7 @@
                 </translate>
                 <rotate angle="180" x="0" y="1" z="0" />
                 <scale x="0.5" y="0.5" z="0.5" />
-                <translate x="0" y="2" z="0" />
+                <translate x="0" y="1" z="0" />
             </transform>
             <models> 
 				<model file="models/simple/ferrari.obj" > <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
@@ -34,7 +34,9 @@
             </transform>
 
             <models> 
-                <model file="models/simple/track.obj" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+                <model file="models/simple/track.obj" > <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
+					<texture file = "textures/track.jpg" />
+				</model>
             </models>
         </group>
      </group>

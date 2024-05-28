@@ -12,9 +12,7 @@
 	</lights>
     <group> 
           <models>
-            <model file="models/simple/ferrari.obj" >  
-                <texture file = "textures/ferrari.png" />          
-            </model> 
+            <model file="models/simple/space.obj" />  
          </models>
      </group>
 </world>
