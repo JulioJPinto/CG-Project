@@ -25,8 +25,19 @@ class Camera {
          float far);
 
   Camera(const Camera& other);
+       
+  glm::mat4 getViewMatrix() const {
+        return glm::lookAt(position, position + forward, up);
+    }
 
-  //   std::string toString();
+    glm::mat4 getProjectionMatrix(float ratio) const {
+        return glm::perspective(glm::radians(static_cast<float>(fov)), ratio, near, far);
+    }
+
+    glm::mat4 getViewProjectionMatrix(float ratio) const {
+        return getProjectionMatrix(ratio) * getViewMatrix();
+    }
 };
+
 
 #endif  // CAMERA_HPP

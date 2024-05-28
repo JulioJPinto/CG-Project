@@ -1,0 +1,189 @@
+<world> 
+    <window width="512" height="512" />
+    <camera>  
+        <position x="0" y="2" z="3" />
+        <lookAt x="2" y="0" z="0" />
+        <up x="0" y="2" z="0" />
+        <projection fov="60" near="1" far="1000" /> 
+    </camera>
+
+    <lights> 
+        <light type="point" posx="0" posy="3" posz="0" />
+        <light type="point" posx="-2" posy="2" posz="2" />
+    </lights>
+
+
+    <!-- Define the grid of cubes -->
+    <group name="Cubes Grid">
+        <!-- Loop through each cube -->
+        <!-- Cube 1 -->
+        <group name="Cube1">
+            <models>
+                <model file="models/advanced/box.3d">
+                <color>
+                    <diffuse R="255" G="0" B="0" />
+                    <ambient R="50" G="50" B="50" />
+                    <specular R="255" G="255" B="255" />
+                    <emissive R="0" G="0" B="0" />
+                    <shininess value="64" />
+                </color>
+                </model>
+            </models>
+            <transform>
+                <translate x="-2" y="0" z="-2" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+        </group>
+
+        <!-- Cube 2 -->
+        <group name="Cube2">
+            <models>
+                <model file="models/advanced/box.3d">
+                <color>
+                    <diffuse R="255" G="0" B="0" />
+                    <ambient R="50" G="50" B="50" />
+                    <specular R="255" G="255" B="255" />
+                    <emissive R="0" G="0" B="0" />
+                    <shininess value="64" />
+                </color>
+                </model>
+            </models>
+            <transform>
+                <translate x="0" y="0" z="-2" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+        </group>
+
+        <!-- Cube 3 -->
+        <group name="Cube3">
+            <models>
+                <model file="models/advanced/box.3d">
+                <color>
+                    <diffuse R="255" G="0" B="0" />
+                    <ambient R="50" G="50" B="50" />
+                    <specular R="255" G="255" B="255" />
+                    <emissive R="0" G="0" B="0" />
+                    <shininess value="64" />
+                </color>
+                </model>
+            </models>
+            <transform>
+                <translate x="2" y="0" z="-2" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+        </group>
+
+        <!-- Cube 4 -->
+        <group name="Cube4">
+            <models>
+                <model file="models/advanced/box.3d">
+                <color>
+                    <diffuse R="255" G="0" B="0" />
+                    <ambient R="50" G="50" B="50" />
+                    <specular R="255" G="255" B="255" />
+                    <emissive R="0" G="0" B="0" />
+                    <shininess value="64" />
+                </color>
+                </model>
+            </models>
+            <transform>
+                <translate x="-2" y="0" z="0" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+        </group>
+
+        <!-- Cube 5 -->
+        <group name="Cube5">
+            <models>
+                <model file="models/advanced/box.3d">
+                <color>
+                    <diffuse R="255" G="0" B="0" />
+                    <ambient R="50" G="50" B="50" />
+                    <specular R="255" G="255" B="255" />
+                    <emissive R="0" G="0" B="0" />
+                    <shininess value="64" />
+                </color>
+                </model>
+            </models>
+            <transform>
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+        </group>
+
+        <!-- Cube 6 -->
+        <group name="Cube6">
+            <models>
+                <model file="models/advanced/box.3d">
+                <color>
+                    <diffuse R="255" G="0" B="0" />
+                    <ambient R="50" G="50" B="50" />
+                    <specular R="255" G="255" B="255" />
+                    <emissive R="0" G="0" B="0" />
+                    <shininess value="64" />
+                </color>
+                </model>
+            </models>
+            <transform>
+                <translate x="2" y="0" z="0" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+        </group>
+
+        <!-- Cube 7 -->
+        <group name="Cube7">
+            <models>
+                <model file="models/advanced/box.3d">
+                <color>
+                    <diffuse R="255" G="0" B="0" />
+                    <ambient R="50" G="50" B="50" />
+                    <specular R="255" G="255" B="255" />
+                    <emissive R="0" G="0" B="0" />
+                    <shininess value="64" />
+                </color>
+                </model>
+            </models>
+            <transform>
+                <translate x="-2" y="0" z="2" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+        </group>
+
+        <!-- Cube 8 -->
+        <group name="Cube8">
+            <models>
+                <model file="models/advanced/box.3d">
+                <color>
+                    <diffuse R="255" G="0" B="0" />
+                    <ambient R="50" G="50" B="50" />
+                    <specular R="255" G="255" B="255" />
+                    <emissive R="0" G="0" B="0" />
+                    <shininess value="64" />
+                </color>
+                </model>
+            </models>
+            <transform>
+                <translate x="0" y="0" z="2" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+        </group>
+
+        <!-- Cube 9 -->
+        <group name="Cube9">
+            <models>
+                <model file="models/advanced/box.3d">
+                <color>
+                    <diffuse R="255" G="0" B="0" />
+                    <ambient R="50" G="50" B="50" />
+                    <specular R="255" G="255" B="255" />
+                    <emissive R="0" G="0" B="0" />
+                    <shininess value="64" />
+                </color>
+                </model>
+            </models>
+            <transform>
+                <translate x="2" y="0" z="2" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transform>
+        </group>
+    </group>
+</world>

@@ -74,7 +74,7 @@ struct BoundingSphere {
     BoundingSphere(const glm::vec3& center, float radius) : center(center), radius(radius) {}
     BoundingSphere(std::vector<Vertex> points);
 
-    bool isInsideFrustsum(const Frustsum& frustsum, glm::mat4 transformations) const;
+    bool isInsideFrustsum(Frustsum& frustsum, glm::mat4 transformations) const;
 
 };
 

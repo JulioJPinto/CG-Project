@@ -99,7 +99,7 @@ BoundingSphere::BoundingSphere(std::vector<Vertex> points) {
 }
 
 
-bool BoundingSphere::isInsideFrustsum(const Frustsum& frustsum, glm::mat4 transformations) const {
+bool BoundingSphere::isInsideFrustsum(Frustsum& frustsum, glm::mat4 transformations) const {
 
     if(!frustsum.on) {
         return true;

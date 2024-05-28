@@ -58,7 +58,7 @@ glm::mat4 applyTransformations(std::vector<Transformations> order,
   return matrix;
 }
 
-void Group::drawGroup(bool lights, const Frustsum& frustsum, bool normals, float speed_factor, int& nr_models) {
+void Group::drawGroup(bool lights,Frustsum& frustsum, bool normals, float speed_factor, int& nr_models) {
   glPushMatrix();
 
   glm::mat4 matrix = applyTransformations(this->order, this->static_transformations, this->rotations, this->translates, speed_factor);
