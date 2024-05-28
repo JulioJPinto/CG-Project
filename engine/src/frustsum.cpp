@@ -92,8 +92,6 @@ BoundingSphere::BoundingSphere(std::vector<Vertex> points) {
 
     // Calculate the center as the average of all points
     center = sum / static_cast<float>(points.size());
-    std::cout << "Center: " << center.x << ", " << center.y << ", " << center.z << std::endl;
-
     // Calculate the radius as the distance from the center to the farthest point (max)
     radius = glm::distance(center, max);
 }

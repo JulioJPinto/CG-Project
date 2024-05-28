@@ -49,21 +49,21 @@ public:
     static void process_input();
 
     // Keyboard
-    [[nodiscard]]
+    
     static bool is_down(Keyboard::Key key);
-    [[nodiscard]]
+    
     static bool is_up(Keyboard::Key key);
 
     // Mouse
-    [[nodiscard]]
+    
     static bool is_down(Mouse::Button button);
-    [[nodiscard]]
+    
     static bool is_up(Mouse::Button button);
-    [[nodiscard]]
+    
     static glm::vec2 mouse_delta() {
         return s_mouse_delta;
     }
-    [[nodiscard]]
+    
     static glm::vec2 mouse_position() {
         return s_mouse_position;
     }
@@ -75,10 +75,10 @@ private:
     inline static glm::ivec2 s_mouse_delta = glm::ivec2{};
 
 private:
-    [[nodiscard]]
+    
     static Keyboard::Key native_to_key(unsigned char);
-    [[nodiscard]]
+    
     static Keyboard::Key special_native_to_key(int);
-    [[nodiscard]]
+    
     static Mouse::Button native_to_button(int);
 };
