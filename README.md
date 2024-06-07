@@ -1,5 +1,6 @@
 # CG
-Project for Computer Graphics Class using OpenGL / Glut.
+Project for Computer Graphics Class using OpenGL / GLUT.\
+**Nota Final: 20/20**
 
 ## Compilar o projeto
 
